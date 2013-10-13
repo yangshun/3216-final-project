@@ -16,7 +16,7 @@ socket.on('controller-input', function(data) {
 });
 
 var Shuriken = function(name) {
-	this.image = new createjs.Bitmap('/images/chrome.jpg');
+	this.image = new createjs.Bitmap('/images/chrome.png');
 
 	this.image.regX = 225 / 2.0;
 	this.image.regY = 225 / 2.0;

@@ -1,1 +1,83 @@
 extends layout
+
+block header
+
+block content
+	h1 = title
+	p Welcome to #{title}
+	p#ping msec
+
+	div#full-size
+		div(class='controllerLeft')
+			table
+				tr
+					td
+					td
+						input(type='button', class='controller-button', data-key='up', value='Up')
+					td
+				tr
+					td
+						input(type='button', class='controller-button', data-key='left', value='Lt')
+					td
+					td
+						input(type='button', class='controller-button', data-key='right', value='Rt')
+				tr
+					td
+					td
+						input(type='button', class='controller-button', data-key='down', value='Dn')
+					td
+		div(class='controllerRight')
+			table
+				tr
+					td
+					td	
+						input(type='button', class='controller-button', data-key='triangle', value='Tri')
+					td
+				tr
+					td
+						input(type='button', class='controller-button', data-key='square', value='Sqr')
+					td
+					td
+						input(type='button', class='controller-button', data-key='circle', value='Cir')
+				tr
+					td
+					td
+						input(type='button', class='controller-button', data-key='cross', value='Crs')
+					td
+		div(class='clear')
+
+	//- p#orientation Device Orientation
+	//- table
+	//- 	tr 
+	//- 		td Event Supported
+	//- 		td#doEvent
+	//- 	tr 
+	//- 		td Tilt Left/Right [gamma]
+	//- 		td#doTiltLR
+	//- 	tr 
+	//- 		td Tilt Front/Back [beta]
+	//- 		td#doTiltFB
+	//- 	tr 
+	//- 		td Direction [alpha]
+	//- 		td#doDirection
+
+	//- p#acceleration Device Acceleration
+	//- table
+	//- 	tr
+	//- 		td Acceleration Event
+	//- 		td#dmEvent
+	//- 	tr
+	//- 		td Acceleration
+	//- 		td#moAccel
+	//- 	tr
+	//- 		td AccelerationIncludingGravity
+	//- 		td#moAccelGrav
+	//- 	tr
+	//- 		td rotationRate
+	//- 		td#moRotation
+	//- 	tr
+	//- 		td interval
+	//- 		td#moInterval
+
+	script(type='text/javascript', src='/js/nuttyninja_controller.js')
+	link(rel='stylesheet', href='/css/style.css')

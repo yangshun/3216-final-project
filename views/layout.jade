@@ -3,5 +3,10 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    script(type='application/javascript', src='/javascripts/fastclick.min.js')
+    script(type='text/javascript', src='/socket.io/socket.io.js')
+    script(type='text/javascript', src='/javascripts/client.js')
+    meta(name="viewport", content="initial-scale=1.0, width=device-width")
+    block header
   body
     block content

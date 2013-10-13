@@ -1,7 +1,7 @@
 // Add fastclick to controllers
-window.addEventListener('load', function() {
-    FastClick.attach(document.body);
-}, false);
+// window.addEventListener('load', function() {
+//     FastClick.attach(document.body);
+// }, false);
 
 // Socket Registration code
 
@@ -12,7 +12,7 @@ if (path.length === 2 && path[1] !== '') {
 	myroom = path[1];
 }
 
-socket.emit('client-register', { type: 'controller', room: myroom });
+socket.emit('client-register', { type: 'controller', room: myroom, name: myname });
 
 // Socket Events
 
@@ -29,17 +29,9 @@ $(document).ready(function () {
 		});
 	})
 
-	// var prev_x = 0;
-	// var drag_gesture = Hammer(document.getElementById('slide')).on("drag", function(event) {
-        
- //        var curr_x = event.gesture.deltaX;
- //        console.log(curr_x - prev_x);        
- //        prev_x = curr_x;
- //    }).on("dragend", function(event) {
- //    	prev_x = 0;
- //    });
 	var handleTouchyDrag = function(e, phase, $target, data) {
-		console.log(data.movePoint.x - data.lastMovePoint.x);
+		var diff_x = data.movePoint.x - data.lastMovePoint.x;
+        socket.emit('controller-input', {name: myname, key:diff_x, action:'drag'});
 	}
 	$('#slide').bind('touchy-drag', handleTouchyDrag);
 });

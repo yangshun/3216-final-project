@@ -31,3 +31,7 @@ body {
 	background-color: red;
 	bottom: 0;
 }
+
+#full-size {
+	display: none;
+}

@@ -98,6 +98,7 @@ io.sockets.on('connection', function(socket) {
   socket.on('client-register', function(data) {
     type = data.type;
     room = data.room;
+    name = data.name;
     console.log('A new '+data.type+' has joined Room : '+room);
 
     socket.join('world-'+data.type);
@@ -105,14 +106,22 @@ io.sockets.on('connection', function(socket) {
 
     serverMessage('Joined as '+data.type+' in Room : '+data.room);
     serverNumbers(data.room);
+    if (data.type == 'controller') {
+      io.sockets.in(data.room+'-screen').emit('server-controller-join', {
+        name: data.name
+      });
+    }
   });
 
   socket.on('disconnect', function() {
-    socket.leave('world-'+type);
+    socket.leave('world-'+type)
     socket.leave(room+'-'+type);
 
     serverNumbers(room);
     console.log('A '+type+' has left '+room);
+    io.sockets.in(room+'-screen').emit('server-controller-leave', {
+      name: name
+    });
   });
 
   socket.on('client-name', function(data) {

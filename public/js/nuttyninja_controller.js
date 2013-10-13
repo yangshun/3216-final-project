@@ -29,16 +29,19 @@ $(document).ready(function () {
 		});
 	})
 
-	var prev_x = 0;
-	var drag_gesture = Hammer(document.getElementById('slide')).on("drag", function(event) {
+	// var prev_x = 0;
+	// var drag_gesture = Hammer(document.getElementById('slide')).on("drag", function(event) {
         
-        var curr_x = event.gesture.deltaX;
-        console.log(curr_x - prev_x);        
-        prev_x = curr_x;
-    }).on("dragend", function(event) {
-    	prev_x = 0;
-    });
- 
+ //        var curr_x = event.gesture.deltaX;
+ //        console.log(curr_x - prev_x);        
+ //        prev_x = curr_x;
+ //    }).on("dragend", function(event) {
+ //    	prev_x = 0;
+ //    });
+	var handleTouchyDrag = function(e, phase, $target, data) {
+		console.log(data.movePoint.x - data.lastMovePoint.x);
+	}
+	$('#slide').bind('touchy-drag', handleTouchyDrag);
 });
 
 // HTML5 Device motion

@@ -20,13 +20,7 @@ $(document).ready(function () {
 	$.map($('.controller-button'), function(button) {
 		var keyval = $(button).data('key');
 		console.log(keyval);
-		// $(button).mousedown(function() {
-		// 	socket.emit('controller-input', { name: myname, key: keyval, action: 'keydown' });
-		// });
 
-		// $(button).mouseup(function() {
-		// 	socket.emit('controller-input', { name: myname, key: keyval, action: 'keyup' });
-		// });
 		var triggers = ['vmousedown', 'vmouseup', 'vmouseout'];
 		triggers.map(function(trigger) {
 			$(button).on(trigger, function() {

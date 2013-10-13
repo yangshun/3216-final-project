@@ -34,6 +34,17 @@ $(document).ready(function () {
 			});
 		});
 	})
+
+	var prev_x = 0;
+	var drag_gesture = Hammer(document.getElementById('slide')).on("drag", function(event) {
+        
+        var curr_x = event.gesture.deltaX;
+        console.log(curr_x - prev_x);        
+        prev_x = curr_x;
+    }).on("dragend", function(event) {
+    	prev_x = 0;
+    });
+ 
 });
 
 // HTML5 Device motion
@@ -63,8 +74,6 @@ if (window.DeviceOrientationEvent) {
 } else {
     document.getElementById("doEvent").innerHTML = "Not supported."
 }
-
-
 
 if (window.DeviceMotionEvent) {
 	window.addEventListener('devicemotion', deviceMotionHandler, false);

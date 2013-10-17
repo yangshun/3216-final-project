@@ -16,6 +16,8 @@ socket.on('controller-input', function(data) {
 });
 
 var Shuriken = function(name) {
+	createjs.Container.call(this);
+
 	this.image = new createjs.Bitmap('/images/chrome.png');
 
 	this.image.regX = 225 / 2.0;
@@ -76,9 +78,9 @@ socket.on('controller-input', function(e) {
 
 	if (e.action == 'drag') {
 		var s = _.findWhere(Shurikens, {name: e.name});
-		// s.image.rotation += e.key * 2;
-		s.rotation += e.key * 2;
-		s.x += e.key * 2;
+		s.image.rotation += e.key * 2;
+		// s.rotation += e.key * 2;
+		// s.x += e.key * 2;
 	}
 });
 

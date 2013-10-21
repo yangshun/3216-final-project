@@ -11,7 +11,7 @@ Nutty Ninja
 ### Deployment tools
 
 1. Install [`virtualenv`](http://www.virtualenv.org/en/latest/#installation) for python
-2. `cd deploytool && virtualenv deploy`
+2. `cd deploytools && virtualenv deploy`
 3. `source deploy/bin/activate`
 4. `pip install -r requirement.txt`
 5. Deploy with `fab deploy`

@@ -17,6 +17,8 @@ socket.on('controller-input', function(data) {
 			GameController.triggerEvent(data.name, 'move', {x: speed*Math.cos(data.angle), y: speed*Math.sin(data.angle)});
 			GameController.triggerEvent(data.name, 'turret_angle', {turret_angle: 90 + (180*data.angle)/Math.PI});
 		}
+	} else if (data.key == 'shoot') {
+		GameController.triggerEvent(data.name, 'fire');
 	}
 });
 

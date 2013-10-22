@@ -24,7 +24,7 @@ $(document).ready(function () {
   });
 
   $('#rightContainer').on('click', function() {
-    socket.emit('controller-input', { shoot: 1});
+    socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
   });
 
   // rightJoystick  = new VirtualJoystick({

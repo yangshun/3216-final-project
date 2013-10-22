@@ -38,6 +38,7 @@ var init = function () {
 
 	Ninjas = [];
 	Projectiles = [];
+	Colors = ['orange', 'red', 'blue', 'green'];
 
 	NinjaFac = new NinjaFactory();
 
@@ -60,9 +61,13 @@ var handleTick = function() {
 
 offset_x = 0;
 socket.on('server-controller-join', function(data) {
-	var player = new Player(data.name, "orange");
-	player.x = 200;
-	player.y = 200;
+	if (Colors.length > 0) {
+		var player = new Player(data.name, Colors[0]);
+		player.x = 200;
+		player.y = 200;
+		Colors.splice(0, 1);
+	}
+
 	stage.addChild(player);
 });
 

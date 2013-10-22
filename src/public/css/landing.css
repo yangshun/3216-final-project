@@ -1,26 +1,43 @@
-
-html, body { width: 100%; height: 100%; margin: 0; }
+html, body { width: 100%; height: 100%; margin: 0; min-width: 1200px;}
 .landing-container { position: relative; width: 100%; height: 100%; background-image: url('../images/background.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center top; overflow: hidden;}
 .landing-container div { position: absolute; }
 .logo { width: 600px; height: 277px; top: 15%; left: 50%; margin-left: -280px; background-image: url('../images/logo.png'); background-repeat: no-repeat; background-size: 100%;}
 .katana { 
-	width: 1969px; 
+	width: 1969px;
 	height: 206px; 
-	bottom: 0; 
+	bottom: 0px; 
 	background-image: url('../images/katana.png'); 
 	background-repeat: no-repeat; 
 	background-size: 100%; 
-/*	-transform: translate(0,500px);
-	-ms-transform: translate(0,500px); 
-	-webkit-transform: translate(0,500px);*/
 }
 .katana-right { 
-	transform: translateX(-100px) translateY(300px) rotate(-60deg); 
-	-webkit-transform: translateX(-100px) translateY(300px) rotate(-60deg); 
-	-ms-transform: translateX(-100px) translateY(300px) rotate(-60deg); 
+	right: -400px;
+	transform: translateY(300px) rotate(-60deg); 
+	-webkit-transform: translateY(300px) rotate(-60deg); 
+	-ms-transform: translateY(300px) rotate(-60deg); 
 }
-.katana-left { 
-	transform: rotate(60deg); 
-	-webkit-transform: rotate(60deg); 
-	-ms-transform: rotate(60deg); 
+.katana-left {
+	left: -400px;
+	transform: translateY(300px) rotate(60deg) scale(-1, 1); 
+	-webkit-transform: translateY(300px) rotate(60deg) scale(-1, 1); 
+	-ms-transform: translateY(300px) rotate(60deg) scale(-1, 1); 
+}
+.text-container {
+	bottom: 8%;
+	left: 50%;
+	width: 600px;
+	margin-left: -300px;
+	font-size: 34px;
+	font-family: Chunq, sans-serif;
+	text-align: center;
+   	-webkit-text-stroke-width: 2px;
+   	-webkit-text-stroke-color: black;
+   	letter-spacing: 1px;
+}
+a {
+	color: #fed61b;
+	cursor: pointer;
+}
+a:hover {
+	color: #fff;
 }

@@ -15,20 +15,12 @@ socket.on('controller-input', function(data) {
 });
 
 
-var Ninja = function(socket_id) {
-	this.socket_id = socket_id;
-}
-
-Ninja.prototype.update = function () {
-	// Update view x and y position
-}
-
 var NinjaFactory = function() {
 
 }
 
 NinjaFactory.prototype.getNewNinja = function(socket_id) {
-	newNinja = new Ninja(socket_id);
+	newNinja = new Person();
 	return newNinja;
 }
 
@@ -42,6 +34,9 @@ var init = function () {
 	Projectiles = [];
 
 	NinjaFac = new NinjaFactory();
+
+	gameMap = new Map();
+	gameMap.generateSimpleMap();
 
 	// stage.addChild(Shuriken1);
 	createjs.Ticker.setFPS(60);

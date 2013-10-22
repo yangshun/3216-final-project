@@ -1,4 +1,4 @@
-html, body { width: 100%; height: 100%; margin: 0; min-width: 1200px; background-color: black; }
+html, body { width: 100%; height: 100%; margin: 0; min-width: 1200px; background-color: white; }
 .landing-container { position: relative; width: 100%; height: 100%; background-image: url('../images/background.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center top; overflow: hidden;}
 .landing-container div { position: absolute; }
 .logo { width: 40%; height: 50%; top: 15%; left: 50%; margin-left: -17%; background-image: url('../images/logo.png'); background-repeat: no-repeat; background-size: 100%;}

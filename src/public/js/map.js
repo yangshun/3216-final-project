@@ -46,7 +46,7 @@ Map.prototype.generateSimpleMap = function() {
 		var arr = [];
 		for(var j=0;j<this.width;j++){
 			var t = new Tile(i,j,0);
-
+			console.log(stage);
 			arr.push(t);
 			stage.addChild(t);
 		}

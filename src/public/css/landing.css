@@ -1,7 +1,7 @@
-html, body { width: 100%; height: 100%; margin: 0; min-width: 1200px;}
+html, body { width: 100%; height: 100%; margin: 0; min-width: 1200px; background-color: black; }
 .landing-container { position: relative; width: 100%; height: 100%; background-image: url('../images/background.jpg'); background-size: cover; background-repeat: no-repeat; background-position: center top; overflow: hidden;}
 .landing-container div { position: absolute; }
-.logo { width: 600px; height: 277px; top: 15%; left: 50%; margin-left: -280px; background-image: url('../images/logo.png'); background-repeat: no-repeat; background-size: 100%;}
+.logo { width: 40%; height: 50%; top: 15%; left: 50%; margin-left: -17%; background-image: url('../images/logo.png'); background-repeat: no-repeat; background-size: 100%;}
 .katana { 
 	width: 1969px;
 	height: 206px; 
@@ -23,16 +23,21 @@ html, body { width: 100%; height: 100%; margin: 0; min-width: 1200px;}
 	-ms-transform: translateY(300px) rotate(60deg) scale(-1, 1); 
 }
 .text-container {
-	bottom: 8%;
+	bottom: 10%;
 	left: 50%;
 	width: 600px;
 	margin-left: -300px;
-	font-size: 34px;
+	font-size: 28px;
 	font-family: Chunq, sans-serif;
 	text-align: center;
-   	-webkit-text-stroke-width: 2px;
-   	-webkit-text-stroke-color: black;
+/*   	-webkit-text-stroke-width: 2px;
+   	-webkit-text-stroke-color: black;*/
+   	text-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+   	font-weight: bold;
    	letter-spacing: 1px;
+}
+.text-container h2 {
+	margin: 20px 0; 
 }
 a {
 	color: #fed61b;

@@ -21,6 +21,14 @@ body {
 	top: 0;
 }
 
+.controller-container p {
+	width: 100%;
+	color: white;
+	font-family: sans-serif;
+	font-size: 36px;
+	text-align: center;
+}
+
 .controller-container .sliding-column.swipe {
 	background-color: green;
 }

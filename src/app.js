@@ -31,6 +31,7 @@ if ('development' == app.get('env')) {
 // For routing
 app.post('/choose', routes.choose);
 app.get('/', routes.index);
+app.get('/landing', routes.landing);
 app.get('/screen', routes.screen);
 app.get('/screen/*', routes.screenWithRoom);
 app.get('/controller', routes.controller);

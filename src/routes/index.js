@@ -21,6 +21,10 @@ module.exports = {
     res.render('nuttyninja_screen', { title: 'Prototype-1 Screen' });
   },
 
+  landing : function(req, res) {
+    res.render('landing', { title: 'Nutty Ninja' });
+  },
+
   screenWithRoom : function(req, res) {
     // res.render('screen', { title: 'Prototype-1 Screen' });
     

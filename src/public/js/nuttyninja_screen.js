@@ -1,5 +1,4 @@
 // Socket registration code
-
 var path = window.location.pathname.slice(1).split('/');
 var myroom = 'lobby'; // default
 if (path.length === 2 && path[1] !== '') {
@@ -15,41 +14,34 @@ socket.on('controller-input', function(data) {
 	// console.log(data);
 });
 
-var Shuriken = function(name) {
-	createjs.Container.call(this);
 
-	this.image = new createjs.Bitmap('/images/chrome.png');
-
-	this.image.regX = 225 / 2.0;
-	this.image.regY = 225 / 2.0;
-
-	this.delta = 0;
-
-	this.name = name;
-	this.addChild(this.image);
-	console.log('HAHAH');
+var Ninja = function(socket_id) {
+	this.socket_id = socket_id;
 }
 
-Shuriken.prototype = new createjs.Container();
-Shuriken.prototype.constructor = Shuriken;
-
-Shuriken.prototype.rotateImage = function (r) {
-	this.image.rotation += r;
+Ninja.prototype.update = function () {
+	// Update view x and y position
 }
 
-Shuriken.prototype.update = function() {
-	// Update its rotation
-	this.image.rotation += this.delta;
+var NinjaFactory = function() {
+
 }
+
+NinjaFactory.prototype.getNewNinja = function(socket_id) {
+	newNinja = new Ninja(socket_id);
+	return newNinja;
+}
+
+
 
 var init = function () {
 	var gameCanvas = $('#gameCanvas')[0];
 	stage = new createjs.Stage(gameCanvas);
 
-	Shurikens = [];
-	// Shuriken1 = new Shuriken();
-	// Shuriken1.x = 200;
-	// Shuriken1.y = 200;
+	Ninjas = [];
+	Projectiles = [];
+
+	NinjaFac = new NinjaFactory();
 
 	// stage.addChild(Shuriken1);
 	createjs.Ticker.setFPS(60);
@@ -57,7 +49,8 @@ var init = function () {
 }
 
 var handleTick = function() {
-	Shurikens.map(function(s){s.update();});
+	Ninjas.map(function(s){s.update();});
+	Projectiles.map(function(s){s.update();});
 	stage.update();
 }
 
@@ -91,8 +84,9 @@ socket.on('server-controller-join', function(data) {
 	s.y = 200;
 	offset_x += 225;
 
-	Shurikens.push(s);
-	stage.addChild(s);
+	newNinja = NinjaFactory.getNewNinja(data.id);
+	Ninjas.push(newNinja);
+	stage.addChild(newNinja);
 });
 
 socket.on('server-controller-leave', function(data) {

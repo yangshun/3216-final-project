@@ -17,6 +17,7 @@ socket.emit('client-register', { type: 'controller', room: myroom, name: myname 
 // Socket Events
 
 $(document).ready(function () {
+  console.log(myname);
   leftJoystick  = new VirtualJoystick({
     container : document.getElementById('leftContainer'),
     mouseSupport  : true
@@ -38,6 +39,6 @@ $(document).ready(function () {
     var delta = Math.atan2(y, x);
     var speed = 1;
     if (x == 0 && y == 0) speed = 0;
-    socket.emit('controller-input', { angle: delta, speed: speed });
+    socket.emit('controller-input', { name: myname, key: 'move', angle: delta, speed: speed });
   }, 1000 / 30);
 });

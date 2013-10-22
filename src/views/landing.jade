@@ -1,0 +1,30 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/css/landing.css')
+  div(class="landing-container")
+    div(class="logo")
+    div(class="katana katana-left")
+    div(class="katana katana-right")
+    div(class="text-container")
+      h2
+        a Solo
+      h2
+        a Multiplayer
+  //- p Welcome to #{title}
+  //- p#ping Connecting ...
+  //- form(action = '/choose', method = 'post')
+  //-   fieldset
+  //-     div
+  //-       label Room Name : 
+  //-       input(type = 'textfield', name = 'room', value = '')
+  //-       p (Leave blank to connect to lobby)
+
+  //-     div
+  //-       input(type = 'radio', name = 'type', value = 'screen')
+  //-       label Screen
+  //-       input(type = 'radio', name = 'type', value = 'controller', checked = true)
+  //-       label Controller
+
+  //-     div
+  //-       input(type = 'submit', value='Enter')

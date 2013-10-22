@@ -17,84 +17,27 @@ socket.emit('client-register', { type: 'controller', room: myroom, name: myname 
 // Socket Events
 
 $(document).ready(function () {
-	$.map($('.controller-button'), function(button) {
-		var keyval = $(button).data('key');
-		console.log(keyval);
+  leftJoystick  = new VirtualJoystick({
+    container : document.getElementById('leftContainer'),
+    mouseSupport  : true
+  });
 
-		var triggers = ['vmousedown', 'vmouseup', 'vmouseout'];
-		triggers.map(function(trigger) {
-			$(button).on(trigger, function() {
-				socket.emit('controller-input', { name: myname, key: keyval, action: trigger });
-			});
-		});
-	})
+  $('#rightContainer').on('click', function() {
+    socket.emit('controller-input', { shoot: 1});
+  });
 
-	var handleTouchyDrag = function(e, phase, $target, data) {
-		var diff_x = data.movePoint.x - data.lastMovePoint.x;
-        socket.emit('controller-input', {name: myname, key:diff_x, action:'drag'});
-	}
-	$('#slide').bind('touchy-drag', handleTouchyDrag);
+  // rightJoystick  = new VirtualJoystick({
+  //   container : document.getElementById('rightContainer'),
+  //   mouseSupport  : true
+  // });
+
+  // Move Event
+  setInterval(function() {
+    var x = leftJoystick.deltaX();
+    var y = leftJoystick.deltaY();
+    var delta = Math.atan2(y, x);
+    var speed = 1;
+    if (x == 0 && y == 0) speed = 0;
+    socket.emit('controller-input', { angle: delta, speed: speed });
+  }, 1000 / 30);
 });
-
-// HTML5 Device motion
-
-if (window.DeviceOrientationEvent) {
-	console.log("DeviceOrientation is supported");
-	// Listen for the event and handle DeviceOrientationEvent object
-
-    document.getElementById("doEvent").innerHTML = "DeviceOrientation";
-    // Listen for the deviceorientation event and handle the raw data
-    window.addEventListener('deviceorientation', function(eventData) {
-        // gamma is the left-to-right tilt in degrees, where right is positive
-        var tiltLR = eventData.gamma;
-
-        // beta is the front-to-back tilt in degrees, where front is positive
-        var tiltFB = eventData.beta;
-
-        // alpha is the compass direction the device is facing in degrees
-        var dir = eventData.alpha
-
-        // call our orientation event handler
-        // deviceOrientationHandler(tiltLR, tiltFB, dir);
-        document.getElementById("doTiltLR").innerHTML = Math.round(tiltLR);
-		document.getElementById("doTiltFB").innerHTML = Math.round(tiltFB);
-		document.getElementById("doDirection").innerHTML = Math.round(dir);
-    }, false);
-} else {
-    document.getElementById("doEvent").innerHTML = "Not supported."
-}
-
-if (window.DeviceMotionEvent) {
-	window.addEventListener('devicemotion', deviceMotionHandler, false);
-} else {
-	document.getElementById("dmEvent").innerHTML = "Not supported"
-}
-
-function deviceMotionHandler(eventData) {
-	var info, xyz = "[X, Y, Z]";
-
-	// Grab the acceleration from the results
-	var acceleration = eventData.acceleration;
-	info = xyz.replace("X", acceleration.x);
-	info = info.replace("Y", acceleration.y);
-	info = info.replace("Z", acceleration.z);
-	document.getElementById("moAccel").innerHTML = info;
-
-	// Grab the acceleration including gravity from the results
-	acceleration = eventData.accelerationIncludingGravity;
-	info = xyz.replace("X", acceleration.x);
-	info = info.replace("Y", acceleration.y);
-	info = info.replace("Z", acceleration.z);
-	document.getElementById("moAccelGrav").innerHTML = info;
-
-	// Grab the rotation rate from the results
-	var rotation = eventData.rotationRate;
-	info = xyz.replace("X", rotation.alpha);
-	info = info.replace("Y", rotation.beta);
-	info = info.replace("Z", rotation.gamma);
-	document.getElementById("moRotation").innerHTML = info;
-
-	// Grab the refresh interval from the results
-	info = eventData.interval;
-	document.getElementById("moInterval").innerHTML = info;       
-}

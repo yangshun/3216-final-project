@@ -52,7 +52,6 @@ Map.prototype.generateSimpleMap = function() {
 			} else {
 				// var t = new Tile(i,j,0);
 			}
-
 			arr.push(t);
 			// stage.addChild(t);
 		}

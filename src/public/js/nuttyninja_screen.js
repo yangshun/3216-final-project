@@ -11,7 +11,15 @@ socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 // Socket Events
 socket.on('controller-input', function(data) {
 	// console.log('Controller : '+data.name+', key : ' + data.key + ', action : '+ data.action);
-	// console.log(data);
+	if (data.key == 'move') {
+		if (data.speed == 1) {
+			speed = 2;
+			GameController.triggerEvent(data.name, 'move', {x: speed*Math.cos(data.angle), y: speed*Math.sin(data.angle)});
+			GameController.triggerEvent(data.name, 'turret_angle', {turret_angle: 90 + (180*data.angle)/Math.PI});
+		}
+	} else if (data.key == 'shoot') {
+		GameController.triggerEvent(data.name, 'fire');
+	}
 });
 
 
@@ -24,18 +32,19 @@ NinjaFactory.prototype.getNewNinja = function(socket_id) {
 	return newNinja;
 }
 
-
+var GameController = new Controller(function(){});
 
 var init = function () {
 	var gameCanvas = $('#gameCanvas')[0];
-	stage = new createjs.Stage(gameCanvas);
+    stage = new createjs.Stage(gameCanvas);
 
 	Ninjas = [];
 	Projectiles = [];
+	Colors = ['orange', 'red', 'blue', 'green'];
 
 	NinjaFac = new NinjaFactory();
 
-	gameMap = new Map();
+	// gameMap = new Map();
 	// gameMap.generateSimpleMap();
 
 	// stage.addChild(Shuriken1);
@@ -44,57 +53,27 @@ var init = function () {
 }
 
 var handleTick = function() {
-	// Ninjas.map(function(s){s.update();});
-	// Projectiles.map(function(s){s.update();});
+	Ninjas.map(function(s){s.update();});
+	Projectiles.map(function(s){s.update();});
+
 	stage.update();
 }
 
-var delta = 30;
-socket.on('controller-input', function(e) {
-	// if (e.action == 'vmousedown') {
-	// 	if (e.key == 'right') {
-	// 		Shuriken1.delta = delta;
-	// 	}
-	// 	if (e.key == 'left') {
-	// 		Shuriken1.delta = -delta;
-	// 	}
-	// }
-
-	// if (e.action == 'vmouseup' || e.action == 'vmouseout') {
-	// 	Shuriken1.delta = 0;
-	// }
-
-	if (e.action == 'drag') {
-		var s = _.findWhere(Shurikens, {name: e.name});
-		s.image.rotation += e.key * 2;
-		// s.rotation += e.key * 2;
-		// s.x += e.key * 2;
-	}
-});
-
 offset_x = 0;
 socket.on('server-controller-join', function(data) {
-	var s = new Shuriken(data.name);
-	s.x = 200 + offset_x;
-	s.y = 200;
-	offset_x += 225;
+	if (Colors.length > 0) {
+		var player = new Player(data.name, Colors[0]);
+		player.x = 200;
+		player.y = 200;
+		Colors.splice(0, 1);
+	}
 
-	newNinja = NinjaFactory.getNewNinja(data.id);
-	Ninjas.push(newNinja);
-	stage.addChild(newNinja);
+	stage.addChild(player);
 });
 
 socket.on('server-controller-leave', function(data) {
 	console.log('LEAVER!!!');
 	console.log(data.name);
-	Shurikens = _.reject(Shurikens, function(s) {
-		if(s.name == data.name) {
-			console.log('quit');
-			console.log(stage.removeChild(s));
-			return true;
-		}
-		return false;
-	});
 });
 
 $(function() {init();});

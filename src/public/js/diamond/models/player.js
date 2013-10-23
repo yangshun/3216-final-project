@@ -2,7 +2,6 @@ var Player = function(identifier, colour) {
     this.identifier = identifier;
     this.colour = colour;
     this.initialize(colour); 
-    createjs.Container.call(this);
 }
 Player.prototype = new createjs.Container();
 
@@ -32,6 +31,10 @@ Player.prototype.registerEvents = function() {
         object.x += payload.x;
         object.y += payload.y;
     });
+
+    GameController.registerEvent(this.identifier, 'turret_angle', function(payload) {
+        object.turret.rotation = payload.turret_angle;
+    });    
 
     GameController.registerEvent(this.identifier, 'rotate', function(payload) {
         object.turret.rotation += payload.rotation;

@@ -1,20 +1,19 @@
 TILE_WIDTH = 32;
 TILE_HEIGHT = 32;
 
-var Tile = function(x, y, r) {
-	createjs.Container.call(this);
+var Tile = function(x, y, r, c) {
+	createjs.Shape.call(this);
 	this.x = x * TILE_WIDTH;
 	this.y = y * TILE_HEIGHT;
 	this.tileX = this.x;
 	this.tileY = this.y;
 	this.rotation = r || 0; // Rotation in degrees
+	this.color = c || "#ffffff";
 
-	var shape = new createjs.Shape();
-	this.drawing = shape.graphics.beginFill("#ffffff").drawRect(0, 0, TILE_WIDTH, TILE_HEIGHT);
-	this.addChild(shape);
+	this.graphics.beginFill(this.color).drawRect(0, 0, TILE_WIDTH, TILE_HEIGHT);
 }
 
-Tile.prototype = new createjs.Container();
+Tile.prototype = new createjs.Shape();
 Tile.prototype.constructor = Tile;
 
 var ObstacleTile = function(x, y, r) {
@@ -29,6 +28,9 @@ var Map = function() {
 	this.width = 20; // # of tiles
 
 	this.tileMap = [];
+	this.bgpath = '/images/game-background.jpg';
+	this.background = new createjs.Bitmap(this.bgpath);
+	stage.addChild(this.background);
 }
 
 Map.prototype.clearMap = function() {
@@ -45,10 +47,14 @@ Map.prototype.generateSimpleMap = function() {
 	for(var i=0;i<this.height;i++){
 		var arr = [];
 		for(var j=0;j<this.width;j++){
-			var t = new Tile(i,j,0);
+			if(i==0 || j==0) {
+				// var t = new Tile(i,j,0,'#000000');
+			} else {
+				// var t = new Tile(i,j,0);
+			}
 
 			arr.push(t);
-			stage.addChild(t);
+			// stage.addChild(t);
 		}
 		this.tileMap.push(arr);
 	}

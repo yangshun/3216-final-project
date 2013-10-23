@@ -36,7 +36,7 @@ var init = function () {
 	NinjaFac = new NinjaFactory();
 
 	gameMap = new Map();
-	gameMap.generateSimpleMap();
+	// gameMap.generateSimpleMap();
 
 	// stage.addChild(Shuriken1);
 	createjs.Ticker.setFPS(60);
@@ -44,8 +44,8 @@ var init = function () {
 }
 
 var handleTick = function() {
-	Ninjas.map(function(s){s.update();});
-	Projectiles.map(function(s){s.update();});
+	// Ninjas.map(function(s){s.update();});
+	// Projectiles.map(function(s){s.update();});
 	stage.update();
 }
 

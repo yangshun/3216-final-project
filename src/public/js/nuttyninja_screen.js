@@ -10,65 +10,21 @@ socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
 // Socket Events
 socket.on('controller-input', function(data) {
-	// console.log('Controller : '+data.name+', key : ' + data.key + ', action : '+ data.action);
-	if (data.key == 'move') {
-		if (data.speed == 1) {
-			speed = 10;
-			GameController.triggerEvent(data.name, 'move', {x: speed*Math.cos(data.angle), y: speed*Math.sin(data.angle)});
-			GameController.triggerEvent(data.name, 'turret_angle', {turret_angle: 90 + (180*data.angle)/Math.PI});
-		}
-	} else if (data.key == 'shoot') {
-		GameController.triggerEvent(data.name, 'fire');
+	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
+		return ninja.identifier === data.name;
+	});
+
+	if (ninjaToHandle != null) {
+		ninjaToHandle.handleInput(data);
 	}
 });
 
-
-var NinjaFactory = function() {
-
-}
-
-NinjaFactory.prototype.getNewNinja = function(socket_id) {
-	newNinja = new Person();
-	return newNinja;
-}
-
-var GameController = new Controller(function(){});
-
-var init = function () {
-	var gameCanvas = $('#gameCanvas')[0];
-    stage = new createjs.Stage(gameCanvas);
-
-	Ninjas = [];
-	Projectiles = [];
-	Colors = ['orange', 'red', 'blue', 'green'];
-
-	NinjaFac = new NinjaFactory();
-
-	// gameMap = new Map();
-	// gameMap.generateSimpleMap();
-
-	// stage.addChild(Shuriken1);
-	createjs.Ticker.setFPS(60);
-	createjs.Ticker.addEventListener('tick', handleTick);
-}
-
-var handleTick = function() {
-	Ninjas.map(function(s){s.update();});
-	Projectiles.map(function(s){s.update();});
-
-	stage.update();
-}
-
-offset_x = 0;
 socket.on('server-controller-join', function(data) {
-	if (Colors.length > 0) {
-		var player = new Player(data.name, Colors[0]);
-		player.x = 200;
-		player.y = 200;
-		Colors.splice(0, 1);
+	if (game.addNinja(data.name)) {
+		console.log("New ninja added " + data.name);
+	} else {
+		console.log("Cannot add more ninja");
 	}
-
-	stage.addChild(player);
 });
 
 socket.on('server-controller-leave', function(data) {
@@ -76,4 +32,26 @@ socket.on('server-controller-leave', function(data) {
 	console.log(data.name);
 });
 
-$(function() {init();});
+var init = function () {
+	var gameCanvas = $('#gameCanvas')[0];
+  var stage = new createjs.Stage(gameCanvas);
+
+	game = new Game();
+	game.stage = stage;
+
+	createjs.Ticker.setFPS(60);
+	createjs.Ticker.addEventListener('tick', handleTick);
+}
+
+var handleTick = function() {
+	game.box.Step(1.0/60.0, 10.0, 10.0);
+
+	game.ninjas.map(function(s){s.tick();});
+	game.shurikens.map(function(s){s.tick();});
+
+	game.stage.update();
+}
+
+$(function() {
+	init();
+});

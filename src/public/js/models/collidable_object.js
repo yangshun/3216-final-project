@@ -1,7 +1,7 @@
 var CollidableObject = function(body, bitmapView) {
   GameObject.call(this);
   this.body = body;
-  this.body.SetUserData(this); // Set reference of this to body, useful in colison callback
+  // this.body.SetUserData(this); // Set reference of this to body, useful in colison callback
   this.view = bitmapView;
 }
 

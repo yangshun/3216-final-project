@@ -34,10 +34,13 @@ socket.on('server-controller-leave', function(data) {
 
 var init = function () {
 	var gameCanvas = $('#gameCanvas')[0];
-  var stage = new createjs.Stage(gameCanvas);
+	var stage = new createjs.Stage(gameCanvas);
 
 	game = new Game();
+	game.canvas = gameCanvas;
 	game.stage = stage;
+	game.map = new Map();
+	game.map.generateSimpleMap();
 
 	createjs.Ticker.setFPS(60);
 	createjs.Ticker.addEventListener('tick', handleTick);
@@ -53,5 +56,6 @@ var handleTick = function() {
 }
 
 $(function() {
+	console.log('where');
 	init();
 });

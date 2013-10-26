@@ -1,13 +1,13 @@
 var ShurikenGun = function(ninja) {
   GameObject.call(this);
   this.ninja = ninja;
-  this.angleRange = 0.3; // In radians
+  this.angleRange = 0.05; // In radians
 
   this.shuriken = {
   	color : this.ninja.color,
   	ninja : this.ninja,
   	speed : 300,
-  	size  : 10,
+  	size  : 5,
   	damage: 1,
   	duration: 0,
   	density : 0.1

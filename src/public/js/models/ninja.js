@@ -3,7 +3,7 @@ var Ninja = function(identifier, color) {
   ControllableObject.call(this, identifier);
   this.hitPoint = null;
   this.color = color;
-  this.size = 0;
+  this.size = NINJA_RADIUS;
   this.speed = 100.0;
   this.angle = 0.0;
 

@@ -5,7 +5,7 @@ var ShurikenGun = function(ninja) {
   this.shuriken = {
   	color : this.ninja.color,
   	ninja : this.ninja,
-  	speed : 110,
+  	speed : 300 * 5,
   	size  : 10,
   	damage: 1,
   	duration: 0
@@ -25,17 +25,14 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 
 	// Make the easeljs view
 	var sView = new createjs.Shape();
-	// sView.x = s.ninja.x + Math.cos(angle) * s.ninja.size;
-	// sView.y = s.ninja.y + Math.sin(angle) * s.ninja.size;
-	sView.x = s.ninja.view.x;
-	sView.y = s.ninja.view.y;
+	sView.x = s.ninja.view.x + Math.cos(angle) * (s.ninja.size + 30);
+	sView.y = s.ninja.view.y + Math.sin(angle) * (s.ninja.size + 30);
 	sView.graphics.beginFill(s.color).drawCircle(0,0, s.size)
 
 	// Make the Box2D body
 	var fixture = new b2FixtureDef;
-	fixture.set_density(1);
+	fixture.set_density(0.1);
 	fixture.set_restitution(0);
-	fixture.set_friction(1.0);
 	  
 	var shape = new b2CircleShape();
 	shape.set_m_radius(s.size / SCALE);
@@ -53,4 +50,6 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 
 	game.shurikens.push(s);
 	game.stage.addChild(s.view);
+
+  s.shoot();
 }

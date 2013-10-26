@@ -119,10 +119,8 @@ RoundObstacleTile.prototype.initBody = function() {
 }
 
 RoundObstacleTile.prototype.collide = function(other) {
-	console.log("Collision with ",other);
 	if (other instanceof Shuriken) {
 		this.hitpoint -= other.damage;
-		console.log(this.hitpoint);
 	}
 
 	if (this.hitpoint <= 0) {

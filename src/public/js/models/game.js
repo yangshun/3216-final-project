@@ -3,7 +3,7 @@ var Game = function() {
   this.ninjas = [];
   this.shurikens = [];
   this.stage = null;
-  this.colors = ['orange', 'red', 'blue', 'green'];
+  this.colors = ['orange', 'red'];
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -83,6 +83,9 @@ Game.prototype.removeNinja = function(s) {
   this.stage.removeChild(s.view);
   this.ninjas = _.without(this.ninjas, s);
   this.box.DestroyBody(s.body);
+  this.colors.push(s.color);
+  console.log("adding " + s.color);
+  console.log(this.colors);
 }
 
 Game.prototype.addShuriken = function(s) {

@@ -9,6 +9,23 @@ var Game = function() {
   this.colors = ['orange', 'red', 'blue', 'green'];
 
   this.box = new b2World(new b2Vec2(0, 0), true);
+  var listener = new b2ContactListener();
+
+  Box2D.customizeVTable(listener, [{
+      original: Box2D.b2ContactListener.prototype.BeginContact,
+      replacement:
+          function (thsPtr, contactPtr) {
+            console.log('colliding');
+              var contact = Box2D.wrapPointer( contactPtr, b2Contact );
+              var bodyA = contact.GetFixtureA().GetBody();
+              var bodyB = contact.GetFixtureB().GetBody();
+
+              // now do what you wish with the fixtures
+              console.log(bodyA.actor);
+              console.log(bodyB.actor);
+          }
+  }]);
+  this.box.SetContactListener(listener);
 }
 
 Game.prototype.addNinja = function(identifer) {
@@ -43,6 +60,7 @@ Game.prototype.addNinja = function(identifer) {
   view.graphics.beginFill(color).drawCircle(0, 0, NINJA_RADIUS);
 
   ninja.body = body;
+  ninja.body.actor = ninja;
   ninja.view = view;
 
   this.ninjas.push(ninja);

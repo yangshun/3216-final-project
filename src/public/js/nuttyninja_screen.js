@@ -37,7 +37,10 @@ socket.on('server-controller-join', controller_join);
 socket.on('server-controller-leave', controller_leave);
 
 var init = function () {
-	var gameCanvas = $('#gameCanvas')[0];
+	var gameCanvas = document.getElementById('gameCanvas');
+	gameCanvas.width = window.innerWidth;
+	gameCanvas.height = window.innerHeight;
+
 	var stage = new createjs.Stage(gameCanvas);
 
 	game = new Game();
@@ -60,6 +63,12 @@ var handleTick = function() {
 }
 
 $(function() {
-	console.log('where');
 	init();
 });
+
+window.addEventListener("resize", OnResizeCalled, false);
+
+function OnResizeCalled() {
+    gameCanvas.style.width = window.innerWidth + 'px';
+    gameCanvas.style.height = window.innerHeight + 'px';
+}

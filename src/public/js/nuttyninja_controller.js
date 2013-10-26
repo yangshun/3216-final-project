@@ -37,8 +37,10 @@ $(document).ready(function () {
     var x = leftJoystick.deltaX();
     var y = leftJoystick.deltaY();
     var delta = Math.atan2(y, x);
-    var speed = 1;
-    if (x == 0 && y == 0) speed = 0;
-    socket.emit('controller-input', { name: myname, key: 'move', angle: delta, speed: speed });
+
+    var key = 'move';
+    if (x == 0 && y == 0) key = 'stopmove';
+
+    socket.emit('controller-input', { name: myname, key: key, angle: delta });
   }, 1000 / 30);
 });

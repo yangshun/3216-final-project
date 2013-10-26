@@ -4,7 +4,7 @@ var Ninja = function(identifier, color) {
   this.hitPoint = null;
   this.color = color;
   this.size = 0;
-  this.speed = 0;
+  this.speed = 100.0;
   this.effects = [];
   this.ShurikenGun = new ShurikenGun(this);
 }
@@ -12,7 +12,7 @@ var Ninja = function(identifier, color) {
 Ninja.prototype = new ControllableObject();
 Ninja.prototype.constructor = Ninja;
 
-Ninja.prototype.move = function() {
+Ninja.prototype.move = function(angel, speed) {
 }
 
 Ninja.prototype.shoot = function() {
@@ -28,13 +28,11 @@ Ninja.prototype.collide = function(anotherObject) {
 // Override handleInput function
 Ninja.prototype.handleInput = function(input) {
   if (input.key === 'move') {
-    var speed = 100.0;
-    if (input.speed === 0) speed = 0;
-
-    var vXnew = speed * Math.cos(input.angle);
-    var vYnew = speed * Math.sin(input.angle);
-
+    var vXnew = this.speed * Math.cos(input.angle);
+    var vYnew = this.speed * Math.sin(input.angle);
     this.changeLinearVelocity(new Vector2D(vXnew, vYnew));
+  } else if (input.key === 'stopmove') {
+    this.changeLinearVelocity(new Vector2D(0, 0));
   }
 }
 
@@ -43,8 +41,8 @@ Ninja.prototype.changeLinearVelocity = function(v) {
     var vYold = this.body.GetLinearVelocity().get_y();
 
     var mass = this.body.GetMass();
-    var deltaPx = mass * (v.x - vXold);
-    var deltaPy = mass * (v.y - vYold);
+    var deltaPx = mass * (v.x / SCALE - vXold);
+    var deltaPy = mass * (v.y / SCALE - vYold);
 
     this.body.ApplyLinearImpulse(new b2Vec2(deltaPx, deltaPy), this.body.GetPosition());
 }

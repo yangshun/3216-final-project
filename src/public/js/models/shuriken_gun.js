@@ -5,7 +5,7 @@ var ShurikenGun = function(ninja) {
   this.shuriken = {
   	color : this.ninja.color,
   	ninja : this.ninja,
-  	speed : 300 * 5,
+  	speed : 300,
   	size  : 10,
   	damage: 1,
   	duration: 0

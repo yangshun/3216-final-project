@@ -78,6 +78,13 @@ $(function() {
 window.addEventListener("resize", OnResizeCalled, false);
 
 function OnResizeCalled() {
-    gameCanvas.style.width = window.innerWidth + 'px';
-    gameCanvas.style.height = window.innerHeight + 'px';
+	var ratio = game.canvas.width / game.canvas.height;
+	if (window.innerHeight * ratio > window.innerWidth) {
+		game.canvas.style.width = window.innerWidth +'px';
+		game.canvas.style.height = (window.innerWidth / ratio) +'px';
+	} else {
+
+		game.canvas.style.height = window.innerHeight +'px';
+		game.canvas.style.width = (window.innerHeight * ratio) +'px';
+	}
 }

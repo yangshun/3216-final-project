@@ -15,6 +15,8 @@ Shuriken.prototype = new CollidableObject();
 Shuriken.prototype.constructor = Shuriken;
 
 Shuriken.prototype.destroy = function() {
+    game.removeShuriken(this);
+    delete this;
 }
 
 Shuriken.prototype.shoot = function() {
@@ -35,14 +37,15 @@ Shuriken.prototype.changeLinearVelocity = function(v) {
 
 // Override collision callback
 Shuriken.prototype.collide = function(anotherObject) {
+  // Our shuriken are like paper, and it goes away with with any collision
+  this.dead = true;
 }
 
 Shuriken.prototype.tick = function() {
 	this.view.x = this.body.GetPosition().get_x() * SCALE;
 	this.view.y = this.body.GetPosition().get_y() * SCALE;
   
-  if (outside(this.view.x, this.view.y)) {
-    game.removeShuriken(this);
-    delete this;
+  if (this.dead || outside(this.view.x, this.view.y)) {
+    this.destroy();
   }
 }

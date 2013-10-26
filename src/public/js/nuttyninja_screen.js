@@ -8,8 +8,7 @@ if (path.length === 2 && path[1] !== '') {
 
 socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
-// Socket Events
-socket.on('controller-input', function(data) {
+function controller_input(data) {
 	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
 		return ninja.identifier === data.name;
 	});
@@ -17,27 +16,35 @@ socket.on('controller-input', function(data) {
 	if (ninjaToHandle != null) {
 		ninjaToHandle.handleInput(data);
 	}
-});
+}
 
-socket.on('server-controller-join', function(data) {
+function controller_join(data) {
 	if (game.addNinja(data.name)) {
 		console.log("New ninja added " + data.name);
 	} else {
 		console.log("Cannot add more ninja");
 	}
-});
+}
 
-socket.on('server-controller-leave', function(data) {
+function controller_leave(data) {
 	console.log('LEAVER!!!');
 	console.log(data.name);
-});
+}
+
+// Socket Events
+socket.on('controller-input', controller_input);
+socket.on('server-controller-join', controller_join);
+socket.on('server-controller-leave', controller_leave);
 
 var init = function () {
 	var gameCanvas = $('#gameCanvas')[0];
-  var stage = new createjs.Stage(gameCanvas);
+	var stage = new createjs.Stage(gameCanvas);
 
 	game = new Game();
+	game.canvas = gameCanvas;
 	game.stage = stage;
+	game.map = new Map();
+	game.map.generateSimpleMap();
 
 	createjs.Ticker.setFPS(60);
 	createjs.Ticker.addEventListener('tick', handleTick);
@@ -53,5 +60,6 @@ var handleTick = function() {
 }
 
 $(function() {
+	console.log('where');
 	init();
 });

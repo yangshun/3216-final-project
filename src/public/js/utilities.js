@@ -6,7 +6,9 @@ var   b2Vec2 = Box2D.b2Vec2
  , b2World = Box2D.b2World
  , b2MassData = Box2D.b2MassData
  , b2PolygonShape = Box2D.b2PolygonShape
- , b2CircleShape = Box2D.b2CircleShape;
+ , b2CircleShape = Box2D.b2CircleShape
+ , b2ContactListener = Box2D.b2ContactListener
+ , b2Contact = Box2D.b2Contact;
 
 NINJA_RADIUS = 20.0
 SCALE = 30.0
@@ -25,4 +27,8 @@ var Vector2D = function(x, y) {
 Vector2D.prototype.tob2Vec2 = function(scale) {
   if (scale == null) scale = 1.0;
   return new b2Vec2(this.x / scale, this.y / scale);
+}
+
+function toDegree(radian) {
+  return radian / Math.PI * 180.0;
 }

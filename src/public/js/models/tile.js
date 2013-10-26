@@ -61,6 +61,11 @@ ObstacleTile.prototype.initBody = function() {
 	body.CreateFixture(fixture);
 
 	this.body = body;
+	this.body.actor = this;
+}
+
+ObstacleTile.prototype.collide = function(anotherObject) {
+
 }
 
 var RoundObstacleTile = function(x, y, r, c) {
@@ -108,4 +113,5 @@ RoundObstacleTile.prototype.initBody = function() {
 	body.CreateFixture(fixture);
 
 	this.body = body;
+	this.body.actor = this;
 }

@@ -25,17 +25,18 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 
 	var sign = Math.random() > 0.5 ? 1.0 : -1.0;
 	s.angle = angle + sign * Math.random() * this.angleRange;
-
-	// Make the easeljs view
-	var sView = new createjs.Shape();
-	sView.x = s.ninja.view.x + Math.cos(angle) * (s.ninja.size + 30);
-	sView.y = s.ninja.view.y + Math.sin(angle) * (s.ninja.size + 30);
-	sView.graphics.beginFill(s.color).drawCircle(0,0, s.size)
   
-  // var sView = new createjs.Bitmap("/images/shuriken-4-point-star.png");
-  // sView.x = s.ninja.view.x + Math.cos(angle) * (s.ninja.size + 30);
-  // sView.y = s.ninja.view.y + Math.sin(angle) * (s.ninja.size + 30);
-  // sView.graphics.beginFill(s.color).drawCircle(0,0, s.size)
+  var centerVector = new Vector2D(s.ninja.view.x + Math.cos(angle) * (s.ninja.size + 30), 
+                                  s.ninja.view.y + Math.sin(angle) * (s.ninja.size + 30));
+
+
+  var sView = new createjs.Bitmap("/images/shuriken-4-point-star.png");
+  sView.scaleX = s.size / (344 / 2);
+  sView.scaleY = s.size / (344 / 2);
+  sView.regX = 344 / 2;
+  sView.regY = 344 / 2;
+  sView.x = centerVector.x;
+  sView.y = centerVector.y;
 
 	// Make the Box2D body
 	var fixture = new b2FixtureDef;
@@ -48,13 +49,13 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 
 	var bodyDef = new b2BodyDef;
 	bodyDef.set_type(Box2D.b2_dynamicBody);
-	bodyDef.set_position(new Vector2D(sView.x, sView.y).tob2Vec2(SCALE));
+	bodyDef.set_position(centerVector.tob2Vec2(SCALE));
 
 	var body = game.box.CreateBody(bodyDef);
 	body.CreateFixture(fixture);	
 
 	s.body = body;
-    s.body.actor = s;
+  s.body.actor = s;
 	s.view = sView;
 
   game.addShuriken(s);

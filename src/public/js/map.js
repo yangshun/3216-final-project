@@ -26,7 +26,7 @@ Map.prototype.generateSimpleMap = function() {
 				var t = new ObstacleTile(j,i,0,'#000000');
 				t.initShape();
 				t.initBody();
-			} else if (Math.random() < 0.1) {
+			} else if (Math.random() < 0.05) {
 				var t = new RoundObstacleTile(j,i,0,'#111111');
 				t.initShape();
 				t.initBody();

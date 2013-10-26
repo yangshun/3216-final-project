@@ -9,7 +9,7 @@ var Game = function() {
   var listener = new b2ContactListener();
 
   Box2D.customizeVTable(listener, [{
-      original: Box2D.b2ContactListener.prototype.BeginContact,
+      original: Box2D.b2ContactListener.prototype.PostSolve,
       replacement:
           function (thsPtr, contactPtr) {
               var contact = Box2D.wrapPointer( contactPtr, b2Contact );
@@ -49,10 +49,21 @@ Game.prototype.addNinja = function(identifer) {
   var ninja = new Ninja(identifer, color);
   ninja.size = NINJA_RADIUS;
 
-  var view = new createjs.Shape();
+  // Create easeljs view
+  var view = new createjs.Container();
   view.x = position.x;
   view.y = position.y;
-  view.graphics.beginFill(color).drawCircle(0, 0, NINJA_RADIUS);
+
+  var shape_body = new createjs.Shape();
+  shape_body.name = "body";
+  shape_body.graphics.beginFill(color).drawCircle(0, 0, NINJA_RADIUS);
+  view.addChild(shape_body);
+
+  var shape_hitpoint = new createjs.Shape();
+  shape_hitpoint.name = "hitpoint";
+
+  shape_hitpoint.graphics.beginFill("green").drawRect(-(NINJA_RADIUS*1.5), -NINJA_RADIUS-20, NINJA_RADIUS*3, 10);
+  view.addChild(shape_hitpoint);
 
   ninja.body = body;
   ninja.body.actor = ninja;
@@ -62,6 +73,12 @@ Game.prototype.addNinja = function(identifer) {
   this.stage.addChild(ninja.view);
 
   return true;
+}
+
+Game.prototype.removeNinja = function(s) {
+  this.stage.removeChild(s.view);
+  this.ninjas = _.without(this.ninjas, s);
+  this.box.DestroyBody(s.body);
 }
 
 Game.prototype.addShuriken = function(s) {

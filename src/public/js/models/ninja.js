@@ -1,7 +1,8 @@
 // TODO: pass parameters to constructor
 var Ninja = function(identifier, color) {
   ControllableObject.call(this, identifier);
-  this.hitPoint = null;
+  this.hitPoint = 10;
+  this.maxHitPoint = 10;
   this.color = color;
   this.size = NINJA_RADIUS;
   this.speed = 100.0;
@@ -22,10 +23,31 @@ Ninja.prototype.shoot = function() {
 }
 
 Ninja.prototype.destroy = function() {
+  game.removeNinja(this);
+  delete this;
 }
 
 // Override collision callback
 Ninja.prototype.collide = function(anotherObject) {
+  if (anotherObject instanceof Shuriken) {
+    this.hitPoint -= anotherObject.damage;
+    if (this.hitPoint <= 0) {
+      this.dead = true;
+    }
+
+    this.updateHitPointBar();
+  }
+}
+
+Ninja.prototype.updateHitPointBar = function() {
+  var hpBar = this.view.getChildByName("hitpoint");
+  var ratio = this.hitPoint / this.maxHitPoint;
+
+  var width = 3*NINJA_RADIUS*ratio/2;
+  width -= 3*NINJA_RADIUS/2;
+  
+  hpBar.scaleX = ratio;
+  hpBar.x = width;
 }
 
 // Override handleInput function
@@ -55,7 +77,10 @@ Ninja.prototype.changeLinearVelocity = function(v) {
 
 // Override tick function
 Ninja.prototype.tick = function() {
-  this.view.x = this.body.GetPosition().get_x() * SCALE - NINJA_RADIUS;
-  this.view.y = this.body.GetPosition().get_y() * SCALE - NINJA_RADIUS;
-  this.view.rotation = toDegree(this.angle)
+  this.view.x = this.body.GetPosition().get_x() * SCALE;
+  this.view.y = this.body.GetPosition().get_y() * SCALE;
+
+  if (this.hitPoint <= 0 || this.dead) {
+    this.destroy();
+  }
 }

@@ -49,6 +49,7 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 	body.CreateFixture(fixture);	
 
 	s.body = body;
+    s.body.actor = s;
 	s.view = sView;
 
   game.addShuriken(s);

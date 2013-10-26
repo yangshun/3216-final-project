@@ -6,7 +6,9 @@ var   b2Vec2 = Box2D.b2Vec2
  , b2World = Box2D.b2World
  , b2MassData = Box2D.b2MassData
  , b2PolygonShape = Box2D.b2PolygonShape
- , b2CircleShape = Box2D.b2CircleShape;
+ , b2CircleShape = Box2D.b2CircleShape
+ , b2ContactListener = Box2D.b2ContactListener
+ , b2Contact = Box2D.b2Contact;
 
 NINJA_RADIUS = 20.0
 SCALE = 30.0

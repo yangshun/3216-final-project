@@ -6,11 +6,44 @@ block content
   p#ping Connecting ...
   p#connected Total Clients : 0
 
-  script(type='text/javascript', src='/js/diamond/models/player.js')
-  script(type='text/javascript', src='/js/diamond/models/projectile.js')
-  script(type='text/javascript', src='/js/diamond/controller.js')
-  script(type='text/javascript', src='/js/nuttyninja_screen.js')
+  script(type='text/javascript', src='/vendor/box2d.js')
 
+  script(type='text/javascript', src='/js/utilities.js')
+  script(type='text/javascript', src='/js/models/game_object.js')
+  script(type='text/javascript', src='/js/models/game.js')
+  script(type='text/javascript', src='/js/models/collidable_object.js')
+  script(type='text/javascript', src='/js/models/controllable_object.js')
+  script(type='text/javascript', src='/js/models/shuriken.js')
+  script(type='text/javascript', src='/js/models/shuriken_gun.js')
+  script(type='text/javascript', src='/js/models/ninja.js')
+  script(type='text/javascript', src='/js/models/tile.js')
+  script(type='text/javascript', src='/js/nuttyninja_screen.js')
   script(type='text/javascript', src='/js/map.js')
-  canvas(id='gameCanvas', height='1000', width='1000')
+  script(type='text/javascript', src='/js/stats.min.js')
+
   block game
+
+  script
+    var stats = new Stats();
+    stats.setMode(1); // 0: fps, 1: ms
+
+    // Align top-left
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.top = '0px';
+
+    document.body.appendChild( stats.domElement );
+
+    setInterval( function () {
+
+        stats.begin();
+
+        // your code goes here
+
+        stats.end();
+
+    }, 1000 / 60 );
+
+  canvas(id='gameCanvas', height='420', width='720')
+
+  div(id='fps_counter')

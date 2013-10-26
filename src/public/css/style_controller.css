@@ -45,7 +45,7 @@ body {
 }
 
 .joystick {
-	width			: 150px;
+	width : 160px;
 	height: 100%;
 	overflow	: hidden;
 	display: inline-block;

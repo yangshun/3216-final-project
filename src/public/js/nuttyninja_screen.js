@@ -8,72 +8,85 @@ if (path.length === 2 && path[1] !== '') {
 
 socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
-// Socket Events
-socket.on('controller-input', function(data) {
-	// console.log('Controller : '+data.name+', key : ' + data.key + ', action : '+ data.action);
-	if (data.key == 'move') {
-		if (data.speed == 1) {
-			speed = 10;
-			GameController.triggerEvent(data.name, 'move', {x: speed*Math.cos(data.angle), y: speed*Math.sin(data.angle)});
-			GameController.triggerEvent(data.name, 'turret_angle', {turret_angle: 90 + (180*data.angle)/Math.PI});
-		}
-	} else if (data.key == 'shoot') {
-		GameController.triggerEvent(data.name, 'fire');
+function controller_input(data) {
+	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
+		return ninja.identifier === data.name;
+	});
+
+	if (ninjaToHandle != null) {
+		ninjaToHandle.handleInput(data);
 	}
-});
-
-
-var NinjaFactory = function() {
-
 }
 
-NinjaFactory.prototype.getNewNinja = function(socket_id) {
-	newNinja = new Person();
-	return newNinja;
+function controller_join(data) {
+	if (game.addNinja(data.name)) {
+		console.log("New ninja added " + data.name);
+	} else {
+		console.log("Cannot add more ninja");
+	}
 }
 
-var GameController = new Controller(function(){});
+function controller_leave(data) {
+	console.log('LEAVER!!!');
+	console.log(data.name);
+
+	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
+		return ninja.identifier === data.name;
+	});
+
+	if (ninjaToHandle != null) {
+		ninjaToHandle.dead = true;	
+	}
+}
+
+// Socket Events
+socket.on('controller-input', controller_input);
+socket.on('server-controller-join', controller_join);
+socket.on('server-controller-leave', controller_leave);
 
 var init = function () {
-	var gameCanvas = $('#gameCanvas')[0];
-    stage = new createjs.Stage(gameCanvas);
+	var gameCanvas = document.getElementById('gameCanvas');
+	gameCanvas.width = window.innerWidth;
+	gameCanvas.height = window.innerHeight;
 
-	Ninjas = [];
-	Projectiles = [];
-	Colors = ['orange', 'red', 'blue', 'green'];
+	var stage = new createjs.Stage(gameCanvas);
 
-	NinjaFac = new NinjaFactory();
+	game = new Game();
+	game.canvas = gameCanvas;
+	game.stage = stage;
+	game.map = new Map();
+	game.map.generateSimpleMap();
 
-	// gameMap = new Map();
-	// gameMap.generateSimpleMap();
-
-	// stage.addChild(Shuriken1);
 	createjs.Ticker.setFPS(60);
 	createjs.Ticker.addEventListener('tick', handleTick);
 }
 
-var handleTick = function() {
-	Ninjas.map(function(s){s.update();});
-	Projectiles.map(function(s){s.update();});
+var handleTick = function(ticker_data) {
+	var timestep = ticker_data.delta / 1000.0;
+	game.box.Step(timestep, 8.0, 3.0);
+	game.box.ClearForces();
 
-	stage.update();
+	game.ninjas.map(function(s){s.tick();});
+	game.shurikens.map(function(s){s.tick();});
+	game.map.tick();
+
+	game.stage.update();
 }
 
-offset_x = 0;
-socket.on('server-controller-join', function(data) {
-	if (Colors.length > 0) {
-		var player = new Player(data.name, Colors[0]);
-		player.x = 200;
-		player.y = 200;
-		Colors.splice(0, 1);
+$(function() {
+	init();
+});
+
+window.addEventListener("resize", OnResizeCalled, false);
+
+function OnResizeCalled() {
+	var ratio = game.canvas.width / game.canvas.height;
+	if (window.innerHeight * ratio > window.innerWidth) {
+		game.canvas.style.width = window.innerWidth +'px';
+		game.canvas.style.height = (window.innerWidth / ratio) +'px';
+	} else {
+
+		game.canvas.style.height = window.innerHeight +'px';
+		game.canvas.style.width = (window.innerHeight * ratio) +'px';
 	}
-
-	stage.addChild(player);
-});
-
-socket.on('server-controller-leave', function(data) {
-	console.log('LEAVER!!!');
-	console.log(data.name);
-});
-
-$(function() {init();});
+}

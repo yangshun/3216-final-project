@@ -131,7 +131,8 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('controller-input', function(data) {
-    serverMessage(data.action+' received for '+data.key);
+    var action = data.action || data.angle;
+    // serverMessage(action+' received for '+data.key);
     socket.broadcast.to(room+'-screen').emit('controller-input', data);
   });
 

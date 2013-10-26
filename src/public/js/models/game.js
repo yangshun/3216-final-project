@@ -35,6 +35,7 @@ Game.prototype.addNinja = function(identifer) {
   
   var color = this.colors.splice(0, 1)[0];
   var ninja = new Ninja(identifer, color);
+  ninja.size = NINJA_RADIUS;
 
   var view = new createjs.Shape();
   view.x = position.x;

@@ -55,6 +55,7 @@ Ninja.prototype.changeLinearVelocity = function(v) {
 
 // Override tick function
 Ninja.prototype.tick = function() {
-  this.view.x = this.body.GetPosition().get_x() * SCALE;
-  this.view.y = this.body.GetPosition().get_y() * SCALE;
+  this.view.x = this.body.GetPosition().get_x() * SCALE - NINJA_RADIUS;
+  this.view.y = this.body.GetPosition().get_y() * SCALE - NINJA_RADIUS;
+  this.view.rotation = toDegree(this.angle)
 }

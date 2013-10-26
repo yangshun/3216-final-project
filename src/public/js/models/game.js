@@ -35,10 +35,21 @@ Game.prototype.addNinja = function(identifer) {
   var ninja = new Ninja(identifer, color);
   ninja.size = NINJA_RADIUS;
 
-  var view = new createjs.Shape();
-  view.x = position.x;
-  view.y = position.y;
-  view.graphics.beginFill(color).drawCircle(0, 0, NINJA_RADIUS);
+  // var view = new createjs.Shape();
+  // view.x = position.x;
+  // view.y = position.y;
+  // view.graphics.beginFill(color).drawCircle(0, 0, NINJA_RADIUS);
+
+  var view = new createjs.Bitmap("/images/ninja-yellow.png");
+  console.log(view.getBounds());
+  view.scaleX = NINJA_RADIUS  / (500 / 2.0);
+  view.scaleY = NINJA_RADIUS  / (500 / 2.0);
+  console.log(view.getBounds());
+  view.x = position.x - NINJA_RADIUS;
+  view.y = position.y - NINJA_RADIUS;
+  view.regX = NINJA_RADIUS;
+  view.regY = NINJA_RADIUS; 
+  console.log(view.regX + " " + view.regY);
 
   ninja.body = body;
   ninja.view = view;

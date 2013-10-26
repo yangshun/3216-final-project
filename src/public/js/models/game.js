@@ -54,8 +54,6 @@ Game.prototype.addNinja = function(identifer) {
   shape_body.name = "body";
   shape_body.scaleX = NINJA_RADIUS  / (500 / 2.0);
   shape_body.scaleY = NINJA_RADIUS  / (500 / 2.0);
-  shape_body.x = 0;
-  shape_body.y = 0;
   shape_body.regX = 500 / 2;
   shape_body.regY = 500 / 2;
 

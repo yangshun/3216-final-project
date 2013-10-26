@@ -1,5 +1,5 @@
 NINJA_RADIUS = 20.0
-SCALE = 1.0
+SCALE = 30.0
 
 var Game = function() {
   this.map = null;

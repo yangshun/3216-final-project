@@ -27,8 +27,8 @@ Game.prototype.addNinja = function(identifer) {
   if (this.colors.length === 0) return false;
 
   // var position = getFreePosition
-  // var position = new Vector2D(Math.random() * 500, 100);
-  var position = new Vector2D(300, 200);
+  var position = new Vector2D(Math.random() * 500, 100);
+  // var position = new Vector2D(300, 200);
 
   var fixture = new b2FixtureDef;
   fixture.set_density(1);

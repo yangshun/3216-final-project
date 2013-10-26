@@ -21,6 +21,7 @@ Game.prototype.addNinja = function(identifer) {
   fixture.set_density(1);
   fixture.set_restitution(0);
   fixture.set_friction(1.0);
+  
   var shape = new b2CircleShape();
   shape.set_m_radius(NINJA_RADIUS / SCALE);
   fixture.set_shape(shape);

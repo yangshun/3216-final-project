@@ -5,6 +5,8 @@ var Ninja = function(identifier, color) {
   this.color = color;
   this.size = 0;
   this.speed = 100.0;
+  this.angle = 0.0;
+
   this.effects = [];
   this.ShurikenGun = new ShurikenGun(this);
 }
@@ -16,6 +18,7 @@ Ninja.prototype.move = function(angel, speed) {
 }
 
 Ninja.prototype.shoot = function() {
+  this.ShurikenGun.makeShuriken(this.angle);
 }
 
 Ninja.prototype.destroy = function() {
@@ -28,11 +31,14 @@ Ninja.prototype.collide = function(anotherObject) {
 // Override handleInput function
 Ninja.prototype.handleInput = function(input) {
   if (input.key === 'move') {
+    this.angle = input.angle;
     var vXnew = this.speed * Math.cos(input.angle);
     var vYnew = this.speed * Math.sin(input.angle);
     this.changeLinearVelocity(new Vector2D(vXnew, vYnew));
   } else if (input.key === 'stopmove') {
     this.changeLinearVelocity(new Vector2D(0, 0));
+  } else if (input.key === 'shoot') {
+    this.shoot();
   }
 }
 

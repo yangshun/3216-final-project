@@ -64,6 +64,7 @@ var init = function () {
 var handleTick = function(ticker_data) {
 	var timestep = ticker_data.delta / 1000.0;
 	game.box.Step(timestep, 8.0, 3.0);
+	game.box.ClearForces();
 
 	game.ninjas.map(function(s){s.tick();});
 	game.shurikens.map(function(s){s.tick();});

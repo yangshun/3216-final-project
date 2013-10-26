@@ -31,7 +31,6 @@ Shuriken.prototype.changeLinearVelocity = function(v) {
     var deltaPy = mass * (v.y / SCALE - vYold);
 
     this.body.ApplyLinearImpulse(new b2Vec2(deltaPx, deltaPy), this.body.GetPosition());
-    console.log("here",this.body.GetLinearVelocity().get_x());
 }
 
 // Override collision callback
@@ -41,4 +40,9 @@ Shuriken.prototype.collide = function(anotherObject) {
 Shuriken.prototype.tick = function() {
 	this.view.x = this.body.GetPosition().get_x() * SCALE;
 	this.view.y = this.body.GetPosition().get_y() * SCALE;
+  
+  if (outside(this.view.x, this.view.y)) {
+    game.removeShuriken(this);
+    delete this;
+  }
 }

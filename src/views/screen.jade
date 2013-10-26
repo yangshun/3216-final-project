@@ -19,6 +19,32 @@ block content
   script(type='text/javascript', src='/js/models/tile.js')
   script(type='text/javascript', src='/js/nuttyninja_screen.js')
   script(type='text/javascript', src='/js/map.js')
+  script(type='text/javascript', src='/js/stats.min.js')
+
+
+  block game
+
+  script
+    var stats = new Stats();
+    stats.setMode(1); // 0: fps, 1: ms
+
+    // Align top-left
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.top = '0px';
+
+    document.body.appendChild( stats.domElement );
+
+    setInterval( function () {
+
+        stats.begin();
+
+        // your code goes here
+
+        stats.end();
+
+    }, 1000 / 60 );
 
   canvas(id='gameCanvas', height='420', width='720')
-  block game
+
+  div(id='fps_counter')

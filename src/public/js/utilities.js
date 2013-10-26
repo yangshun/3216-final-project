@@ -10,6 +10,15 @@ var   b2Vec2 = Box2D.b2Vec2
  , b2ContactListener = Box2D.b2ContactListener
  , b2Contact = Box2D.b2Contact;
 
+NINJA_RADIUS = 20.0
+SCALE = 30.0
+
+function outside(x, y) {
+  var CANVAS_WIDTH = $('#gameCanvas').width();
+  var CANVAS_HEIGHT = $('#gameCanvas').height();
+  return x < 0 || y < 0 || x > CANVAS_WIDTH || y > CANVAS_HEIGHT;
+}
+
 var Vector2D = function(x, y) {
   this.x = x || 0;
   this.y = y || 0;

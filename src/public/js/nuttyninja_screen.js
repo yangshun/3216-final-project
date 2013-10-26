@@ -58,6 +58,7 @@ var handleTick = function() {
 
 	game.ninjas.map(function(s){s.tick();});
 	game.shurikens.map(function(s){s.tick();});
+	game.map.tick();
 
 	game.stage.update();
 }

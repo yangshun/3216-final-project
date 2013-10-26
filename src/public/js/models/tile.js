@@ -35,7 +35,7 @@ var ObstacleTile = function(x, y, r, c) {
 
 	this.view = null;
 	this.body = null;
-	this.isDestroyed = false;
+	this.dead = false;
 }
 
 ObstacleTile.prototype = new Tile();
@@ -44,7 +44,7 @@ ObstacleTile.prototype.constructor = ObstacleTile;
 ObstacleTile.prototype.initBody = function() {
 	var fixture = new b2FixtureDef;
 	fixture.set_density(1);
-	fixture.set_restitution(1.0);
+	fixture.set_restitution(0.0);
 	fixture.set_friction(1.0);
 	
 	var shape = new b2PolygonShape();
@@ -79,7 +79,9 @@ var RoundObstacleTile = function(x, y, r, c) {
 
 	this.view = null;
 	this.body = null;
-	this.isDestroyed = false;
+
+	this.hitpoint = 3;
+	this.dead = false;
 }
 
 RoundObstacleTile.prototype = new ObstacleTile();
@@ -96,7 +98,7 @@ RoundObstacleTile.prototype.initShape = function(c) {
 RoundObstacleTile.prototype.initBody = function() {
 	var fixture = new b2FixtureDef;
 	fixture.set_density(1);
-	fixture.set_restitution(1.0);
+	fixture.set_restitution(0.0);
 	fixture.set_friction(1.0);
 	
 	var shape = new b2CircleShape();
@@ -114,4 +116,26 @@ RoundObstacleTile.prototype.initBody = function() {
 
 	this.body = body;
 	this.body.actor = this;
+}
+
+RoundObstacleTile.prototype.collide = function(other) {
+	console.log("Collision with ",other);
+	if (other instanceof Shuriken) {
+		this.hitpoint -= other.damage;
+		console.log(this.hitpoint);
+	}
+
+	if (this.hitpoint <= 0) {
+		this.dead = true;
+	}
+}
+
+RoundObstacleTile.prototype.tick = function() {
+	if (this.dead) {
+		this.destroy();	
+	}
+}
+
+RoundObstacleTile.prototype.destroy = function() {
+	game.map.removeTile(this);
 }

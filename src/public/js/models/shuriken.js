@@ -42,8 +42,8 @@ Shuriken.prototype.collide = function(anotherObject) {
 }
 
 Shuriken.prototype.tick = function() {
-	this.view.x = this.body.GetPosition().get_x() * SCALE;
-	this.view.y = this.body.GetPosition().get_y() * SCALE;
+	this.view.x = this.body.GetPosition().get_x() * SCALE - this.size;
+	this.view.y = this.body.GetPosition().get_y() * SCALE - this.size;
   
   if (this.dead || outside(this.view.x, this.view.y)) {
     this.destroy();

@@ -50,21 +50,24 @@ Game.prototype.addNinja = function(identifer) {
   var ninja = new Ninja(identifer, color);
   ninja.size = NINJA_RADIUS;
 
-  // Create easeljs view
+  var shape_body = new createjs.Bitmap("/images/ninja-yellow.png");
+  shape_body.name = "body";
+  shape_body.scaleX = NINJA_RADIUS  / (500 / 2.0);
+  shape_body.scaleY = NINJA_RADIUS  / (500 / 2.0);
+  shape_body.regX = 500 / 2;
+  shape_body.regY = 500 / 2;
+
   var view = new createjs.Container();
   view.x = position.x;
   view.y = position.y;
-
-  var shape_body = new createjs.Shape();
-  shape_body.name = "body";
-  shape_body.graphics.beginFill(color).drawCircle(0, 0, NINJA_RADIUS);
-  view.addChild(shape_body);
 
   var shape_hitpoint = new createjs.Shape();
   shape_hitpoint.name = "hitpoint";
 
   shape_hitpoint.graphics.beginFill("green").drawRect(-(NINJA_RADIUS*1.5), -NINJA_RADIUS-20, NINJA_RADIUS*3, 10);
   view.addChild(shape_hitpoint);
+
+  view.addChild(shape_body);
 
   ninja.body = body;
   ninja.body.actor = ninja;

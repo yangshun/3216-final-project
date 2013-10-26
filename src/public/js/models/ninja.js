@@ -79,6 +79,7 @@ Ninja.prototype.changeLinearVelocity = function(v) {
 Ninja.prototype.tick = function() {
   this.view.x = this.body.GetPosition().get_x() * SCALE;
   this.view.y = this.body.GetPosition().get_y() * SCALE;
+  this.view.getChildByName("body").rotation = toDegree(this.angle);
 
   if (this.hitPoint <= 0 || this.dead) {
     this.destroy();

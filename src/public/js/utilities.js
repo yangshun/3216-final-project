@@ -28,3 +28,7 @@ Vector2D.prototype.tob2Vec2 = function(scale) {
   if (scale == null) scale = 1.0;
   return new b2Vec2(this.x / scale, this.y / scale);
 }
+
+function toDegree(radian) {
+  return radian / Math.PI * 180.0;
+}

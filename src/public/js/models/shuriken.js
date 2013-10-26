@@ -9,9 +9,11 @@ var Shuriken = function() {
   this.duration = 0;
   this.angle = 0;
   this.density = 0;
+  this.rotation_step = 30;
 }
 
 Shuriken.prototype = new CollidableObject();
+
 Shuriken.prototype.constructor = Shuriken;
 
 Shuriken.prototype.destroy = function() {
@@ -44,7 +46,7 @@ Shuriken.prototype.collide = function(anotherObject) {
 Shuriken.prototype.tick = function() {
 	this.view.x = this.body.GetPosition().get_x() * SCALE - this.size;
 	this.view.y = this.body.GetPosition().get_y() * SCALE - this.size;
-  
+  this.view.rotation += this.rotation_step;
   if (this.dead || outside(this.view.x, this.view.y)) {
     this.destroy();
   }

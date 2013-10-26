@@ -5,7 +5,7 @@ var Ninja = function(identifier, color) {
   this.maxHitPoint = 10;
   this.color = color;
   this.size = NINJA_RADIUS;
-  this.speed = 100.0;
+  this.speed = 250.0;
   this.angle = 0.0;
 
   this.effects = [];

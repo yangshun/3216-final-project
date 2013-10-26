@@ -1,6 +1,3 @@
-NINJA_RADIUS = 20.0
-SCALE = 30.0
-
 var Game = function() {
   this.map = null;
   this.ninjas = [];
@@ -49,4 +46,15 @@ Game.prototype.addNinja = function(identifer) {
   this.stage.addChild(ninja.view);
 
   return true;
+}
+
+Game.prototype.addShuriken = function(s) {
+  this.shurikens.push(s);
+  this.stage.addChild(s.view);
+}
+
+Game.prototype.removeShuriken = function(s) {
+  this.stage.removeChild(s.view);
+  this.shurikens = _.without(this.shurikens, s);
+  this.box.DestroyBody(s.body);
 }

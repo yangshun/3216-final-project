@@ -51,8 +51,7 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 	s.body = body;
 	s.view = sView;
 
-	game.shurikens.push(s);
-	game.stage.addChild(s.view);
+  game.addShuriken(s);
 
   s.shoot();
 }

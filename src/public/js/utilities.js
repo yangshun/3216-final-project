@@ -8,6 +8,15 @@ var   b2Vec2 = Box2D.b2Vec2
  , b2PolygonShape = Box2D.b2PolygonShape
  , b2CircleShape = Box2D.b2CircleShape;
 
+NINJA_RADIUS = 20.0
+SCALE = 30.0
+
+function outside(x, y) {
+  var CANVAS_WIDTH = $('#gameCanvas').width();
+  var CANVAS_HEIGHT = $('#gameCanvas').height();
+  return x < 0 || y < 0 || x > CANVAS_WIDTH || y > CANVAS_HEIGHT;
+}
+
 var Vector2D = function(x, y) {
   this.x = x || 0;
   this.y = y || 0;

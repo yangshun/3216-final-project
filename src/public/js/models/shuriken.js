@@ -8,6 +8,7 @@ var Shuriken = function() {
   this.damage = 0;
   this.duration = 0;
   this.angle = 0;
+  this.density = 0;
 }
 
 Shuriken.prototype = new CollidableObject();
@@ -17,7 +18,7 @@ Shuriken.prototype.destroy = function() {
 }
 
 Shuriken.prototype.shoot = function() {
-  this.changeLinearVelocity(new Vector2D(this.speed * Math.cos(this.angle), 
+  this.changeLinearVelocity(new Vector2D(this.speed * Math.cos(this.angle),
                                          this.speed * Math.sin(this.angle)));
 }
 
@@ -30,6 +31,7 @@ Shuriken.prototype.changeLinearVelocity = function(v) {
     var deltaPy = mass * (v.y / SCALE - vYold);
 
     this.body.ApplyLinearImpulse(new b2Vec2(deltaPx, deltaPy), this.body.GetPosition());
+    console.log("here",this.body.GetLinearVelocity().get_x());
 }
 
 // Override collision callback

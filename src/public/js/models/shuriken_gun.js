@@ -31,6 +31,11 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 	sView.x = s.ninja.view.x + Math.cos(angle) * (s.ninja.size + 30);
 	sView.y = s.ninja.view.y + Math.sin(angle) * (s.ninja.size + 30);
 	sView.graphics.beginFill(s.color).drawCircle(0,0, s.size)
+  
+  // var sView = new createjs.Bitmap("/images/shuriken-4-point-star.png");
+  // sView.x = s.ninja.view.x + Math.cos(angle) * (s.ninja.size + 30);
+  // sView.y = s.ninja.view.y + Math.sin(angle) * (s.ninja.size + 30);
+  // sView.graphics.beginFill(s.color).drawCircle(0,0, s.size)
 
 	// Make the Box2D body
 	var fixture = new b2FixtureDef;

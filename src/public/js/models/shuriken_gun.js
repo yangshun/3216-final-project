@@ -1,6 +1,7 @@
 var ShurikenGun = function(ninja) {
   GameObject.call(this);
   this.ninja = ninja;
+  this.angleRange = 0.3; // In radians
 
   this.shuriken = {
   	color : this.ninja.color,
@@ -8,7 +9,8 @@ var ShurikenGun = function(ninja) {
   	speed : 300,
   	size  : 10,
   	damage: 1,
-  	duration: 0
+  	duration: 0,
+  	density : 0.1
   };
 }
 
@@ -21,7 +23,8 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 		s[p] = this.shuriken[p];
 	}
 
-	s.angle = angle;
+	var sign = Math.random() > 0.5 ? 1.0 : -1.0;
+	s.angle = angle + sign * Math.random() * this.angleRange;
 
 	// Make the easeljs view
 	var sView = new createjs.Shape();
@@ -31,7 +34,7 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 
 	// Make the Box2D body
 	var fixture = new b2FixtureDef;
-	fixture.set_density(0.1);
+	fixture.set_density(s.density);
 	fixture.set_restitution(0);
 	  
 	var shape = new b2CircleShape();

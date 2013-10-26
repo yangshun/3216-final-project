@@ -29,6 +29,14 @@ function controller_join(data) {
 function controller_leave(data) {
 	console.log('LEAVER!!!');
 	console.log(data.name);
+
+	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
+		return ninja.identifier === data.name;
+	});
+
+	if (ninjaToHandle != null) {
+		ninjaToHandle.dead = true;	
+	}
 }
 
 // Socket Events

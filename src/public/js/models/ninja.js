@@ -1,7 +1,7 @@
 // TODO: pass parameters to constructor
 var Ninja = function(identifier, color) {
   ControllableObject.call(this, identifier);
-  this.hitPoint = null;
+  this.hitPoint = 100;
   this.color = color;
   this.size = NINJA_RADIUS;
   this.speed = 100.0;
@@ -26,6 +26,10 @@ Ninja.prototype.destroy = function() {
 
 // Override collision callback
 Ninja.prototype.collide = function(anotherObject) {
+  if (anotherObject instanceof Shuriken) {
+    this.hitPoint -= anotherObject.damage;
+    console.log(this.hitPoint);
+  }
 }
 
 // Override handleInput function

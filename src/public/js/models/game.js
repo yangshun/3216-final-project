@@ -15,14 +15,12 @@ var Game = function() {
       original: Box2D.b2ContactListener.prototype.BeginContact,
       replacement:
           function (thsPtr, contactPtr) {
-            console.log('colliding');
               var contact = Box2D.wrapPointer( contactPtr, b2Contact );
-              var bodyA = contact.GetFixtureA().GetBody();
-              var bodyB = contact.GetFixtureB().GetBody();
+              var bodyA = contact.GetFixtureA().GetBody().actor;
+              var bodyB = contact.GetFixtureB().GetBody().actor;
 
-              // now do what you wish with the fixtures
-              console.log(bodyA.actor);
-              console.log(bodyB.actor);
+              bodyA.collide(bodyB);
+              bodyB.collide(bodyA);
           }
   }]);
   this.box.SetContactListener(listener);

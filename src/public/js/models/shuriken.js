@@ -34,6 +34,8 @@ Shuriken.prototype.changeLinearVelocity = function(v) {
 
 // Override collision callback
 Shuriken.prototype.collide = function(anotherObject) {
+  // Our shuriken are like paper, and it goes away with with any collision
+  this.destroy();
 }
 
 Shuriken.prototype.tick = function() {

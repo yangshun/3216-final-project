@@ -3,7 +3,7 @@ var Game = function() {
   this.ninjas = [];
   this.shurikens = [];
   this.stage = null;
-  this.colors = ['orange', 'red', 'blue', 'green'];
+  this.colors = ['yellow', 'red', 'blue', 'orange'];
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -64,7 +64,7 @@ Game.prototype.addNinja = function(identifer) {
   var shape_hitpoint = new createjs.Shape();
   shape_hitpoint.name = "hitpoint";
 
-  shape_hitpoint.graphics.beginFill("green").drawRect(-(NINJA_RADIUS*1.5), -NINJA_RADIUS-20, NINJA_RADIUS*3, 10);
+  shape_hitpoint.graphics.beginFill(color).drawRect(-(NINJA_RADIUS*1.5), -NINJA_RADIUS-20, NINJA_RADIUS*3, 10);
   view.addChild(shape_hitpoint);
 
   view.addChild(shape_body);
@@ -83,6 +83,7 @@ Game.prototype.removeNinja = function(s) {
   this.stage.removeChild(s.view);
   this.ninjas = _.without(this.ninjas, s);
   this.box.DestroyBody(s.body);
+  this.colors.push(s.color);
 }
 
 Game.prototype.addShuriken = function(s) {

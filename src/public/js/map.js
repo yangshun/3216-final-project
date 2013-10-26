@@ -3,8 +3,11 @@ var Map = function() {
 	this.width = Math.floor(game.canvas.width / TILE_WIDTH); // # of tiles
 
 	this.tileMap = [];
+	this.destructible = [];
+
 	this.bgpath = '/images/game-background.jpg';
 	this.background = new createjs.Bitmap(this.bgpath);
+
 	game.stage.addChild(this.background);
 }
 
@@ -26,10 +29,11 @@ Map.prototype.generateSimpleMap = function() {
 				var t = new ObstacleTile(j,i,0,'#000000');
 				t.initShape();
 				t.initBody();
-			} else if (Math.random() < 0.1) {
+			} else if (Math.random() < 0.05) {
 				var t = new RoundObstacleTile(j,i,0,'#111111');
 				t.initShape();
 				t.initBody();
+				this.destructible.push(t);
 			} else {
 				var t = new Tile(j,i,0);
 			}
@@ -48,4 +52,20 @@ Map.prototype.getRandomBlankPosition = function() {
 
 	console.log('getBlankPosition','justTiles', justTiles);
 	return justTiles[int(Math.round(Math.random()*justTile.length))];
+}
+
+Map.prototype.tick = function() {
+	this.destructible.map(function(t) {
+		t.tick();
+	});
+}
+
+Map.prototype.removeTile = function(t) {
+	this.destructible = _.without(this.destructible, t);
+	game.box.DestroyBody(t.body);
+	game.stage.removeChild(t.view);
+	this.tileMap = _.without(this.tileMap, t);
+	var new_t = new Tile(t.tileX, t.tileY, 0);
+	this.tileMap.push(new_t);
+	delete t;
 }

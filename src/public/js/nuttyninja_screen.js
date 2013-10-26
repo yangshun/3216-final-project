@@ -29,6 +29,14 @@ function controller_join(data) {
 function controller_leave(data) {
 	console.log('LEAVER!!!');
 	console.log(data.name);
+
+	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
+		return ninja.identifier === data.name;
+	});
+
+	if (ninjaToHandle != null) {
+		ninjaToHandle.dead = true;	
+	}
 }
 
 // Socket Events
@@ -37,7 +45,10 @@ socket.on('server-controller-join', controller_join);
 socket.on('server-controller-leave', controller_leave);
 
 var init = function () {
-	var gameCanvas = $('#gameCanvas')[0];
+	var gameCanvas = document.getElementById('gameCanvas');
+	gameCanvas.width = window.innerWidth;
+	gameCanvas.height = window.innerHeight;
+
 	var stage = new createjs.Stage(gameCanvas);
 
 	game = new Game();
@@ -55,11 +66,18 @@ var handleTick = function() {
 
 	game.ninjas.map(function(s){s.tick();});
 	game.shurikens.map(function(s){s.tick();});
+	game.map.tick();
 
 	game.stage.update();
 }
 
 $(function() {
-	console.log('where');
 	init();
 });
+
+window.addEventListener("resize", OnResizeCalled, false);
+
+function OnResizeCalled() {
+    gameCanvas.style.width = window.innerWidth + 'px';
+    gameCanvas.style.height = window.innerHeight + 'px';
+}

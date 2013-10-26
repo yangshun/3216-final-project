@@ -43,7 +43,11 @@ Ninja.prototype.updateHitPointBar = function() {
   var hpBar = this.view.getChildByName("hitpoint");
   var ratio = this.hitPoint / this.maxHitPoint;
 
+  var width = 3*NINJA_RADIUS*ratio/2;
+  width -= 3*NINJA_RADIUS/2;
+  
   hpBar.scaleX = ratio;
+  hpBar.x = width;
 }
 
 // Override handleInput function

@@ -2,7 +2,7 @@ var VirtualJoystick	= function(opts)
 {
 	opts			= opts			|| {};
 	this._container		= opts.container	|| document.body;
-	this._strokeStyle	= opts.strokeStyle	|| 'cyan';
+	this._strokeStyle	= opts.strokeStyle	|| 'yellow';
 	this._stickEl		= opts.stickElement	|| this._buildJoystickStick();
 	this._baseEl		= opts.baseElement	|| this._buildJoystickBase();
 	this._mouseSupport	= opts.mouseSupport !== undefined ? opts.mouseSupport : false;
@@ -11,7 +11,7 @@ var VirtualJoystick	= function(opts)
 
 	this._container.appendChild(this._baseEl);
 	this._baseEl.style.position	= "absolute"
-	this._baseEl.style.display	= "none";
+	// this._baseEl.style.display	= "none";
 	
 	this._container.appendChild(this._stickEl);
 	this._stickEl.style.position	= "absolute"
@@ -139,7 +139,7 @@ VirtualJoystick.prototype._onUp	= function()
 {
 	this._pressed	= false; 
 	this._stickEl.style.display	= "none";
-	this._baseEl.style.display	= "none";
+	// this._baseEl.style.display	= "none";
 	
 	this._baseX	= this._baseY	= 0;
 	this._stickX	= this._stickY	= 0;
@@ -159,8 +159,8 @@ VirtualJoystick.prototype._onDown	= function(x, y)
 	this._stickEl.style.top		= (y - this._stickEl.height/2)+"px";
 
 	this._baseEl.style.display	= "";
-	this._baseEl.style.left		= (x - this._baseEl.width /2)+"px";
-	this._baseEl.style.top		= (y - this._baseEl.height/2)+"px";
+	// this._baseEl.style.left		= (x - this._baseEl.width /2)+"px";
+	// this._baseEl.style.top		= (y - this._baseEl.height/2)+"px";
 }
 
 VirtualJoystick.prototype._onMove	= function(x, y)
@@ -273,21 +273,27 @@ VirtualJoystick.prototype._onTouchMove	= function(event)
 VirtualJoystick.prototype._buildJoystickBase	= function()
 {
 	var canvas	= document.createElement( 'canvas' );
-	canvas.width	= 126;
-	canvas.height	= 126;
+	canvas.width	= 160;
+	canvas.height	= 160;
 	
 	var ctx		= canvas.getContext('2d');
-	ctx.beginPath(); 
-	ctx.strokeStyle = this._strokeStyle; 
-	ctx.lineWidth	= 6; 
-	ctx.arc( canvas.width/2, canvas.width/2, 40, 0, Math.PI*2, true); 
-	ctx.stroke();	
+	// ctx.beginPath(); 
+	// ctx.strokeStyle = this._strokeStyle; 
+	// ctx.lineWidth	= 6; 
+	// ctx.arc( canvas.width/2, canvas.width/2, 40, 0, Math.PI*2, true); 
+	// ctx.stroke();	
 
-	ctx.beginPath(); 
-	ctx.strokeStyle	= this._strokeStyle; 
-	ctx.lineWidth	= 2; 
-	ctx.arc( canvas.width/2, canvas.width/2, 60, 0, Math.PI*2, true); 
-	ctx.stroke();
+	// ctx.beginPath(); 
+	// ctx.strokeStyle	= this._strokeStyle; 
+	// ctx.lineWidth	= 2; 
+	// ctx.arc( canvas.width/2, canvas.width/2, 60, 0, Math.PI*2, true); 
+	// ctx.stroke();
+	var imageObj = new Image();
+	
+	imageObj.src = '/images/base.png';
+	imageObj.onload = function() {
+		ctx.drawImage(imageObj, 0, 0, 160, 160);
+	};
 	
 	return canvas;
 }
@@ -298,14 +304,20 @@ VirtualJoystick.prototype._buildJoystickBase	= function()
 VirtualJoystick.prototype._buildJoystickStick	= function()
 {
 	var canvas	= document.createElement( 'canvas' );
-	canvas.width	= 86;
-	canvas.height	= 86;
+	canvas.width	= 100;
+	canvas.height	= 100;
 	var ctx		= canvas.getContext('2d');
-	ctx.beginPath(); 
-	ctx.strokeStyle	= this._strokeStyle; 
-	ctx.lineWidth	= 6; 
-	ctx.arc( canvas.width/2, canvas.width/2, 40, 0, Math.PI*2, true); 
-	ctx.stroke();
+	// ctx.beginPath(); 
+	// ctx.strokeStyle	= this._strokeStyle; 
+	// ctx.lineWidth	= 6; 
+	// ctx.arc( canvas.width/2, canvas.width/2, 40, 0, Math.PI*2, true); 
+	// ctx.stroke();
+	var imageObj = new Image();
+	
+	imageObj.src = '/images/stick.png';
+	imageObj.onload = function() {
+		ctx.drawImage(imageObj, 0, 0, 100, 100);
+	};
 	return canvas;
 }
 

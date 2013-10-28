@@ -23,7 +23,7 @@ $(document).ready(function () {
     mouseSupport  : true
   });
 
-  $('#rightContainer').on('click', function() {
+  $('#rightContainer').on('touchstart', function() {
     socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
   });
 

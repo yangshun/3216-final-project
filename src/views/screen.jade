@@ -1,11 +1,6 @@
 extends layout
 
 block content
-  h1 = title
-  p Welcome to #{title}
-  p#ping Connecting ...
-  p#connected Total Clients : 0
-
   script(type='text/javascript', src='/vendor/box2d.js')
 
   script(type='text/javascript', src='/js/utilities.js')
@@ -45,5 +40,10 @@ block content
     }, 1000 / 60 );
 
   canvas(id='gameCanvas', height='420', width='720')
+
+  h1 = title
+  p Welcome to #{title}
+  p#ping Connecting ...
+  p#connected Total Clients : 0
 
   div(id='fps_counter')

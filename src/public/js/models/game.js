@@ -3,7 +3,7 @@ var Game = function() {
   this.ninjas = [];
   this.shurikens = [];
   this.stage = null;
-  this.colors = ['yellow', 'red', 'blue', 'orange'];
+  this.colors = ['yellow', 'red', 'blue', 'orange', 'purple', 'green', 'brown', 'cyan'];
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();

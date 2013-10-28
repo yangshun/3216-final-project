@@ -37,7 +37,8 @@ $(document).ready(function () {
     var x = leftJoystick.deltaX();
     var y = leftJoystick.deltaY();
     var delta = Math.atan2(y, x);
-
+    delta -= Math.PI/2;
+    // console.log(delta)
     var key = 'move';
     if (x == 0 && y == 0) key = 'stopmove';
 

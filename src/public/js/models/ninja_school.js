@@ -5,6 +5,8 @@ var NinjaSchool = {
 
   // data: {position: Vector2D, player: Player, color: String}
   trainNinja: function(data) {
+    if (!this.canTrainNinja(data.color)) return false;
+
     var fixture = new b2FixtureDef;
     fixture.set_density(1);
     fixture.set_restitution(0);

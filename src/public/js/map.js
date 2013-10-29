@@ -45,14 +45,18 @@ Map.prototype.generateSimpleMap = function() {
 
 Map.prototype.getRandomBlankPosition = function() {
 	// Get a tile that has no obstacle
-	var justTiles = this.tileMap.filter(function(t) {
-		var notObstacle = !(t instanceof ObstacleTile)
-		return notObstacle;
-	});
+	var justTiles = [];
+	for (var row in this.tileMap) {
+		for (var tile in this.tileMap[row]) {
+			if (!(this.tileMap[row][tile] instanceof ObstacleTile)) {
+				justTiles.push(this.tileMap[row][tile]);
+			}
+		}
+	}
 
 	console.log('getBlankPosition','justTiles', justTiles);
-	var emptyTile = justTiles[int(Math.round(Math.random()*justTile.length))];
-        return new Vector2D(emptyTile.x+TILE_WIDTH/2, emptyTile.y+TILE_HEIGHT/2);
+	var emptyTile = justTiles[(Math.round(Math.random()*justTiles.length))];
+  return new Vector2D(emptyTile.x+TILE_WIDTH/2, emptyTile.y+TILE_HEIGHT/2);
 }
 
 Map.prototype.tick = function() {

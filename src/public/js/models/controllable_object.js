@@ -3,6 +3,7 @@ var ControllableObject = function(player) {
   this.player = player;
   if (player) {
     this.identifier = player.id;
+    player.controlled_object = this;
   }
 }
 

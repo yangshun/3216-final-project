@@ -75,7 +75,6 @@ Game.prototype.addNinja = function(data) {
   name_view.textAlign = "center";
   name_view.x = 0;
   name_view.y = - NINJA_RADIUS - 35;
-  name_view.lineWidth = 2 * NINJA_RADIUS;
   view.addChild(name_view);
 
   ninja.body = body;

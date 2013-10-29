@@ -41,8 +41,9 @@ var loadJoysticks = function() {
     // console.log(delta)
     var key = 'move';
     if (x === 0 && y === 0) key = 'stopmove';
+    var l = Math.min(Math.sqrt(x * x + y * y) / 50.0, 1.0);
 
-    socket.emit('controller-input', { name: myname, key: key, angle: delta });
+    socket.emit('controller-input', { name: myname, key: key, angle: delta, length: l });
   }, 1000 / 30);
 };
 

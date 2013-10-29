@@ -13,7 +13,9 @@ socket.on('server-message', function(data) {
 
 
 socket.on('server-num', function(data) {
-  document.getElementById('connected').innerHTML = 'Connected in '+data.room+', Controllers : '+data.clients+', Screens : '+data.screens;
+  if (document.getElementById('connected')) {
+    document.getElementById('connected').innerHTML = 'Connected in '+data.room+', Controllers : '+data.clients+', Screens : '+data.screens;
+  }
 });
 
 // Performance calls for use in rttHeartBeat

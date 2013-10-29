@@ -73,8 +73,12 @@ var handleTick = function(ticker_data) {
 	game.stage.update();
 }
 
-$(function() {
-	init();
+socket.on('server-screen-ready', function(data) {
+  if(data.success){
+    $(function() {init();});
+  } else {
+    console.log(data.error);
+  }
 });
 
 window.addEventListener("resize", OnResizeCalled, false);

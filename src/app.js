@@ -101,6 +101,14 @@ io.sockets.on('connection', function(socket) {
     room = data.room;
     name = data.name;
     console.log('A new '+data.type+' has joined Room : '+room);
+  
+    if (data.type == 'screen' &&
+        io.sockets.clients(data.room+'-screen').length >= 1) {
+      socket.emit('server-screen-ready', { success: false, error: 'Room full'});
+      return socket.disconnect();
+    } else {
+      socket.emit('server-screen-ready', { success: true });
+    }
 
     socket.join('world-'+data.type);
     socket.join(data.room+'-'+data.type); 

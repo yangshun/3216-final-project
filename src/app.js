@@ -136,7 +136,7 @@ io.sockets.on('connection', function(socket) {
     serverNumbers(room);
     console.log('A '+type+' has left '+room);
     io.sockets.in(room+'-screen').emit('server-controller-leave', {
-      name: name
+      id: socket.id
     });
   });
 

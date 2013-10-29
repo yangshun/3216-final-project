@@ -19,13 +19,12 @@ function controller_input(data) {
 }
 
 function controller_join(data) {
-        console.log(data);
 	if (game.addNinja(data)) {
 		console.log("New ninja added " + data.name);
-                socket.emit('screen-controller-join', {success: true, name: data.name, id: data.id});
+    socket.emit('screen-controller-join', {success: true, name: data.name, id: data.id});
 	} else {
 		console.log("Cannot add more ninja");
-                socket.emit('screen-controller-join', {success: false});
+    socket.emit('screen-controller-join', {success: false});
 	}
 }
 
@@ -39,7 +38,7 @@ function controller_leave(data) {
 
 	if (ninjaToHandle != null) {
 		console.log(ninjaToHandle);
-		ninjaToHandle.dead = true;	
+		ninjaToHandle.state = 'remove';	
 	}
 }
 

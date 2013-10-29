@@ -1,7 +1,7 @@
 var NinjaSchool = {
   colors: ['yellow', 'red', 'blue', 'orange', 'purple', 'green', 'brown', 'cyan'],
   images: {'yellow'  : '/images/ninja-yellow.png',
-            'red'     : '/images/ninja-red.png'},
+            'red'    : '/images/ninja-red.png'},
 
   // data: {position: Vector2D, player: Player, color: String}
   trainNinja: function(data) {

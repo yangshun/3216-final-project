@@ -3,7 +3,6 @@ var Game = function() {
   this.ninjas = [];
   this.shurikens = [];
   this.stage = null;
-  this.colors = ['yellow', 'red', 'blue', 'orange', 'purple', 'green', 'brown', 'cyan'];
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -41,11 +40,19 @@ Game.prototype.addNinja = function(data) {
   return true;
 }
 
+Game.prototype.reviveNinja = function(ninja, time) {
+  this.stage.removeChild(ninja.view);
+  setTimeout(function() {
+    var position = game.map.getRandomBlankPosition();
+    ninja.reset(position);
+    game.stage.addChild(ninja.view);
+  }, time);
+}
+
 Game.prototype.removeNinja = function(s) {
   this.stage.removeChild(s.view);
   this.ninjas = _.without(this.ninjas, s);
   this.box.DestroyBody(s.body);
-  this.colors.push(s.color);
 }
 
 Game.prototype.addShuriken = function(s) {

@@ -9,6 +9,17 @@ block content
 
 	script(type='text/javascript', src='/vendor/virtualjoystick.js')
 	script(type='text/javascript', src='/js/nuttyninja_controller.js')
+	div(class="carousell" id="chooseName")
+		p What is your name?
+		input(type = 'textfield',id='playername',name = 'name', value = '')
+	div(class="carousell" id="chooseNinja")
+		p Choose your Ninja!
+		img(id="red-ninja" src="/images/ninja-red.png" width="128" height="128")
+		input(type = 'radio', name='ninjaChoose', id='ninja-red', value = 'red', checked='checked')
+		img(id="yellow-ninja" src="/images/ninja-yellow.png" width="128" height="128")
+		input(type = 'radio', name='ninjaChoose', id='ninja-yellow', value = 'yellow')
+	div(class="carousell" id="goBtn")
+		input(type = 'button', value = 'Play!')
 	div(class="joystick joystick-left" id="leftContainer")
 	div(class="joystick joystick-right" id="rightContainer")
 		img(id="shoot-button" src="/images/shoot.png" width="128" height="128")

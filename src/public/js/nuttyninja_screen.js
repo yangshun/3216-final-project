@@ -10,7 +10,7 @@ socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
 function controller_input(data) {
 	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-		return ninja.identifier === data.name;
+		return ninja.identifier === data.id;
 	});
 
 	if (ninjaToHandle != null) {
@@ -19,10 +19,13 @@ function controller_input(data) {
 }
 
 function controller_join(data) {
-	if (game.addNinja(data.name)) {
+        console.log(data);
+	if (game.addNinja(data)) {
 		console.log("New ninja added " + data.name);
+                socket.emit('screen-controller-join', {success: true, name: data.name, id: data.id});
 	} else {
 		console.log("Cannot add more ninja");
+                socket.emit('screen-controller-join', {success: false});
 	}
 }
 
@@ -31,10 +34,11 @@ function controller_leave(data) {
 	console.log(data.name);
 
 	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-		return ninja.identifier === data.name;
+		return ninja.identifier === data.id;
 	});
 
 	if (ninjaToHandle != null) {
+		console.log(ninjaToHandle);
 		ninjaToHandle.dead = true;	
 	}
 }
@@ -73,8 +77,12 @@ var handleTick = function(ticker_data) {
 	game.stage.update();
 }
 
-$(function() {
-	init();
+socket.on('server-screen-ready', function(data) {
+  if(data.success){
+    $(function() {init();});
+  } else {
+    console.log(data.error);
+  }
 });
 
 window.addEventListener("resize", OnResizeCalled, false);

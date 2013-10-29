@@ -96,11 +96,23 @@ io.sockets.on('connection', function(socket) {
   serverMessage('MOTD: Welcome to Prototype-1');
   serverNumbers('world');
 
+  socket.on('screen-controller-join', function(data) {
+    io.sockets.sockets[data.id].emit('screen-controller-join', data);
+  });
+
   socket.on('client-register', function(data) {
     type = data.type;
     room = data.room;
     name = data.name;
     console.log('A new '+data.type+' has joined Room : '+room);
+  
+    if (data.type == 'screen' &&
+        io.sockets.clients(data.room+'-screen').length >= 1) {
+      socket.emit('server-screen-ready', { success: false, error: 'Room full'});
+      return socket.disconnect();
+    } else {
+      socket.emit('server-screen-ready', { success: true });
+    }
 
     socket.join('world-'+data.type);
     socket.join(data.room+'-'+data.type); 
@@ -108,8 +120,11 @@ io.sockets.on('connection', function(socket) {
     serverMessage('Joined as '+data.type+' in Room : '+data.room);
     serverNumbers(data.room);
     if (data.type == 'controller') {
+      console.log(data);
       io.sockets.in(data.room+'-screen').emit('server-controller-join', {
-        name: data.name
+        id: socket.id,
+        name: data.name,
+        ninja: data.ninja
       });
     }
   });
@@ -133,6 +148,8 @@ io.sockets.on('connection', function(socket) {
   socket.on('controller-input', function(data) {
     var action = data.action || data.angle;
     // serverMessage(action+' received for '+data.key);
+    data.id = socket.id;
+    data.name = name;
     socket.broadcast.to(room+'-screen').emit('controller-input', data);
   });
 

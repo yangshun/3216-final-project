@@ -1,6 +1,9 @@
-var ControllableObject = function(identifier) {
+var ControllableObject = function(player) {
   CollidableObject.call(this);
-  this.identifier = identifier;
+  this.player = player;
+  if (player) {
+    this.identifier = player.id;
+  }
 }
 
 ControllableObject.prototype = new CollidableObject();

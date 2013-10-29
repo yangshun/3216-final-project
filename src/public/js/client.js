@@ -13,7 +13,9 @@ socket.on('server-message', function(data) {
 
 
 socket.on('server-num', function(data) {
-  document.getElementById('connected').innerHTML = 'Connected in '+data.room+', Controllers : '+data.clients+', Screens : '+data.screens;
+  if (document.getElementById('connected')) {
+    document.getElementById('connected').innerHTML = 'Connected in '+data.room+', Controllers : '+data.clients+', Screens : '+data.screens;
+  }
 });
 
 // Performance calls for use in rttHeartBeat
@@ -45,7 +47,7 @@ function rttHeartBeat() {
     // Currently does not take into account timeouts
     if (timings.length === 5) {
       var total = timings.reduce(function(a,b){return a+b;});
-      document.getElementById('ping').innerHTML = 'Latency : ' + (total/5.0) + ' ms';
+      // document.getElementById('ping').innerHTML = 'Latency : ' + (total/5.0) + ' ms';
     }
   });
 

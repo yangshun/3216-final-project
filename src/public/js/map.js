@@ -51,7 +51,8 @@ Map.prototype.getRandomBlankPosition = function() {
 	});
 
 	console.log('getBlankPosition','justTiles', justTiles);
-	return justTiles[int(Math.round(Math.random()*justTile.length))];
+	var emptyTile = justTiles[int(Math.round(Math.random()*justTile.length))];
+        return new Vector2D(emptyTile.x+TILE_WIDTH/2, emptyTile.y+TILE_HEIGHT/2);
 }
 
 Map.prototype.tick = function() {

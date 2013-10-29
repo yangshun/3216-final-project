@@ -6,6 +6,8 @@ var Map = function() {
 
 	this.tileMap = [];
 	this.destructible = [];
+	this.blankTiles = []; // Keeps track of blank tiles
+
 	this.numHealthTiles = 0;
 
 	this.bgpath = '/images/game-background.jpg';
@@ -39,7 +41,9 @@ Map.prototype.generateSimpleMap = function() {
 				this.destructible.push(t);
 			} else {
 				var t = new Tile(j,i,0);
+				this.blankTiles.push(t);
 			}
+
 			arr.push(t);
 		}
 		this.tileMap.push(arr);
@@ -48,16 +52,7 @@ Map.prototype.generateSimpleMap = function() {
 
 Map.prototype.getRandomBlankTile = function() {
 	// Get a tile that has no obstacle
-	var justTiles = [];
-	for (var row in this.tileMap) {
-		for (var tile in this.tileMap[row]) {
-			if (!(this.tileMap[row][tile] instanceof ObstacleTile)) {
-				justTiles.push(this.tileMap[row][tile]);
-			}
-		}
-	}
-
-	var emptyTile = justTiles[(Math.round(Math.random()*justTiles.length))];
+	var emptyTile = this.blankTiles[(Math.round(Math.random()*this.blankTiles.length))];
 	return emptyTile;
 }
 
@@ -76,6 +71,16 @@ Map.prototype.tick = function() {
 	}
 }
 
+Map.prototype.removeAndReplaceTile = function(t) {
+	this.removeTile(t);
+
+	this.tileMap = _.without(this.tileMap, t);
+	var new_t = new Tile(t.tileX, t.tileY, 0);
+	this.tileMap.push(new_t);
+	this.blankTiles.push(new_t);
+	delete t;
+}
+
 Map.prototype.removeTile = function(t) {
 	if (t instanceof HealthTile) {
 		this.numHealthTiles -= 1;
@@ -84,15 +89,10 @@ Map.prototype.removeTile = function(t) {
 	this.destructible = _.without(this.destructible, t);
 	game.box.DestroyBody(t.body);
 	game.stage.removeChild(t.view);
-	this.tileMap = _.without(this.tileMap, t);
-	var new_t = new Tile(t.tileX, t.tileY, 0);
-	this.tileMap.push(new_t);
-	delete t;
 }
 
 Map.prototype.generateRandomPowerup = function() {
 	var t = this.getRandomBlankTile();	
-	console.log(t.tileX+','+t.tileY);
 	this.generatePowerup(t.tileX, t.tileY);
 };
 

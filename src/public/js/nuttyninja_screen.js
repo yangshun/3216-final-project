@@ -29,15 +29,13 @@ function controller_join(data) {
 }
 
 function controller_leave(data) {
-	console.log('LEAVER!!!');
-	console.log(data.name);
+	console.log('LEAVER!!!', data.id);
 
 	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
 		return ninja.identifier === data.id;
 	});
 
 	if (ninjaToHandle != null) {
-		console.log(ninjaToHandle);
 		ninjaToHandle.state = 'remove';	
 	}
 }

@@ -27,7 +27,7 @@ Tile.prototype.initShape = function(c) {
 
 
 Tile.prototype.destroy = function() {
-	game.map.removeTile(this);
+	game.map.removeAndReplaceTile(this);
 }
 
 Tile.prototype.tick = function() {
@@ -147,7 +147,7 @@ RoundObstacleTile.prototype.collide = function(other) {
 // }
 
 // RoundObstacleTile.prototype.destroy = function() {
-// 	game.map.removeTile(this);
+// 	game.map.removeAndReplaceTile(this);
 // }
 
 
@@ -205,4 +205,8 @@ HealthTile.prototype.initBody = function() {
 
 HealthTile.prototype.collide = function(anotherObject) {
 	this.dead = true
+}
+
+HealthTile.prototype.destroy = function() {
+	game.map.removeTile(this);
 }

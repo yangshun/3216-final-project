@@ -31,10 +31,7 @@ Ninja.prototype.destroy = function() {
 Ninja.prototype.collide = function(anotherObject) {
   if (anotherObject instanceof Shuriken) {
     this.hitPoint -= anotherObject.damage;
-    if (this.hitPoint <= 0) {
-      this.dead = true;
-    }
-
+    if (this.hitPoint <= 0) { this.state = 'dead'; }
   }
 
   if (anotherObject instanceof HealthTile) {

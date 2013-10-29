@@ -19,10 +19,13 @@ function controller_input(data) {
 }
 
 function controller_join(data) {
+        console.log(data);
 	if (game.addNinja(data)) {
 		console.log("New ninja added " + data.name);
+                socket.emit('screen-controller-join', {success: true, name: data.name, id: data.id});
 	} else {
 		console.log("Cannot add more ninja");
+                socket.emit('screen-controller-join', {success: false});
 	}
 }
 

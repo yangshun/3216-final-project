@@ -16,6 +16,7 @@ var loadJoysticks = function() {
   console.log(myname);
   // Re-display the joystick divs
   $('.joystick').css('display', 'block');
+  console.log('sdfajsflk');
 
   leftJoystick  = new VirtualJoystick({
     container : document.getElementById('leftContainer'),
@@ -40,20 +41,28 @@ var loadJoysticks = function() {
     // console.log(delta)
     var key = 'move';
     if (x === 0 && y === 0) key = 'stopmove';
-    var r = Math.min(Math.sqrt(x * x + y * y) / 50.0, 1.0);
-    console.log(r);
 
-    socket.emit('controller-input', { name: myname, key: key, angle: delta, length: r });
+    socket.emit('controller-input', { name: myname, key: key, angle: delta });
   }, 1000 / 30);
 };
 
+var loadNinja = function() {
+  // Figure out what is checked and his name
+  $('#goBtn').on('click', function() {
+    var myninja = $('input:radio[name="ninjaChoose"]:checked')[0].value;
+    myname = $('#playername').val();
+    $('.carousell').css('display', 'none');
+    var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
+    socket.emit('client-register', data);
+  });
+};
 
 // Socket Events
 // 1. Choose your ninja
 // 2. client-register
 // 3. Screen replies ok and you're good to go
 // socket.emit('client-register', { type: 'controller', room: myroom, name: myname, ninja: 'fat ninja'});
-
+$(function() { loadNinja(); });
 socket.on('screen-controller-join', function(data) {
   if (data.success) {
     $(document).ready(loadJoysticks);

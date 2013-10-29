@@ -120,6 +120,7 @@ io.sockets.on('connection', function(socket) {
     serverMessage('Joined as '+data.type+' in Room : '+data.room);
     serverNumbers(data.room);
     if (data.type == 'controller') {
+      console.log(data);
       io.sockets.in(data.room+'-screen').emit('server-controller-join', {
         id: socket.id,
         name: data.name,
@@ -135,8 +136,7 @@ io.sockets.on('connection', function(socket) {
     serverNumbers(room);
     console.log('A '+type+' has left '+room);
     io.sockets.in(room+'-screen').emit('server-controller-leave', {
-      name: name,
-      id: socket.id
+      name: name
     });
   });
 

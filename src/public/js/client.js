@@ -47,7 +47,7 @@ function rttHeartBeat() {
     // Currently does not take into account timeouts
     if (timings.length === 5) {
       var total = timings.reduce(function(a,b){return a+b;});
-      document.getElementById('ping').innerHTML = 'Latency : ' + (total/5.0) + ' ms';
+      // document.getElementById('ping').innerHTML = 'Latency : ' + (total/5.0) + ' ms';
     }
   });
 

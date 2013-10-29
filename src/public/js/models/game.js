@@ -23,8 +23,10 @@ var Game = function() {
   this.box.SetContactListener(listener);
 }
 
-Game.prototype.addNinja = function(identifer) {
+Game.prototype.addNinja = function(data) {
   if (this.colors.length === 0) return false;
+
+  var player = new Player(data);
 
   // var position = getFreePosition
   var position = new Vector2D(Math.random() * 500, 100);
@@ -47,8 +49,9 @@ Game.prototype.addNinja = function(identifer) {
   body.CreateFixture(fixture);
   
   var color = this.colors.splice(0, 1)[0];
-  var ninja = new Ninja(identifer, color);
+  var ninja = new Ninja(player, color);
   ninja.size = NINJA_RADIUS;
+  player.controlled_object = ninja;
 
   var shape_body = new createjs.Bitmap("/images/ninja-yellow.png");
   shape_body.name = "body";

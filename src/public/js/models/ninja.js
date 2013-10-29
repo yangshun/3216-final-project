@@ -1,6 +1,6 @@
 // TODO: pass parameters to constructor
-var Ninja = function(identifier, color) {
-  ControllableObject.call(this, identifier);
+var Ninja = function(player, color) {
+  ControllableObject.call(this, player);
   this.hitPoint = 10;
   this.maxHitPoint = 10;
   this.color = color;

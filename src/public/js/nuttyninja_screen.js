@@ -19,7 +19,7 @@ function controller_input(data) {
 }
 
 function controller_join(data) {
-	if (game.addNinja(data.name)) {
+	if (game.addNinja(data)) {
 		console.log("New ninja added " + data.name);
 	} else {
 		console.log("Cannot add more ninja");
@@ -35,6 +35,7 @@ function controller_leave(data) {
 	});
 
 	if (ninjaToHandle != null) {
+		console.log(ninjaToHandle);
 		ninjaToHandle.dead = true;	
 	}
 }

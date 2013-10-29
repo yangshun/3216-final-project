@@ -35,8 +35,13 @@ Ninja.prototype.collide = function(anotherObject) {
       this.dead = true;
     }
 
-    this.updateHitPointBar();
   }
+
+  if (anotherObject instanceof HealthTile) {
+    this.hitPoint = Math.min(anotherObject.heal + this.hitPoint, this.maxHitPoint);
+  }
+
+  this.updateHitPointBar();
 }
 
 Ninja.prototype.updateHitPointBar = function() {

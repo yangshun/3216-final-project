@@ -1,9 +1,12 @@
+MAX_HEALTH_TILE = 5;
+
 var Map = function() {
 	this.height = Math.floor(game.canvas.height / TILE_HEIGHT); // # of tiles
 	this.width = Math.floor(game.canvas.width / TILE_WIDTH); // # of tiles
 
 	this.tileMap = [];
 	this.destructible = [];
+	this.numHealthTiles = 0;
 
 	this.bgpath = '/images/game-background.jpg';
 	this.background = new createjs.Bitmap(this.bgpath);
@@ -43,7 +46,7 @@ Map.prototype.generateSimpleMap = function() {
 	}
 }
 
-Map.prototype.getRandomBlankPosition = function() {
+Map.prototype.getRandomBlankTile = function() {
 	// Get a tile that has no obstacle
 	var justTiles = [];
 	for (var row in this.tileMap) {
@@ -54,18 +57,30 @@ Map.prototype.getRandomBlankPosition = function() {
 		}
 	}
 
-	console.log('getBlankPosition','justTiles', justTiles);
 	var emptyTile = justTiles[(Math.round(Math.random()*justTiles.length))];
-  return new Vector2D(emptyTile.x+TILE_WIDTH/2, emptyTile.y+TILE_HEIGHT/2);
+	return emptyTile;
+}
+
+Map.prototype.getRandomBlankPosition = function() {
+	var emptyTile = this.getRandomBlankTile();
+	return new Vector2D(emptyTile.x+TILE_WIDTH/2, emptyTile.y+TILE_HEIGHT/2);
 }
 
 Map.prototype.tick = function() {
 	this.destructible.map(function(t) {
 		t.tick();
 	});
+
+	if (Math.random()< 0.01 && this.numHealthTiles < MAX_HEALTH_TILE) {
+		this.generateRandomPowerup();
+	}
 }
 
 Map.prototype.removeTile = function(t) {
+	if (t instanceof HealthTile) {
+		this.numHealthTiles -= 1;
+	}
+
 	this.destructible = _.without(this.destructible, t);
 	game.box.DestroyBody(t.body);
 	game.stage.removeChild(t.view);
@@ -74,3 +89,17 @@ Map.prototype.removeTile = function(t) {
 	this.tileMap.push(new_t);
 	delete t;
 }
+
+Map.prototype.generateRandomPowerup = function() {
+	var t = this.getRandomBlankTile();	
+	console.log(t.tileX+','+t.tileY);
+	this.generatePowerup(t.tileX, t.tileY);
+};
+
+Map.prototype.generatePowerup = function(x, y) {
+	this.numHealthTiles += 1;
+	var p = new HealthTile(x, y, 0);
+	p.initShape();
+	p.initBody();
+	this.destructible.push(p);
+};

@@ -10,7 +10,7 @@ socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
 function controller_input(data) {
 	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-		return ninja.identifier === data.name;
+		return ninja.identifier === data.id;
 	});
 
 	if (ninjaToHandle != null) {
@@ -31,7 +31,7 @@ function controller_leave(data) {
 	console.log(data.name);
 
 	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-		return ninja.identifier === data.name;
+		return ninja.identifier === data.id;
 	});
 
 	if (ninjaToHandle != null) {

@@ -7,7 +7,7 @@ var Ninja = function(player, color) {
   this.size = NINJA_RADIUS;
   this.speed = 250.0;
   this.angle = 0.0;
-
+  this.state = 'live';
   this.effects = [];
   this.ShurikenGun = new ShurikenGun(this);
 }
@@ -81,13 +81,30 @@ Ninja.prototype.changeLinearVelocity = function(v) {
     this.body.ApplyLinearImpulse(new b2Vec2(deltaPx, deltaPy), this.body.GetPosition());
 }
 
+Ninja.prototype.reset = function(position) {
+  this.state = 'live';
+  this.hitPoint = 10;
+  this.angle = 0.0;
+  
+  this.body.SetActive(true);
+  this.body.SetTransform(position.tob2Vec2(SCALE), 0.0);
+  this.body.SetLinearVelocity(new b2Vec2(0, 0));
+  this.body.SetAngularVelocity(0);
+ 
+  this.updateHitPointBar();
+ }
+
 // Override tick function
 Ninja.prototype.tick = function() {
-  this.view.x = this.body.GetPosition().get_x() * SCALE;
-  this.view.y = this.body.GetPosition().get_y() * SCALE;
-  this.view.getChildByName("body").rotation = toDegree(this.angle);
-
-  if (this.hitPoint <= 0 || this.dead) {
+  if (this.state == 'live') {
+    this.view.x = this.body.GetPosition().get_x() * SCALE;
+    this.view.y = this.body.GetPosition().get_y() * SCALE;
+    this.view.getChildByName("body").rotation = toDegree(this.angle);
+  } else if (this.state == 'dead') {
+    this.state = 'reviving';
+    this.body.SetActive(false);
+    game.reviveNinja(this, 1000.0);
+  } else if (this.state == 'remove') {
     this.destroy();
   }
 }

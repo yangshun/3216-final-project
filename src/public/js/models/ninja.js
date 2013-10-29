@@ -54,8 +54,8 @@ Ninja.prototype.updateHitPointBar = function() {
 Ninja.prototype.handleInput = function(input) {
   if (input.key === 'move') {
     this.angle = input.angle;
-    var vXnew = this.speed * Math.cos(input.angle);
-    var vYnew = this.speed * Math.sin(input.angle);
+    var vXnew = this.speed * input.length * Math.cos(input.angle);
+    var vYnew = this.speed * input.length * Math.sin(input.angle);
     this.changeLinearVelocity(new Vector2D(vXnew, vYnew));
   } else if (input.key === 'stopmove') {
     this.changeLinearVelocity(new Vector2D(0, 0));

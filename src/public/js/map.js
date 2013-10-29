@@ -1,4 +1,5 @@
 MAX_HEALTH_TILE = 5;
+MAX_SPEED_TILE = 2;
 
 var Map = function() {
 	this.height = Math.floor(game.canvas.height / TILE_HEIGHT); // # of tiles
@@ -9,6 +10,7 @@ var Map = function() {
 	this.blankTiles = []; // Keeps track of blank tiles
 
 	this.numHealthTiles = 0;
+	this.numSpeedTiles = 0;
 
 	this.bgpath = '/images/game-background.jpg';
 	this.background = new createjs.Bitmap(this.bgpath);
@@ -67,7 +69,13 @@ Map.prototype.tick = function() {
 	});
 
 	if (Math.random()< 0.01 && this.numHealthTiles < MAX_HEALTH_TILE) {
-		this.generateRandomPowerup();
+		this.numHealthTiles += 1;
+		this.generateRandomPowerup('healthtile');
+	}
+
+	if (Math.random() < 0.01 && this.numSpeedTiles < MAX_SPEED_TILE) {
+		this.numSpeedTiles += 1;
+		this.generateRandomPowerup('speedtile');
 	}
 }
 
@@ -85,20 +93,30 @@ Map.prototype.removeTile = function(t) {
 	if (t instanceof HealthTile) {
 		this.numHealthTiles -= 1;
 	}
+	if (t instanceof SpeedTile) {
+		this.numSpeedTiles -= 1;	
+	}
 
 	this.destructible = _.without(this.destructible, t);
 	game.box.DestroyBody(t.body);
 	game.stage.removeChild(t.view);
 }
 
-Map.prototype.generateRandomPowerup = function() {
+Map.prototype.generateRandomPowerup = function(type) {
 	var t = this.getRandomBlankTile();	
-	this.generatePowerup(t.tileX, t.tileY);
+	this.generatePowerup(t.tileX, t.tileY, type);
 };
 
-Map.prototype.generatePowerup = function(x, y) {
-	this.numHealthTiles += 1;
-	var p = new HealthTile(x, y, 0);
+Map.prototype.generatePowerup = function(x, y, type) {
+	var p;
+	switch (type) {
+		case 'healthtile':
+			p = new HealthTile(x, y, 0);
+			break;
+		case 'speedtile':
+			p = new SpeedTile(x, y, 0);
+			break;
+	}
 	p.initShape();
 	p.initBody();
 	this.destructible.push(p);

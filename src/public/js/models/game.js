@@ -70,7 +70,7 @@ Game.prototype.addNinja = function(data) {
   hitpoint_view.graphics.beginFill(color).drawRect(-(NINJA_RADIUS*1.5), -NINJA_RADIUS-20, NINJA_RADIUS*3, 10);
   view.addChild(hitpoint_view);
 
-  var name_view = new createjs.Text(player.name, "10px Arial", ninja.color);
+  var name_view = new createjs.Text(player.name, "15px chunq", "black");
   name_view.name = "name";
   name_view.textAlign = "center";
   name_view.x = 0;

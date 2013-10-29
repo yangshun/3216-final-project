@@ -96,6 +96,10 @@ io.sockets.on('connection', function(socket) {
   serverMessage('MOTD: Welcome to Prototype-1');
   serverNumbers('world');
 
+  socket.on('screen-controller-join', function(data) {
+    io.sockets.sockets[data.id].emit('screen-controller-join', data);
+  });
+
   socket.on('client-register', function(data) {
     type = data.type;
     room = data.room;
@@ -117,7 +121,9 @@ io.sockets.on('connection', function(socket) {
     serverNumbers(data.room);
     if (data.type == 'controller') {
       io.sockets.in(data.room+'-screen').emit('server-controller-join', {
-        name: data.name
+        id: socket.id,
+        name: data.name,
+        ninja: data.ninja
       });
     }
   });
@@ -141,6 +147,8 @@ io.sockets.on('connection', function(socket) {
   socket.on('controller-input', function(data) {
     var action = data.action || data.angle;
     // serverMessage(action+' received for '+data.key);
+    data.id = socket.id;
+    data.name = name;
     socket.broadcast.to(room+'-screen').emit('controller-input', data);
   });
 

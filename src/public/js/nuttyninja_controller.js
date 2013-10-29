@@ -12,12 +12,11 @@ if (path.length === 2 && path[1] !== '') {
 	myroom = path[1];
 }
 
-socket.emit('client-register', { type: 'controller', room: myroom, name: myname });
-
-// Socket Events
-
-$(document).ready(function () {
+var loadJoysticks = function() {
   console.log(myname);
+  // Re-display the joystick divs
+  $('.joystick').css('display', 'block');
+
   leftJoystick  = new VirtualJoystick({
     container : document.getElementById('leftContainer'),
     mouseSupport  : true
@@ -40,8 +39,22 @@ $(document).ready(function () {
     delta -= Math.PI/2;
     // console.log(delta)
     var key = 'move';
-    if (x == 0 && y == 0) key = 'stopmove';
+    if (x === 0 && y === 0) key = 'stopmove';
 
     socket.emit('controller-input', { name: myname, key: key, angle: delta });
   }, 1000 / 30);
+};
+
+
+// Socket Events
+// 1. Choose your ninja
+// 2. client-register
+// 3. Screen replies ok and you're good to go
+// socket.emit('client-register', { type: 'controller', room: myroom, name: myname, ninja: 'fat ninja'});
+
+socket.on('screen-controller-join', function(data) {
+  if (data.success) {
+    $(document).ready(loadJoysticks);
+  }
 });
+

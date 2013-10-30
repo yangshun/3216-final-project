@@ -1,4 +1,33 @@
 var Screen = (function() {
+    var init = function() {
+        var gameCanvas = document.getElementById('gameCanvas');
+        gameCanvas.width = window.innerWidth;
+        gameCanvas.height = window.innerHeight;
+
+        var stage = new createjs.Stage(gameCanvas);
+
+        game = new Game();
+        game.canvas = gameCanvas;
+        game.stage = stage;
+        game.map = new Map();
+        game.map.generateSimpleMap();
+
+        createjs.Ticker.setFPS(60);
+        createjs.Ticker.addEventListener('tick', handleTick);
+    };
+
+    var handleTick = function(ticker_data) {
+        var timestep = ticker_data.delta / 1000.0;
+        game.box.Step(timestep, 8.0, 3.0);
+        game.box.ClearForces();
+
+        game.ninjas.map(function(s){s.tick();});
+        game.shurikens.map(function(s){s.tick();});
+        game.map.tick();
+
+        game.stage.update();
+    }
+
     var controller_input = function(data) {
         var ninjaToHandle = _.find(game.ninjas, function(ninja) {
             return ninja.identifier === data.id;
@@ -7,7 +36,7 @@ var Screen = (function() {
         if (ninjaToHandle != null) {
             ninjaToHandle.handleInput(data);
         }
-    }
+    };
 
     var controller_join = function(data) {
         if (game.addNinja(data)) {
@@ -18,7 +47,7 @@ var Screen = (function() {
             console.log("Cannot add more ninja");
             return {success: false};
         }
-    }
+    };
 
     var controller_leave = function(data) {
         var ninjaToHandle = _.find(game.ninjas, function(ninja) {
@@ -28,9 +57,11 @@ var Screen = (function() {
         if (ninjaToHandle != null) {
             ninjaToHandle.state = 'remove'; 
         }
-    }
+    };
 
-    return {controller_input: controller_input,
+    return {init: init,
+            controller_input: controller_input,
             controller_join: controller_join,
-            controller_leave: controller_leave};
+            controller_leave: controller_leave
+        };
 })();

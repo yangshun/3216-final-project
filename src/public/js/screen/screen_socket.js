@@ -9,47 +9,24 @@ if (path.length === 2 && path[1] !== '') {
 socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
 // Socket Events
-socket.on('controller-input', Screen.controller_input);
+socket.on('controller-input', function(data) {
+	Screen.controller_input(data);
+});
+
 socket.on('server-controller-join', function(data) {
 	socket.emit('screen-controller-join', Screen.controller_join(data));
 });
-socket.on('server-controller-leave', Screen.controller_leave);
 
-var init = function () {
-	var gameCanvas = document.getElementById('gameCanvas');
-	gameCanvas.width = window.innerWidth;
-	gameCanvas.height = window.innerHeight;
-
-	var stage = new createjs.Stage(gameCanvas);
-
-	game = new Game();
-	game.canvas = gameCanvas;
-	game.stage = stage;
-	game.map = new Map();
-	game.map.generateSimpleMap();
-
-	createjs.Ticker.setFPS(60);
-	createjs.Ticker.addEventListener('tick', handleTick);
-}
-
-var handleTick = function(ticker_data) {
-	var timestep = ticker_data.delta / 1000.0;
-	game.box.Step(timestep, 8.0, 3.0);
-	game.box.ClearForces();
-
-	game.ninjas.map(function(s){s.tick();});
-	game.shurikens.map(function(s){s.tick();});
-	game.map.tick();
-
-	game.stage.update();
-}
+socket.on('server-controller-leave', function(data) {
+	Screen.controller_leave(data);
+});
 
 socket.on('server-screen-ready', function(data) {
-  if(data.success){
-    $(function() {init();});
-  } else {
-    console.log(data.error);
-  }
+	if (data.success) {
+		$(function() {Screen.init();});
+	} else {
+		console.log(data.error);
+	}
 });
 
 window.addEventListener("resize", OnResizeCalled, false);

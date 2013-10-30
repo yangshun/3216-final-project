@@ -8,42 +8,12 @@ if (path.length === 2 && path[1] !== '') {
 
 socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
-function controller_input(data) {
-	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-		return ninja.identifier === data.id;
-	});
-
-	if (ninjaToHandle != null) {
-		ninjaToHandle.handleInput(data);
-	}
-}
-
-function controller_join(data) {
-	if (game.addNinja(data)) {
-		console.log("New ninja added " + data.name);
-    socket.emit('screen-controller-join', {success: true, name: data.name, id: data.id});
-	} else {
-		console.log("Cannot add more ninja");
-    socket.emit('screen-controller-join', {success: false});
-	}
-}
-
-function controller_leave(data) {
-	console.log('LEAVER!!!', data.id);
-
-	var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-		return ninja.identifier === data.id;
-	});
-
-	if (ninjaToHandle != null) {
-		ninjaToHandle.state = 'remove';	
-	}
-}
-
 // Socket Events
-socket.on('controller-input', controller_input);
-socket.on('server-controller-join', controller_join);
-socket.on('server-controller-leave', controller_leave);
+socket.on('controller-input', Screen.controller_input);
+socket.on('server-controller-join', function(data) {
+	socket.emit('screen-controller-join', Screen.controller_join(data));
+});
+socket.on('server-controller-leave', Screen.controller_leave);
 
 var init = function () {
 	var gameCanvas = document.getElementById('gameCanvas');

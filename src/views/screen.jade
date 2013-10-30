@@ -1,22 +1,30 @@
 extends layout
 
 block content
-  script(type='text/javascript', src='/vendor/box2d.js')
+  // - Libraries and utilities
+  script(type='text/javascript', src='/lib/box2d.js')
+  script(type='text/javascript', src='/lib/stats.min.js')
+  script(type='text/javascript', src='/js/misc/utilities.js')
 
-  script(type='text/javascript', src='/js/utilities.js')
-  script(type='text/javascript', src='/js/models/ninja_school.js')
-  script(type='text/javascript', src='/js/models/player.js')
-  script(type='text/javascript', src='/js/models/game_object.js')
-  script(type='text/javascript', src='/js/models/game.js')
-  script(type='text/javascript', src='/js/models/collidable_object.js')
-  script(type='text/javascript', src='/js/models/controllable_object.js')
-  script(type='text/javascript', src='/js/models/shuriken.js')
-  script(type='text/javascript', src='/js/models/shuriken_gun.js')
-  script(type='text/javascript', src='/js/models/ninja.js')
-  script(type='text/javascript', src='/js/models/tile.js')
-  script(type='text/javascript', src='/js/nuttyninja_screen.js')
-  script(type='text/javascript', src='/js/map.js')
-  script(type='text/javascript', src='/js/stats.min.js')
+  // - Factories
+  script(type='text/javascript', src='/js/screen/factories/ninja_school.js')
+  
+  // - Game Models
+  script(type='text/javascript', src='/js/screen/models/player.js')
+  script(type='text/javascript', src='/js/screen/models/game_object.js')
+  script(type='text/javascript', src='/js/screen/models/collidable_object.js')
+  script(type='text/javascript', src='/js/screen/models/controllable_object.js')
+  script(type='text/javascript', src='/js/screen/models/shuriken.js')
+  script(type='text/javascript', src='/js/screen/models/shuriken_gun.js')
+  script(type='text/javascript', src='/js/screen/models/ninja.js')
+  script(type='text/javascript', src='/js/screen/nuttyninja_screen.js')
+
+  // - Game Maps
+  script(type='text/javascript', src='/js/screen/map/map.js')
+  script(type='text/javascript', src='/js/screen/map/tile.js')
+
+  // - Game
+  script(type='text/javascript', src='/js/screen/game.js')
 
   block game
 

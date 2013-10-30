@@ -65,3 +65,16 @@ var Screen = (function() {
             controller_leave: controller_leave
         };
 })();
+
+// Resize code
+window.addEventListener("resize", function() {
+    var ratio = game.canvas.width / game.canvas.height;
+    if (window.innerHeight * ratio > window.innerWidth) {
+        game.canvas.style.width = window.innerWidth +'px';
+        game.canvas.style.height = (window.innerWidth / ratio) +'px';
+    } else {
+
+        game.canvas.style.height = window.innerHeight +'px';
+        game.canvas.style.width = (window.innerHeight * ratio) +'px';
+    }
+}, false);

@@ -5,7 +5,6 @@ if (path.length === 2 && path[1] !== '') {
 	// We have a room id
 	myroom = path[1];
 }
-
 socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
 
 // Socket Events
@@ -28,17 +27,3 @@ socket.on('server-screen-ready', function(data) {
 		console.log(data.error);
 	}
 });
-
-window.addEventListener("resize", OnResizeCalled, false);
-
-function OnResizeCalled() {
-	var ratio = game.canvas.width / game.canvas.height;
-	if (window.innerHeight * ratio > window.innerWidth) {
-		game.canvas.style.width = window.innerWidth +'px';
-		game.canvas.style.height = (window.innerWidth / ratio) +'px';
-	} else {
-
-		game.canvas.style.height = window.innerHeight +'px';
-		game.canvas.style.width = (window.innerHeight * ratio) +'px';
-	}
-}

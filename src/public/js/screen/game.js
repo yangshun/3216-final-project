@@ -15,8 +15,7 @@ var Game = function() {
               var bodyA = contact.GetFixtureA().GetBody().actor;
               var bodyB = contact.GetFixtureB().GetBody().actor;
 
-              bodyA.collide(bodyB);
-              bodyB.collide(bodyA);
+              CollisionManager.collision(bodyA, bodyB);
           }
   }]);
   this.box.SetContactListener(listener);

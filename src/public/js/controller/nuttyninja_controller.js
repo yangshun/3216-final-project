@@ -33,17 +33,25 @@ var loadJoysticks = function() {
   // });
 
   // Move Event
+  var isMoving = false;
   setInterval(function() {
     var x = leftJoystick.deltaX();
     var y = leftJoystick.deltaY();
     var delta = Math.atan2(y, x);
     delta -= Math.PI/2;
     // console.log(delta)
-    var key = 'move';
-    if (x === 0 && y === 0) key = 'stopmove';
-    var l = Math.min(Math.sqrt(x * x + y * y) / 50.0, 1.0);
+    if (x === 0 && y === 0) {
+      if (isMoving) {
+        isMoving = false;
+        socket.emit('controller-input', { name: myname, key: 'stopmove'});
+      }
+    }
+    else {
+      var l = Math.min(Math.sqrt(x * x + y * y) / 50.0, 1.0);
+      isMoving = true;
+      socket.emit('controller-input', { name: myname, key: 'move', angle: delta, length: l });
+    }
 
-    socket.emit('controller-input', { name: myname, key: key, angle: delta, length: l });
   }, 1000 / 30);
 };
 

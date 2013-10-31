@@ -4,6 +4,7 @@ var CollidableObject = function(body, bitmapView) {
   // this.body.SetUserData(this); // Set reference of this to body, useful in colison callback
   this.view = bitmapView;
   this.dead = false;
+  this._type = 'collidable';
 }
 
 CollidableObject.prototype = new GameObject(); // Inheritance

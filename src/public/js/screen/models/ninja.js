@@ -10,6 +10,7 @@ var Ninja = function(player, color) {
   this.state = 'live';
   this.effects = [];
   this.ShurikenGun = new ShurikenGun(this);
+  this._type = 'ninja';
 }
 
 Ninja.prototype = new ControllableObject();

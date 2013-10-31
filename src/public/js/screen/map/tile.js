@@ -48,6 +48,7 @@ var ObstacleTile = function(x, y, r, c) {
 	this.view = null;
 	this.body = null;
 	this.dead = false;
+	this._type = 'tile_obstacle';
 }
 
 ObstacleTile.prototype = new Tile();
@@ -167,6 +168,7 @@ var HealthTile = function(x, y, r, c) {
 	this.view = null;
 	this.body = null;
 	this.dead = false;
+	this._type = 'tile_health';
 }
 
 HealthTile.prototype = new Tile();
@@ -226,6 +228,7 @@ var SpeedTile = function(x, y, r, c) {
 	this.view = null;
 	this.body = null;
 	this.dead = false;
+	this._type = 'tile_speed';
 }
 
 SpeedTile.prototype = new Tile();

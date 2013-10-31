@@ -10,6 +10,7 @@ var Shuriken = function() {
   this.angle = 0;
   this.density = 0;
   this.rotation_step = 30;
+  this._type = 'shuriken';
 }
 
 Shuriken.prototype = new CollidableObject();

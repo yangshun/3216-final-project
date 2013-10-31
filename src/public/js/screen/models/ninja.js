@@ -32,7 +32,10 @@ Ninja.prototype.destroy = function() {
 Ninja.prototype.collide = function(anotherObject) {
   if (anotherObject instanceof Shuriken) {
     this.hitPoint -= anotherObject.damage;
-    if (this.hitPoint <= 0) { this.state = 'dead'; }
+    if (this.hitPoint <= 0) { 
+      this.state = 'dead'; 
+      game.updateScore(anotherObject.ninja.player.name, this.player.name);
+    }
   }
 
   if (anotherObject instanceof HealthTile) {
@@ -40,7 +43,11 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof SpeedTile) {
-    this.speed *= 2; 
+    this.speed = Math.min(400, this.speed + 100);
+    TimedEventManager.addEvent(5000, function() {
+      console.log(this);
+      this.speed = Math.max(250, this.speed - 100);
+    }); 
   }
 
   this.updateHitPointBar();
@@ -67,7 +74,7 @@ Ninja.prototype.handleInput = function(input) {
   } else if (input.key === 'stopmove') {
     this.changeLinearVelocity(new Vector2D(0, 0));
   } else if (input.key === 'shoot') {
-    this.shoot();
+    if (this.state == 'live') { this.shoot(); }
   }
 }
 

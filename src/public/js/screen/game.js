@@ -35,8 +35,13 @@ Game.prototype.addNinja = function(data) {
 
   this.ninjas.push(ninja);
   this.stage.addChild(ninja.view);
+  Leaderboard.addPlayer(player.name);
 
   return true;
+}
+
+Game.prototype.updateScore = function(player_kill, player_die) {
+  Leaderboard.updatePlayer(player_kill, {kill: 1});
 }
 
 Game.prototype.reviveNinja = function(ninja, time) {

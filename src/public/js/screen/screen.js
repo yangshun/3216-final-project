@@ -18,9 +18,9 @@ var Screen = (function() {
         // Sample call to register collision
         CollisionManager.registerCallback(HealthTile, Ninja, function(objA, objB) {
             TimedEventManager.addEvent(2000, function() {
-                console.log("2 seconds after eating!");
+                console.log((new Date).getTime() + ": 2 seconds after eating!");
             });
-            console.log("Ninja is eating health woots");
+            console.log((new Date).getTime() + ": Ninja is eating health woots");
         });
     };
 

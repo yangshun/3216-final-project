@@ -14,6 +14,11 @@ var Screen = (function() {
 
         createjs.Ticker.setFPS(60);
         createjs.Ticker.addEventListener('tick', handleTick);
+
+        // Sample call to register collision
+        CollisionManager.registerCallback(HealthTile, Ninja, function() {
+            console.log("Ninja is eating health woots");
+        });
     };
 
     var handleTick = function(ticker_data) {

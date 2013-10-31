@@ -16,7 +16,10 @@ var Screen = (function() {
         createjs.Ticker.addEventListener('tick', handleTick);
 
         // Sample call to register collision
-        CollisionManager.registerCallback(HealthTile, Ninja, function() {
+        CollisionManager.registerCallback(HealthTile, Ninja, function(objA, objB) {
+            TimedEventManager.addEvent(2000, function() {
+                console.log("2 seconds after eating!");
+            });
             console.log("Ninja is eating health woots");
         });
     };
@@ -31,6 +34,7 @@ var Screen = (function() {
         game.map.tick();
 
         game.stage.update();
+        TimedEventManager.tick();
     }
 
     var controller_input = function(data) {

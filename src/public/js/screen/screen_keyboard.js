@@ -9,7 +9,7 @@ var playerJoined = false;
 $(window).keydown(function(e) {
     var key = String.fromCharCode(e.keyCode);
 
-    if (key != 'J' && keyDown.indexOf(key) < 0 && (key in bindings)) {
+    if (key != 'F' && key != 'J' && keyDown.indexOf(key) < 0 && (key in bindings)) {
         keyDown.push(key);
     }
 });
@@ -20,7 +20,10 @@ $(window).keyup(function(e) {
     if (key == 'J' && !playerJoined) {
         playerJoined = true;
         Screen.controller_join({id: "kb1", name:"KB1", ninja:"orange"});
-    } else {
+    } else if (key == 'F') {
+        Screen.controller_input({id: "kb1", name:"KB1", key:"shoot", shoot: 1});
+    }
+    else {
         var idx = keyDown.indexOf(key);
         keyDown.splice(idx, 1);
         if (keyDown.length == 0) {

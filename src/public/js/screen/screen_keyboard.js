@@ -26,7 +26,7 @@ $(window).keyup(function(e) {
     if (key == 'J' && !playerJoined) {
         playerJoined = true;
         Screen.controller_join({id: "kb1", name:"KB1", ninja:"orange"});
-    } else if (key == 'F') {
+    } else if (key == 'K') {
         Screen.controller_input({id: "kb1", name:"KB1", key:"shoot", shoot: 1});
     }
     else {

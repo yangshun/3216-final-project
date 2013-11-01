@@ -36,6 +36,8 @@ app.get('/screen', routes.screen);
 app.get('/screen/*', routes.screenWithRoom);
 app.get('/controller', routes.controller);
 app.get('/controller/*', routes.controllerWithRoom);
+app.get('/botcontroller', routes.botcontrollerWithRoom);
+app.get('/botcontroller/*', routes.botcontrollerWithRoom);
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

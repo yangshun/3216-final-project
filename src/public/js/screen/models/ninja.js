@@ -41,6 +41,10 @@ Ninja.prototype.collide = function(anotherObject) {
 
   if (anotherObject instanceof SpeedTile) {
     this.speed *= 2; 
+    var object = this;
+    TimedEventManager.addEvent(3000, function() {
+      object.speed /= 2;
+    });
   }
 
   this.updateHitPointBar();

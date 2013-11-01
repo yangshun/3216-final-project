@@ -1,8 +1,14 @@
 bindings = {};
-bindings['W'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*1.5}); }
-bindings['S'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*0.5}); }
-bindings['A'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI}); }
 bindings['D'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*0}); }
+bindings['C'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*0.25}); }
+bindings['S'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*0.5}); }
+bindings['Z'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*0.75}); }
+bindings['A'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*1.0}); }
+bindings['Q'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*1.25}); }
+bindings['W'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*1.5}); }
+bindings['E'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*1.75}); }
+
+
 
 var keyDown = [];
 var playerJoined = false;

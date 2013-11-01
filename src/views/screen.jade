@@ -7,6 +7,7 @@ block content
   script(type='text/javascript', src='/lib/stats.min.js')
   script(type='text/javascript', src='/js/misc/utilities.js')
   script(type='text/javascript', src='/lib/pubsub.js')
+  script(type='text/javascript', src='/lib/angular.min.js')
 
   //- Factories
   script(type='text/javascript', src='/js/screen/factories/ninja_school.js')
@@ -37,7 +38,18 @@ block content
 
   block game
 
-  div#leaderboard
+  div(id="leaderboard", ng-app, ng-controller="LeaderboardController")
+    //- p {{player_list}}
+    table
+      tr
+        th Name
+        th Kills
+        th Deaths
+
+      tr(ng-repeat="player in player_list | orderBy:'-kills'")
+        td {{player.name}}
+        td {{player.kills}}
+        td {{player.deaths}}
 
   script
     var stats = new Stats();

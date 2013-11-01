@@ -12,8 +12,8 @@ var GunFactory = {
     gun_view.name = "gun";
     gun_view.scaleX = GUN_WIDTH  / 623.0;
     gun_view.scaleY = GUN_HEIGHT  / 200.0;
-    gun_view.regX = 623.0 / 2;
-    gun_view.regY = 200.0 / 2;
+    gun_view.regX = 623 / 2.0;
+    gun_view.regY = 0;
 
     var gun = new ShurikenGun(data.ninja, gun_view);
     return gun;

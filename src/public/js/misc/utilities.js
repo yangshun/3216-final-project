@@ -12,8 +12,8 @@ var   b2Vec2 = Box2D.b2Vec2
 
 NINJA_RADIUS = 20.0
 SCALE = 30.0
-GUN_WIDTH = 40
-GUN_HEIGHT = 13
+GUN_WIDTH = 60
+GUN_HEIGHT = 18
 
 function outside(x, y) {
   var CANVAS_WIDTH = $('#gameCanvas').width();

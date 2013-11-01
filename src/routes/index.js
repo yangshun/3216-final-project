@@ -38,4 +38,8 @@ module.exports = {
   controllerWithRoom : function(req, res) {
     res.render('controller', { title: 'Prototype-1 Controller' });
   },
+  
+  botcontrollerWithRoom : function(req, res) {
+    res.render('bot_controller', { title: 'Prototype-1 Bot Controller' });
+  }
 };

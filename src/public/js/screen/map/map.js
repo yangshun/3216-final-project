@@ -111,6 +111,7 @@ Map.prototype.generatePowerup = function(x, y, type) {
 	var p;
 	switch (type) {
 		case 'healthtile':
+			console.log('making health tile');
 			p = new HealthTile(x, y, 0);
 			break;
 		case 'speedtile':

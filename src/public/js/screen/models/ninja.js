@@ -34,7 +34,7 @@ Ninja.prototype.collide = function(anotherObject) {
     this.hitPoint -= anotherObject.damage;
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
-      game.updateScore(anotherObject.ninja.player.name, this.player.name);
+      PubSub.publish('ninja.death', {name:anotherObject.ninja.player.name , kills:1});
     }
   }
 
@@ -44,9 +44,10 @@ Ninja.prototype.collide = function(anotherObject) {
 
   if (anotherObject instanceof SpeedTile) {
     this.speed = Math.min(400, this.speed + 100);
+    var that = this;
     TimedEventManager.addEvent(5000, function() {
       console.log(this);
-      this.speed = Math.max(250, this.speed - 100);
+      that.speed = Math.max(250, this.speed - 100);
     }); 
   }
 

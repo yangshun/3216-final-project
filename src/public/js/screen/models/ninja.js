@@ -6,7 +6,7 @@ var Ninja = function(player, color) {
   this.color = color;
   this.size = NINJA_RADIUS;
   this.speed = 250.0;
-  this.angle = 0.0;
+  this.angle = Math.PI / 2;
   this.state = 'live';
   this.effects = [];
   this.ShurikenGun = new ShurikenGun(this);
@@ -105,6 +105,7 @@ Ninja.prototype.tick = function() {
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
     this.view.getChildByName("body").rotation = toDegree(this.angle);
+    this.view.getChildByName("gun").rotation = toDegree(this.angle);
   } else if (this.state == 'dead') {
     this.state = 'reviving';
     this.body.SetActive(false);

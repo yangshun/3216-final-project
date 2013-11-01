@@ -30,14 +30,19 @@ Game.prototype.addNinja = function(data) {
   var ninja = NinjaSchool.trainNinja({
     player: player,
     position: position,
-    color: data.ninja,
+    color: data.ninja
   });
 
   this.ninjas.push(ninja);
   this.stage.addChild(ninja.view);
+  PubSub.publish('ninja.create', { name: ninja.player.name });
 
   return true;
 }
+
+//Game.prototype.updateScore = function(player_kill, player_die) {
+  // Leaderboard.updatePlayer(player_kill, {kill: 1});
+//}
 
 Game.prototype.reviveNinja = function(ninja, time) {
   this.stage.removeChild(ninja.view);

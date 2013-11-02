@@ -6,7 +6,7 @@ var Ninja = function(player, color) {
   this.color = color;
   this.size = NINJA_RADIUS;
   this.speed = 250.0;
-  this.angle = 0.0;
+  this.angle = Math.PI / 2;
   this.state = 'live';
   this.effects = [];
   this.ShurikenGun = new ShurikenGun(this);
@@ -32,7 +32,10 @@ Ninja.prototype.destroy = function() {
 Ninja.prototype.collide = function(anotherObject) {
   if (anotherObject instanceof Shuriken) {
     this.hitPoint -= anotherObject.damage;
-    if (this.hitPoint <= 0) { this.state = 'dead'; }
+    if (this.hitPoint <= 0) { 
+      this.state = 'dead'; 
+      PubSub.publish('ninja.death', {name:anotherObject.ninja.player.name , kills:1});
+    }
   }
 
   if (anotherObject instanceof HealthTile) {
@@ -71,7 +74,7 @@ Ninja.prototype.handleInput = function(input) {
   } else if (input.key === 'stopmove') {
     this.changeLinearVelocity(new Vector2D(0, 0));
   } else if (input.key === 'shoot') {
-    this.shoot();
+    if (this.state == 'live') { this.shoot(); }
   }
 }
 
@@ -105,6 +108,7 @@ Ninja.prototype.tick = function() {
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
     this.view.getChildByName("body").rotation = toDegree(this.angle);
+    this.view.getChildByName("gun").rotation = toDegree(this.angle);
   } else if (this.state == 'dead') {
     this.state = 'reviving';
     this.body.SetActive(false);

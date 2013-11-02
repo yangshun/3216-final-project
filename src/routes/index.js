@@ -18,7 +18,7 @@ module.exports = {
 
   screen : function(req, res) {
     // res.render('screen', { title: 'Prototype-1 Screen' });
-    res.render('nuttyninja_screen', { title: 'Prototype-1 Screen' });
+    res.render('screen', { title: 'Prototype-1 Screen' });
   },
 
   landing : function(req, res) {
@@ -28,15 +28,15 @@ module.exports = {
   screenWithRoom : function(req, res) {
     // res.render('screen', { title: 'Prototype-1 Screen' });
     
-    res.render('nuttyninja_screen', { title: 'Prototype-1 Screen' });
+    res.render('screen', { title: 'Prototype-1 Screen' });
   },
 
   controller : function(req, res) {
-    res.render('nuttyninja_controller', { title: 'Prototype-1 Controller' });
+    res.render('controller', { title: 'Prototype-1 Controller' });
   },
 
   controllerWithRoom : function(req, res) {
-    res.render('nuttyninja_controller', { title: 'Prototype-1 Controller' });
+    res.render('controller', { title: 'Prototype-1 Controller' });
   },
   
   botcontrollerWithRoom : function(req, res) {

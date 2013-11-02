@@ -26,9 +26,15 @@ var NinjaSchool = {
     var ninja = new Ninja(data.player, data.color);
     ninja.size = NINJA_RADIUS;
 
+    var gun = GunFactory.makeGun({ninja: ninja, type: 'hulk'});
+    gun.view.x = 0;
+    gun.view.y = 0;
+
     var view = new createjs.Container();
     view.x = data.position.x;
     view.y = data.position.y;
+
+    view.addChild(gun.view);
 
     var image_name = this.images[data.color] || this.images['yellow'];
     var body_view = new createjs.Bitmap(image_name);

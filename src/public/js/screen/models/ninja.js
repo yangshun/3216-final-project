@@ -24,6 +24,14 @@ Ninja.prototype.shoot = function() {
 }
 
 Ninja.prototype.destroy = function() {
+  this.effects.map(function(e) { e.destroy(); });
+  this.effects = null;
+
+  this.view = null;
+
+  this.ShurikenGun.destroy();
+  this.ShurikenGun = null;
+  
   game.removeNinja(this);
   delete this;
 }
@@ -135,7 +143,6 @@ Ninja.prototype.tick = function() {
     game.reviveNinja(this, 1000.0);
   } else if (this.state == 'remove') {
     PubSub.publish('ninja.remove', {name: this.player.name, ninja: this });
-    this.effects.map(function(e) { e.destroy(); });
     this.destroy();
   }
 }

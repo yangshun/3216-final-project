@@ -249,32 +249,24 @@ body { /* Addresses a small issue in webkit: http://bit.ly/NEdoDq */
 /* originally authored by Nick Pettit - https://github.com/nickpettit/glide */
 
 @-webkit-keyframes pulse {
-    0% { -webkit-transform: scale(1) rotate(0deg); }
-    /*25% { -webkit-transform: rotate(3deg); }*/
-	50% { -webkit-transform: scale(1.05) rotate(0deg); }
-	/*75% { -webkit-transform: rotate(-3deg); }*/
-    100% { -webkit-transform: scale(1) rotate(0deg); }
+    0% { -webkit-transform: scale(1); }
+	50% { -webkit-transform: scale(1.07); }
+    100% { -webkit-transform: scale(1); }
 }
 @-moz-keyframes pulse {
-    0% { -moz-transform: scale(1) rotate(0deg); }
-    /*25% { -moz-transform: rotate(3deg); }*/
-	50% { -moz-transform: scale(1.05) rotate(0deg); }
-	/*75% { -moz-transform: rotate(-3deg); }*/
-    100% { -moz-transform: scale(1) rotate(0deg); }
+    0% { -moz-transform: scale(1); }
+	50% { -moz-transform: scale(1.07); }
+    100% { -moz-transform: scale(1); }
 }
 @-o-keyframes pulse {
-    0% { -o-transform: scale(1) rotate(0deg); }
-    /*25% { -o-transform: rotate(3deg); }*/
-	50% { -o-transform: scale(1.05) rotate(0deg); }
-	/*75% { -o-transform: rotate(-3deg); }*/
-    100% { -o-transform: scale(1) rotate(0deg); }
+    0% { -o-transform: scale(1); }
+	50% { -o-transform: scale(1.07); }
+    100% { -o-transform: scale(1); }
 }
 @keyframes pulse {
-    0% { transform: scale(1) rotate(0deg); }
-    /*25% { transform: rotate(3deg); }*/
-	50% { transform: scale(1.05) rotate(0deg); }
-	/*75% { transform: rotate(-3deg); }*/
-    100% { transform: scale(1) rotate(0deg); }
+    0% { transform: scale(1); }
+	50% { transform: scale(1.07); }
+    100% { transform: scale(1); }
 }
 
 .animated.pulse {

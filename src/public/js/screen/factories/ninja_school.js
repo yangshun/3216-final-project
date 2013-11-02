@@ -26,8 +26,6 @@ var NinjaSchool = {
     var ninja = new Ninja(data.player, data.color);
     ninja.size = NINJA_RADIUS;
 
-    var gun = GunFactory.makeGun({ninja: ninja, type: 'hulk'});
-
     var view = new createjs.Container();
     view.x = data.position.x;
     view.y = data.position.y;
@@ -56,7 +54,7 @@ var NinjaSchool = {
     ninja.body = body;
     ninja.body.actor = ninja;
     ninja.view = view;
-    ninja.equipGun('hulk');
+    ninja.equipGun('bumblebee');
 
     return ninja;
   },

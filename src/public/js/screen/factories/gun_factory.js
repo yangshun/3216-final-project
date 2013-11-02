@@ -3,7 +3,8 @@ var GunFactory = {
             'bumblebee': '/images/cannon-bumblebee.png',
             'frost': '/images/cannon-frost.png',
             'hulk': '/images/cannon-hulk.png',
-            'juggernaut': '/images/cannon-juggernaut.png'},
+            'juggernaut': '/images/cannon-juggernaut.png',
+            'plasma': '/images/cannon-plasma.png'},
 
   // data: {position: Vector2D, player: Player, color: String}
   makeGun: function(data) {
@@ -19,6 +20,8 @@ var GunFactory = {
     var gun; 
     if (data.type == 'juggernaut') {
       gun = new JuggernautGun(data.ninja, gun_view);
+    } else if (data.type == 'hulk') {
+      gun = new HulkGun(data.ninja, gun_view);
     } else {
       gun = new ShurikenGun(data.ninja, gun_view);
     }

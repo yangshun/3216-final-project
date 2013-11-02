@@ -19,6 +19,13 @@ var Game = function() {
           }
   }]);
   this.box.SetContactListener(listener);
+
+  // Initialize pubsub stuff
+  var blinkOn = function(msg, data) {
+    data.ninja.addEffect(new BlinkEffect(data.ninja));
+  };
+  PubSub.subscribe('ninja.create', blinkOn);
+  PubSub.subscribe('ninja.revive', blinkOn);
 }
 
 Game.prototype.addNinja = function(data) {
@@ -35,7 +42,7 @@ Game.prototype.addNinja = function(data) {
 
   this.ninjas.push(ninja);
   this.stage.addChild(ninja.view);
-  PubSub.publish('ninja.create', { name: ninja.player.name });
+  PubSub.publish('ninja.create', { name: ninja.player.name, ninja: ninja });
 
   return true;
 }
@@ -50,6 +57,7 @@ Game.prototype.reviveNinja = function(ninja, time) {
     var position = game.map.getRandomBlankPosition();
     ninja.reset(position);
     game.stage.addChild(ninja.view);
+    PubSub.publish('ninja.revive', {name: ninja.player.name, ninja: ninja});
   }, time);
 }
 

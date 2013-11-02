@@ -43,8 +43,8 @@ def deploy():
         run("npm install");
         print(yellow('Restart Server ...'))
         time.sleep(1)
-        run("sudo forever stop app.js")
-        run("sudo forever start app.js")
+        run("forever stop app.js")
+        run("forever start app.js")
         sanity_check_status = sanity_check()
         if sanity_check_status == 1:
             print(red('\n-> Deployment error.'))

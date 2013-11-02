@@ -13,13 +13,14 @@ PROJECT_PATH = '/home/ubuntu/2013-final-project-3/src'
 AWS_IP = '54.251.188.20'
 SERVER = [AWS_IP]
 env.user = 'ubuntu'
-env.key_filename = '~/.ssh/gsync.pem' 
+env.key_filename = '~/.ssh/gsync.pem'
+port = 3216 
 
 
 def sanity_check():
     time.sleep(2)
     print(yellow('Sanity check...\nPinging the following urls:\n'))
-    host = 'http://'+ AWS_IP +':3000'
+    host = 'http://'+ AWS_IP
     urls = ('/')
     for url in urls:
         time.sleep(1)

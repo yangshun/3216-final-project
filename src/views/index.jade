@@ -1,21 +1,47 @@
 extends layout
 
 block content
-  h1 = title
-  p Welcome to #{title}
-  p#ping Connecting ...
-  form(action = '/choose', method = 'post')
-    fieldset
-      div
-        label Room Name : 
-        input(type = 'textfield', name = 'room', value = '')
-        p (Leave blank to connect to lobby)
-
-      div
-        input(type = 'radio', name = 'type', value = 'screen')
-        label Screen
-        input(type = 'radio', name = 'type', value = 'controller', checked = true)
-        label Controller
-
-      div
-        input(type = 'submit', value='Enter')
+  link(rel='stylesheet', href='/css/landing.css')
+  div(class="landing-container desktop-container")
+    div(class="logo")
+    div(class="katana katana-left")
+    div(class="katana katana-right")
+    div(class="text-container")
+      h2
+        a(href="/play/") New Game
+      h2
+        a View Games
+  div(class="landing-container mobile-container")
+    div(class="logo")
+    div(class="text-container")
+      h3
+        a(href="/join/") Quick Join
+      input
+      h3
+        a Join
+  script
+    function toggleFullScreen() {
+      if (!document.fullscreenElement &&    // alternative standard method
+          !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+        if (document.documentElement.requestFullscreen) {
+          document.documentElement.requestFullscreen();
+        } else if (document.documentElement.mozRequestFullScreen) {
+          document.documentElement.mozRequestFullScreen();
+        } else if (document.documentElement.webkitRequestFullscreen) {
+          document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+        }
+      } else {
+        if (document.cancelFullScreen) {
+          document.cancelFullScreen();
+        } else if (document.mozCancelFullScreen) {
+          document.mozCancelFullScreen();
+        } else if (document.webkitCancelFullScreen) {
+          document.webkitCancelFullScreen();
+        }
+      }
+    }
+    document.addEventListener("keydown", function(e) {
+      if (e.keyCode == 13) {
+        toggleFullScreen();
+      }
+    }, false);

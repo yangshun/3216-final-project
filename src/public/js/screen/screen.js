@@ -78,14 +78,47 @@ var Screen = (function() {
 })();
 
 // Resize code
-window.addEventListener("resize", function() {
-  var ratio = game.canvas.width / game.canvas.height;
-  if (window.innerHeight * ratio > window.innerWidth) {
-    game.canvas.style.width = window.innerWidth +'px';
-    game.canvas.style.height = (window.innerWidth / ratio) +'px';
-  } else {
 
-    game.canvas.style.height = window.innerHeight +'px';
-    game.canvas.style.width = (window.innerHeight * ratio) +'px';
+function resize() {
+  // var ratio = game.canvas.width / game.canvas.height;
+  // console.log(window.innerHeight, window.innerWidth);
+  // if (window.innerHeight * ratio > window.innerWidth) {
+  //   game.canvas.style.width = window.innerWidth +'px';
+  //   game.canvas.style.height = (window.innerWidth / ratio) +'px';
+  // } else {
+  //   game.canvas.style.height = window.innerHeight +'px';
+  //   game.canvas.style.width = (window.innerHeight * ratio) +'px';
+  // }
+  game.canvas.style.width = window.innerWidth +'px';
+  game.canvas.style.height = window.innerHeight +'px';
+}
+
+window.addEventListener("resize", resize, false);
+
+function toggleFullScreen() {
+  if (!document.fullscreenElement &&    // alternative standard method
+      !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
+    if (document.documentElement.requestFullscreen) {
+      document.documentElement.requestFullscreen();
+    } else if (document.documentElement.mozRequestFullScreen) {
+      document.documentElement.mozRequestFullScreen();
+    } else if (document.documentElement.webkitRequestFullscreen) {
+      document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.cancelFullScreen) {
+      document.cancelFullScreen();
+    } else if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else if (document.webkitCancelFullScreen) {
+      document.webkitCancelFullScreen();
+    }
+  }
+}
+
+document.addEventListener("keydown", function(e) {
+  if (e.keyCode == 13) {
+    toggleFullScreen();
+    setTimeout(resize, 1000);
   }
 }, false);

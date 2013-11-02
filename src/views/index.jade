@@ -1,6 +1,7 @@
 extends layout
 
 block content
+  link(rel='stylesheet', href='/css/animate.css')
   link(rel='stylesheet', href='/css/landing.css')
   div(class="landing-container desktop-container")
     div(class="logo")
@@ -20,28 +21,12 @@ block content
       h3
         a Join
   script
-    function toggleFullScreen() {
-      if (!document.fullscreenElement &&    // alternative standard method
-          !document.mozFullScreenElement && !document.webkitFullscreenElement) {  // current working methods
-        if (document.documentElement.requestFullscreen) {
-          document.documentElement.requestFullscreen();
-        } else if (document.documentElement.mozRequestFullScreen) {
-          document.documentElement.mozRequestFullScreen();
-        } else if (document.documentElement.webkitRequestFullscreen) {
-          document.documentElement.webkitRequestFullscreen(Element.ALLOW_KEYBOARD_INPUT);
-        }
-      } else {
-        if (document.cancelFullScreen) {
-          document.cancelFullScreen();
-        } else if (document.mozCancelFullScreen) {
-          document.mozCancelFullScreen();
-        } else if (document.webkitCancelFullScreen) {
-          document.webkitCancelFullScreen();
-        }
-      }
-    }
-    document.addEventListener("keydown", function(e) {
-      if (e.keyCode == 13) {
-        toggleFullScreen();
-      }
-    }, false);
+    $(document).ready(function() {
+      $('.logo').addClass('animated bounceInDown');
+      setTimeout(function() {
+        $('.logo').removeClass('bounceInDown')
+        $('.logo').addClass('pulse');
+      }, 1000);
+      $('.katana-left').addClass('katana-left-final');
+      $('.katana-right').addClass('katana-right-final');
+    });

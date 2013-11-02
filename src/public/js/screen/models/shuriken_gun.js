@@ -25,18 +25,19 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 		s[p] = this.shuriken[p];
 	}
 
-	var sign = Math.random() > 0.5 ? 1.0 : -1.0;
+	// var sign = Math.random() > 0.5 ? 1.0 : -1.0;
+  var sign = 0;
 	s.angle = angle + sign * Math.random() * this.angleRange;
   
-  var centerVector = new Vector2D(s.ninja.view.x + Math.cos(angle) * (s.ninja.size + 30), 
-                                  s.ninja.view.y + Math.sin(angle) * (s.ninja.size + 30));
-
+  var cX = 30 * Math.cos(-angle) + this.ninja.size * Math.sin(-angle);
+  var cY = 30 * -Math.sin(-angle) + this.ninja.size * Math.cos(-angle);
+  var centerVector = new Vector2D(s.ninja.view.x + cX, s.ninja.view.y + cY);
 
   var sView = new createjs.Bitmap("/images/shuriken-4-point-star.png");
-  sView.scaleX = s.size / (344 / 2);
-  sView.scaleY = s.size / (344 / 2);
-  sView.regX = 344 / 2;
-  sView.regY = 344 / 2;
+  sView.scaleX = s.size / (344.0 / 2);
+  sView.scaleY = s.size / (344.0 / 2);
+  sView.regX = 344.0 / 2;
+  sView.regY = 344.0 / 2;
   sView.x = centerVector.x;
   sView.y = centerVector.y;
 
@@ -63,4 +64,11 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
   game.addShuriken(s);
 
   s.shoot();
+}
+
+ShurikenGun.prototype.destroy = function() {
+  this.ninja.view.removeChild(this.view);
+  this.ninja = null;
+  this.view = null;
+  delete this;
 }

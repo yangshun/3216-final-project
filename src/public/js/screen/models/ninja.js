@@ -53,12 +53,22 @@ Ninja.prototype.collide = function(anotherObject) {
   this.updateHitPointBar();
 }
 
+Ninja.prototype.equipGun = function(gun_type) {
+  if (this.ShurikenGun) this.ShurikenGun.destroy();
+
+  var gun = GunFactory.makeGun({ninja: this, type: gun_type});
+  this.ShurikenGun = gun;
+  gun.view.x = 0;
+  gun.view.y = 0;
+  this.view.addChildAt(gun.view, 0);
+}
+
 Ninja.prototype.updateHitPointBar = function() {
   var hpBar = this.view.getChildByName("hitpoint");
   var ratio = this.hitPoint / this.maxHitPoint;
 
-  var width = 3*NINJA_RADIUS*ratio/2;
-  width -= 3*NINJA_RADIUS/2;
+  var width = 3*this.size*ratio/2;
+  width -= 3*this.size/2;
   
   hpBar.scaleX = ratio;
   hpBar.x = width;

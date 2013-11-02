@@ -3,9 +3,10 @@ var ShurikenGun = function(ninja, view) {
   this.ninja = ninja;
   this.view = view;
   this.angleRange = 0.05; // In radian
-
+  var color = null;
+  if (this.ninja) { color = this.ninja.color; }
   this.shuriken = {
-  	color : this.ninja.color,
+  	color : color,
   	ninja : this.ninja,
   	speed : 600,
   	size  : 10,
@@ -25,8 +26,7 @@ ShurikenGun.prototype.makeShuriken = function(angle) {
 		s[p] = this.shuriken[p];
 	}
 
-	// var sign = Math.random() > 0.5 ? 1.0 : -1.0;
-  var sign = 0;
+	var sign = Math.random() > 0.5 ? 1.0 : -1.0;
 	s.angle = angle + sign * Math.random() * this.angleRange;
   
   var cX = 30 * Math.cos(-angle) + this.ninja.size * Math.sin(-angle);

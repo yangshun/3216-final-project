@@ -19,6 +19,8 @@ Shuriken.prototype.constructor = Shuriken;
 
 Shuriken.prototype.destroy = function() {
     game.removeShuriken(this);
+    this.ninja = null;
+    this.view = null;
     delete this;
 }
 

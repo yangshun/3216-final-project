@@ -3,10 +3,11 @@ var GunFactory = {
             'bumblebee': '/images/cannon-bumblebee.png',
             'frost': '/images/cannon-frost.png',
             'hulk': '/images/cannon-hulk.png',
-            'juggernault': '/images/cannon-juggernault.png'},
+            'juggernaut': '/images/cannon-juggernaut.png'},
 
   // data: {position: Vector2D, player: Player, color: String}
   makeGun: function(data) {
+    console.log(data);
     var gun_url = this.images[data.type] || this.images['bumblebee'];
     var gun_view = new createjs.Bitmap(gun_url);
     gun_view.name = "gun";
@@ -15,7 +16,13 @@ var GunFactory = {
     gun_view.regX = 623 / 2.0;
     gun_view.regY = -(data.ninja.size - GUN_HEIGHT) / gun_view.scaleY;
 
-    var gun = new ShurikenGun(data.ninja, gun_view);
+    var gun; 
+    if (data.type == 'juggernaut') {
+      gun = new JuggernautGun(data.ninja, gun_view);
+    } else {
+      gun = new ShurikenGun(data.ninja, gun_view);
+    }
+
     return gun;
   }
 }

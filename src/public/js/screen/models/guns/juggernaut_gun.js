@@ -52,11 +52,8 @@ JuggernautGun.prototype.makeOneShuriken = function(angle) {
 }
 
 JuggernautGun.prototype.makeShuriken = function(angle) {
-  // this.makeOneShuriken(angle - Math.PI / 5);
-  // this.makeOneShuriken(angle);
-  
-  for (var i = 0; i < 8; i++) {
-    this.makeOneShuriken(angle + Math.PI / 4.0 * i);  
-  }
+  this.makeOneShuriken(angle - Math.PI / 5);
+  this.makeOneShuriken(angle);
+  this.makeOneShuriken(angle + Math.PI / 5);
 }
 

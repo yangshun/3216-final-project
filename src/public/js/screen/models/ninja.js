@@ -134,6 +134,7 @@ Ninja.prototype.tick = function() {
     this.body.SetActive(false);
     game.reviveNinja(this, 1000.0);
   } else if (this.state == 'remove') {
+    PubSub.publish('ninja.remove', {name: this.player.name, ninja: this });
     this.effects.map(function(e) { e.destroy(); });
     this.destroy();
   }

@@ -207,6 +207,14 @@ HealthTile.prototype.initBody = function() {
 
 HealthTile.prototype.collide = function(anotherObject) {
 	this.dead = true
+  // TODO remove this hax
+  if (anotherObject instanceof Ninja) {
+    var e = new HealEffect(anotherObject);
+    anotherObject.effects.push(e);
+    TimedEventManager.addEvent(3000, function() {
+      e.destroy();
+    });
+  }
 }
 
 HealthTile.prototype.destroy = function() {

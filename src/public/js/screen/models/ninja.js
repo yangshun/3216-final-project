@@ -89,6 +89,14 @@ Ninja.prototype.changeLinearVelocity = function(v) {
     this.body.ApplyLinearImpulse(new b2Vec2(deltaPx, deltaPy), this.body.GetPosition());
 }
 
+Ninja.prototype.addEffect = function(e) {
+  this.effects.push(e);
+}
+
+Ninja.prototype.removeEffect = function(e) {
+  this.effects = _.without(this.effects, e);
+}
+
 Ninja.prototype.reset = function(position) {
   this.state = 'live';
   this.hitPoint = 10;
@@ -104,15 +112,18 @@ Ninja.prototype.reset = function(position) {
 
 // Override tick function
 Ninja.prototype.tick = function() {
+  var that = this;
   if (this.state == 'live') {
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
     this.view.getChildByName("body").rotation = toDegree(this.angle);
+    this.effects.map(function(e) { e.tick(that); });
   } else if (this.state == 'dead') {
     this.state = 'reviving';
     this.body.SetActive(false);
     game.reviveNinja(this, 1000.0);
   } else if (this.state == 'remove') {
+    this.effects.map(function(e) { e.destroy(); });
     this.destroy();
   }
 }

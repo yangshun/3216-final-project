@@ -10,23 +10,27 @@ var Ninja = function(player, color) {
   this.state = 'live';
   this.effects = [];
   this.ShurikenGun = new ShurikenGun(this);
+
+  this.followers = [];
   this._type = 'ninja';
-}
+};
 
 Ninja.prototype = new ControllableObject();
 Ninja.prototype.constructor = Ninja;
 
-Ninja.prototype.move = function(angel, speed) {
-}
+Ninja.prototype.move = function(angle, speed) {
+};
 
 Ninja.prototype.shoot = function() {
   this.ShurikenGun.makeShuriken(this.angle);
-}
+};
 
 Ninja.prototype.destroy = function() {
   game.removeNinja(this);
+  this.followers.map(function(f) { f.destroy(); });
+  this.followers = [];
   delete this;
-}
+};
 
 // Override collision callback
 Ninja.prototype.collide = function(anotherObject) {
@@ -51,7 +55,7 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   this.updateHitPointBar();
-}
+};
 
 Ninja.prototype.updateHitPointBar = function() {
   var hpBar = this.view.getChildByName("hitpoint");
@@ -62,7 +66,7 @@ Ninja.prototype.updateHitPointBar = function() {
   
   hpBar.scaleX = ratio;
   hpBar.x = width;
-}
+};
 
 // Override handleInput function
 Ninja.prototype.handleInput = function(input) {
@@ -76,7 +80,7 @@ Ninja.prototype.handleInput = function(input) {
   } else if (input.key === 'shoot') {
     if (this.state == 'live') { this.shoot(); }
   }
-}
+};
 
 Ninja.prototype.changeLinearVelocity = function(v) {
     var vXold = this.body.GetLinearVelocity().get_x();
@@ -87,7 +91,7 @@ Ninja.prototype.changeLinearVelocity = function(v) {
     var deltaPy = mass * (v.y / SCALE - vYold);
 
     this.body.ApplyLinearImpulse(new b2Vec2(deltaPx, deltaPy), this.body.GetPosition());
-}
+};
 
 Ninja.prototype.reset = function(position) {
   this.state = 'live';
@@ -100,15 +104,25 @@ Ninja.prototype.reset = function(position) {
   this.body.SetAngularVelocity(0);
  
   this.updateHitPointBar();
- }
+};
+
+Ninja.prototype.addFollower = function(f) {
+  this.followers.push(f);
+};
+
+Ninja.prototype.removeFollower = function(f) {
+  this.followers = _.without(this.followers, f);
+};
 
 // Override tick function
 Ninja.prototype.tick = function() {
+  var that = this;
   if (this.state == 'live') {
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
     this.view.getChildByName("body").rotation = toDegree(this.angle);
     this.view.getChildByName("gun").rotation = toDegree(this.angle);
+    this.followers.map(function(f) { f.tick(that); });
   } else if (this.state == 'dead') {
     this.state = 'reviving';
     this.body.SetActive(false);
@@ -116,4 +130,4 @@ Ninja.prototype.tick = function() {
   } else if (this.state == 'remove') {
     this.destroy();
   }
-}
+};

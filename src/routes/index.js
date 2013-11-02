@@ -4,11 +4,11 @@
  */
 
 module.exports = {
-  index : function(req, res) {
+  index: function(req, res) {
     res.render('index', { title: 'Prototype-1' });
   },
 
-  choose : function(req, res) {
+  choose: function(req, res) {
     var room = req.body.room;
     var type = req.body.type;
     console.log('type: '+type);
@@ -16,30 +16,28 @@ module.exports = {
     res.redirect('/'+type+'/'+room);
   },
 
-  screen : function(req, res) {
+  screen: function(req, res) {
     // res.render('screen', { title: 'Prototype-1 Screen' });
-    res.render('screen', { title: 'Prototype-1 Screen' });
+    res.render('screen', { title: 'Nutty Ninjas Arena' });
   },
 
-  landing : function(req, res) {
-    res.render('landing', { title: 'Nutty Ninja' });
+  landing: function(req, res) {
+    res.render('landing', { title: 'Nutty Ninjas' });
   },
 
-  screenWithRoom : function(req, res) {
-    // res.render('screen', { title: 'Prototype-1 Screen' });
-    
-    res.render('screen', { title: 'Prototype-1 Screen' });
+  screenWithRoom: function(req, res) {
+    res.render('screen', { title: 'Nutty Ninjas Arena' });
   },
 
-  controller : function(req, res) {
-    res.render('controller', { title: 'Prototype-1 Controller' });
+  controller: function(req, res) {
+    res.render('controller', { title: 'Nutty Ninjas' });
   },
 
-  controllerWithRoom : function(req, res) {
-    res.render('controller', { title: 'Prototype-1 Controller' });
+  controllerWithRoom: function(req, res) {
+    res.render('controller', { title: 'Nutty Ninjas' });
   },
   
-  botcontrollerWithRoom : function(req, res) {
-    res.render('bot_controller', { title: 'Prototype-1 Bot Controller' });
+  botcontrollerWithRoom: function(req, res) {
+    res.render('bot_controller', { title: 'Nutty Ninjas' });
   }
 };

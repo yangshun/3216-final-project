@@ -8,25 +8,34 @@ block content
     div(class="katana katana-left")
     div(class="katana katana-right")
     div(class="text-container")
-      h2
+      h3
         a(href="/play/") New Game
-      h2
+      h3
         a View Games
   div(class="landing-container mobile-container")
-    div(class="logo")
+    img(class="logo-img" src="/images/logo.png")
     div(class="text-container")
       h3
-        a(href="/join/") Quick Join
-      input
+        a(href="/join/") QUICK JOIN
+      p(class="white") - OR -
+      p Enter a room number<br/> to join the game
+      input(id="room-number")
       h3
-        a Join
+        a(onclick="joinRoom()") JOIN
   script
     $(document).ready(function() {
       $('.logo').addClass('animated bounceInDown');
+      $('.logo-img').addClass('animated bounceInDown');
       setTimeout(function() {
         $('.logo').removeClass('bounceInDown')
         $('.logo').addClass('pulse');
+        $('.logo-img').removeClass('bounceInDown')
+        $('.logo-img').addClass('pulse');
       }, 1000);
       $('.katana-left').addClass('katana-left-final');
       $('.katana-right').addClass('katana-right-final');
     });
+
+    function joinRoom() {
+      window.location.href = '/join/' + $('#room-number').val();
+    }

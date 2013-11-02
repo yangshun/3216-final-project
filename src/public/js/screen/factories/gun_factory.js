@@ -27,5 +27,13 @@ var GunFactory = {
     }
 
     return gun;
+  },
+
+  allGunTypes: function() {
+    return _.keys(this.images);
+  },
+
+  gunImage: function(gun_type) {
+    return this.images[gun_type];
   }
-}
+};

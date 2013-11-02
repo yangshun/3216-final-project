@@ -32,12 +32,12 @@ if ('development' == app.get('env')) {
 app.post('/choose', routes.choose);
 app.get('/', routes.index);
 app.get('/landing', routes.landing);
-app.get('/screen', routes.screen);
-app.get('/screen/*', routes.screenWithRoom);
-app.get('/controller', routes.controller);
-app.get('/controller/*', routes.controllerWithRoom);
-app.get('/botcontroller', routes.botcontrollerWithRoom);
-app.get('/botcontroller/*', routes.botcontrollerWithRoom);
+app.get('/play', routes.screen);
+app.get('/play/*', routes.screenWithRoom);
+app.get('/join', routes.controller);
+app.get('/join/*', routes.controllerWithRoom);
+app.get('/bot', routes.botcontrollerWithRoom);
+app.get('/bot/*', routes.botcontrollerWithRoom);
 
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');

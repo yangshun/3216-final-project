@@ -58,6 +58,54 @@ Powerup.prototype.destroy = function() {
   game.map.removeTile(this);
 };
 
+// Gun Pickup Tiles
+
+var GunTile = function(x, y, r, gun_type) {
+
+
+  Tile.call(this);
+  this.x = x * TILE_WIDTH;
+  this.y = y * TILE_HEIGHT;
+  this.tileX = x;
+  this.tileY = y;
+  this.rotation = r || 0; // Rotation in degrees
+
+  var gun_types = GunFactory.allGunTypes();
+
+  this.gun_type = gun_type || _.sample(gun_types);
+
+  this.view = null;
+  this.body = null;
+  this.dead = false;
+  this._type = 'tile_gun';
+};
+
+GunTile.prototype = new Powerup();
+GunTile.prototype.constructor = GunTile;
+
+GunTile.prototype.initShape = function(c) {
+  this.view = new createjs.Bitmap(GunFactory.gunImage(this.gun_type));
+  this.view.name = "gun";
+  this.view.scaleX = TILE_WIDTH  / 623.0 * 1.2;
+  this.view.scaleY = TILE_HEIGHT / 200.0 * GUN_HEIGHT / GUN_WIDTH * 1.2;
+  this.view.regX = 623 / 2.0;
+  this.view.regY = 200 / 2.0;
+  this.view.x = this.x + TILE_WIDTH / 2;
+  this.view.y = this.y + TILE_HEIGHT / 2;
+
+  game.stage.addChild(this.view);
+};
+GunTile.prototype.collide = function(anotherObject) {
+  if(anotherObject instanceof Ninja) {
+    this.dead  = true;
+  }
+};
+GunTile.prototype.tick = function() {
+  if (this.dead) {
+    this.destroy();
+  }
+  this.view.rotation += 5;
+};
 
 
 // HealthTile

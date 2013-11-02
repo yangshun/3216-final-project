@@ -1,5 +1,8 @@
-MAX_HEALTH_TILE = 5;
-MAX_SPEED_TILE = 2;
+CONFIG_MAX = {
+  healthtile : 5,
+  speedtile : 2,
+  guntile : 5
+};
 
 var Map = function() {
   this.height = Math.floor(game.canvas.height / TILE_HEIGHT); // # of tiles
@@ -9,14 +12,17 @@ var Map = function() {
   this.destructible = [];
   this.blankTiles = []; // Keeps track of blank tiles
 
-  this.numHealthTiles = 0;
-  this.numSpeedTiles = 0;
+  this.numTiles = {
+    healthtile: 0,
+    speedtile: 0,
+    guntile: 0
+  };
 
   this.bgpath = '/images/game-background.jpg';
   this.background = new createjs.Bitmap(this.bgpath);
 
   game.stage.addChild(this.background);
-}
+};
 
 Map.prototype.clearMap = function() {
   for(var i=0;i<this.tileMap.length;i++){
@@ -68,18 +74,19 @@ Map.prototype.tick = function() {
     t.tick();
   });
 
-  if (Math.random()< 0.01 && this.numHealthTiles < MAX_HEALTH_TILE) {
-    this.numHealthTiles += 1;
+  if (Math.random()< 0.01 && this.numTiles.healthtile < CONFIG_MAX.healthtile) {
+    this.numTiles.healthtile += 1;
     this.generateRandomPowerup('healthtile');
   }
 
-  if (Math.random() < 0.01 && this.numSpeedTiles < MAX_SPEED_TILE) {
-    this.numSpeedTiles += 1;
+  if (Math.random() < 0.01 && this.numTiles.speedtile < CONFIG_MAX.speedtile) {
+    this.numTiles.speedtile += 1;
     this.generateRandomPowerup('speedtile');
   }
 
-  if (Math.random() < 0.01) {
-    this.generateRandomPowerup('shieldtile');
+  if (Math.random() < 0.01 && this.numTiles.guntile < CONFIG_MAX.guntile) {
+    this.numTiles.guntile += 1;
+    this.generateRandomPowerup('guntile');
   }
 }
 
@@ -95,10 +102,13 @@ Map.prototype.removeAndReplaceTile = function(t) {
 
 Map.prototype.removeTile = function(t) {
   if (t instanceof HealthTile) {
-    this.numHealthTiles -= 1;
+    this.numTiles.healthtile -= 1;
   }
   if (t instanceof SpeedTile) {
-    this.numSpeedTiles -= 1;  
+    this.numTiles.speedtile -= 1;
+  }
+  if (t instanceof GunTile) {
+    this.numTiles.guntile -= 1;
   }
 
   this.destructible = _.without(this.destructible, t);
@@ -120,8 +130,8 @@ Map.prototype.generatePowerup = function(x, y, type) {
     case 'speedtile':
       p = new SpeedTile(x, y, 0);
       break;
-    case 'shieldtile':
-      p = new ShieldTile(x, y, 0);
+    case 'guntile':
+      p = new GunTile(x, y, 0);
       break;
   }
   p.initShape();

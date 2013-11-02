@@ -62,6 +62,10 @@ Ninja.prototype.collide = function(anotherObject) {
     });
   }
 
+  if (anotherObject instanceof GunTile) {
+    this.equipGun(anotherObject.gun_type);
+  }
+
   this.updateHitPointBar();
 };
 

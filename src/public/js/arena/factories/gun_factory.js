@@ -36,6 +36,9 @@ var GunFactory = {
       case 'frost':
         gun = new FrostGun(data.ninja, gun_view);
         break;
+      case 'plasma':
+        gun = new PlasmaGun(data.ninja, gun_view);
+        break;
       default:
         gun = new ShurikenGun(data.ninja, gun_view);
     }

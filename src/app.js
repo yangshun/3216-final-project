@@ -32,8 +32,8 @@ if ('development' == app.get('env')) {
 app.post('/choose', routes.choose);
 app.get('/', routes.index);
 app.get('/landing', routes.landing);
-app.get('/play', routes.screen);
-app.get('/play/*', routes.screenWithRoom);
+app.get('/play', routes.arena);
+app.get('/play/*', routes.arenaWithRoom);
 app.get('/join', routes.controller);
 app.get('/join/*', routes.controllerWithRoom);
 app.get('/bot', routes.botcontrollerWithRoom);
@@ -85,21 +85,21 @@ io.sockets.on('connection', function(socket) {
   }
 
   var serverNumbers = function(roomname) {
-    io.sockets.in(roomname+'-screen').emit('server-num',{
+    io.sockets.in(roomname+'-arena').emit('server-num',{
       room : roomname,
       clients : (io.sockets.clients(roomname+'-controller').length || 0),
-      screens : (io.sockets.clients(roomname+'-screen').length || 0)
+      arenas : (io.sockets.clients(roomname+'-arena').length || 0)
     });
   }
 
   // Socket Events
 
   socket.join('world');
-  serverMessage('MOTD: Welcome to Prototype-1');
+  serverMessage('MOTD: Welcome to Nutty Ninjas');
   serverNumbers('world');
 
-  socket.on('screen-controller-join', function(data) {
-    io.sockets.sockets[data.id].emit('screen-controller-join', data);
+  socket.on('arena-controller-join', function(data) {
+    io.sockets.sockets[data.id].emit('arena-controller-join', data);
   });
 
   socket.on('client-register', function(data) {
@@ -108,12 +108,12 @@ io.sockets.on('connection', function(socket) {
     name = data.name;
     console.log('A new '+data.type+' has joined Room : '+room);
   
-    if (data.type == 'screen' &&
-        io.sockets.clients(data.room+'-screen').length >= 1) {
-      socket.emit('server-screen-ready', { success: false, error: 'Room full'});
+    if (data.type == 'arena' &&
+        io.sockets.clients(data.room+'-arena').length >= 1) {
+      socket.emit('server-arena-ready', { success: false, error: 'Room full'});
       return socket.disconnect();
     } else {
-      socket.emit('server-screen-ready', { success: true });
+      socket.emit('server-arena-ready', { success: true });
     }
 
     socket.join('world-'+data.type);
@@ -123,7 +123,7 @@ io.sockets.on('connection', function(socket) {
     serverNumbers(data.room);
     if (data.type == 'controller') {
       console.log(data);
-      io.sockets.in(data.room+'-screen').emit('server-controller-join', {
+      io.sockets.in(data.room+'-arena').emit('server-controller-join', {
         id: socket.id,
         name: data.name,
         ninja: data.ninja
@@ -137,7 +137,7 @@ io.sockets.on('connection', function(socket) {
 
     serverNumbers(room);
     console.log('A '+type+' has left '+room);
-    io.sockets.in(room+'-screen').emit('server-controller-leave', {
+    io.sockets.in(room+'-arena').emit('server-controller-leave', {
       id: socket.id
     });
   });
@@ -152,12 +152,12 @@ io.sockets.on('connection', function(socket) {
     // serverMessage(action+' received for '+data.key);
     data.id = socket.id;
     data.name = name;
-    socket.broadcast.to(room+'-screen').emit('controller-input', data);
+    socket.broadcast.to(room+'-arena').emit('controller-input', data);
   });
 
   // Servce RTT initiated from Client side every 2 secs
   // in burst of 5 pings
-  socket.on('screen-rttHeartBeat', function(data) {
+  socket.on('arena-rttHeartBeat', function(data) {
     data.server_time = Date.now();
     socket.emit('server-rttHeartBeat', data);
   });

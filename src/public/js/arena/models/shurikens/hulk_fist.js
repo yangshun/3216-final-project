@@ -45,7 +45,6 @@ HulkFist.make = function(ninja, centerVector, angle) {
   s.body = body;
   s.body.actor = s;
   s.view = sView;
-  s.view.rotation = s.angle / Math.PI * 180.0;
 
   return s;
 }

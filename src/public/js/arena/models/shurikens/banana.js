@@ -37,7 +37,7 @@ Banana.prototype.tick = function() {
   this.body.ApplyLinearImpulse(new b2Vec2(newX, newY), this.body.GetPosition());
   this.view.x = this.body.GetPosition().get_x() * SCALE;
   this.view.y = this.body.GetPosition().get_y() * SCALE;
-  this.view.rotation += this.rotation_step;
+  this.view.rotation = toDegree(this.body.GetAngle());
   if (this.dead || outside(this.view.x, this.view.y)) {
     this.destroy();
   }
@@ -61,16 +61,18 @@ Banana.make = function(ninja, centerVector, angle) {
   fixture.set_density(s.density);
   fixture.set_restitution(0);
     
-  var shape = new b2PolygonShape;
+  var shape = new b2PolygonShape();
   shape.SetAsBox(s.width / SCALE / 2, s.height / SCALE / 2);
   fixture.set_shape(shape);
 
   var bodyDef = new b2BodyDef;
   bodyDef.set_type(Box2D.b2_dynamicBody);
   bodyDef.set_position(centerVector.tob2Vec2(SCALE));
+  bodyDef.set_angle(angle);
 
   var body = game.box.CreateBody(bodyDef);
   body.CreateFixture(fixture);  
+  body.SetAngularVelocity(toRadian(s.rotation_step));
 
   s.body = body;
   s.body.actor = s;

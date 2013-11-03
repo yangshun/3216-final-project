@@ -13,8 +13,8 @@ HulkGun.prototype.makeShuriken = function(angle) {
   var sign = 0;
   angle = angle + sign * Math.random() * this.angleRange;
   
-  var cX = 80 * Math.cos(-angle) + this.ninja.size * Math.sin(-angle);
-  var cY = 50 * -Math.sin(-angle) + this.ninja.size * Math.cos(-angle);
+  var cX = 70 * Math.cos(-angle) + this.ninja.size * Math.sin(-angle);
+  var cY = 70 * -Math.sin(-angle) + this.ninja.size * Math.cos(-angle);
   var centerVector = new Vector2D(this.ninja.view.x + cX, this.ninja.view.y + cY);
 
   var s = this.shuriken.make(this.ninja, centerVector, angle);

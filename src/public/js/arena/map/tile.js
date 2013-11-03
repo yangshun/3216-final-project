@@ -132,6 +132,7 @@ RoundObstacleTile.prototype.initBody = function() {
 RoundObstacleTile.prototype.collide = function(other) {
 	if (other instanceof Shuriken) {
 		this.hitpoint -= other.damage;
+    this.view.alpha = this.hitpoint / 3 * 0.25 + 0.75;
 	}
 
 	if (this.hitpoint <= 0) {

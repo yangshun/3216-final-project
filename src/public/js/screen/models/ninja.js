@@ -43,7 +43,11 @@ Ninja.prototype.destroy = function() {
 // Override collision callback
 Ninja.prototype.collide = function(anotherObject) {
   if (anotherObject instanceof Shuriken) {
-    this.hitPoint -= anotherObject.damage;
+    if (anotherObject.ninja == this) {
+      // Anything we want to happen here?
+    } else {
+      this.hitPoint -= anotherObject.damage;
+    }
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
       PubSub.publish('ninja.death', {name:anotherObject.ninja.player.name , kills:1});

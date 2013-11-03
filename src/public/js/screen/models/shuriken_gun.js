@@ -8,7 +8,7 @@ var ShurikenGun = function(ninja, view) {
   this.shuriken = {
   	color : color,
   	ninja : this.ninja,
-  	speed : 600,
+  	speed : 300,
   	size  : 10,
   	damage: 1,
   	duration: 0,
@@ -21,7 +21,7 @@ ShurikenGun.prototype = new GameObject();
 ShurikenGun.prototype.constructor = ShurikenGun;
 
 ShurikenGun.prototype.makeShuriken = function(angle) {
-	var s = new Shuriken();
+	var s = new Boomerang();
 	for(var p in this.shuriken) {
 		s[p] = this.shuriken[p];
 	}

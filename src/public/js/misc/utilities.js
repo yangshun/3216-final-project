@@ -8,7 +8,9 @@ var   b2Vec2 = Box2D.b2Vec2
  , b2PolygonShape = Box2D.b2PolygonShape
  , b2CircleShape = Box2D.b2CircleShape
  , b2ContactListener = Box2D.b2ContactListener
- , b2Contact = Box2D.b2Contact;
+ , b2Contact = Box2D.b2Contact
+ , b2RevoluteJointDef = Box2D.b2RevoluteJointDef
+ , b2WheelJoint = Box2D.b2WheelJoint;
 
 NINJA_RADIUS = 20.0
 SCALE = 30.0

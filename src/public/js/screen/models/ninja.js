@@ -12,6 +12,9 @@ var Ninja = function(player, color) {
   this.ShurikenGun = new ShurikenGun(this);
 
   this.followers = [];
+
+  this.ninja_shield = null;
+
   this._type = 'ninja';
 };
 
@@ -23,6 +26,17 @@ Ninja.prototype.move = function(angle, speed) {
 
 Ninja.prototype.shoot = function() {
   this.ShurikenGun.makeShuriken(this.angle);
+};
+
+Ninja.prototype.shield = function() {
+  // Might want to do effects here
+  console.log('shielding');
+  this.ninja_shield.active(true);
+};
+
+Ninja.prototype.unshield = function() {
+  console.log('unshielding');
+  this.ninja_shield.active(false);
 };
 
 Ninja.prototype.destroy = function() {
@@ -81,7 +95,7 @@ Ninja.prototype.equipGun = function(gun_type) {
   gun.view.x = 0;
   gun.view.y = 0;
   this.view.addChildAt(gun.view, 0);
-}
+};
 
 Ninja.prototype.updateHitPointBar = function() {
   var hpBar = this.view.getChildByName("hitpoint");
@@ -89,7 +103,7 @@ Ninja.prototype.updateHitPointBar = function() {
 
   var width = 3*this.size*ratio/2;
   width -= 3*this.size/2;
-  
+
   hpBar.scaleX = ratio;
   hpBar.x = width;
 };
@@ -105,6 +119,10 @@ Ninja.prototype.handleInput = function(input) {
     this.changeLinearVelocity(new Vector2D(0, 0));
   } else if (input.key === 'shoot') {
     if (this.state == 'live') { this.shoot(); }
+  } else if (input.key === 'shield') {
+    if (this.state == 'live') { this.shield(); }
+  } else if (input.key === 'unshield') {
+    if (this.state == 'live') { this.unshield(); }
   }
 };
 
@@ -121,11 +139,11 @@ Ninja.prototype.changeLinearVelocity = function(v) {
 
 Ninja.prototype.addEffect = function(e) {
   this.effects.push(e);
-}
+};
 
 Ninja.prototype.removeEffect = function(e) {
   this.effects = _.without(this.effects, e);
-}
+};
 
 Ninja.prototype.reset = function(position) {
   this.state = 'live';
@@ -156,6 +174,8 @@ Ninja.prototype.tick = function() {
     this.view.y = this.body.GetPosition().get_y() * SCALE;
     this.view.getChildByName("body").rotation = toDegree(this.angle);
     this.view.getChildByName("gun").rotation = toDegree(this.angle);
+
+    this.ninja_shield.tick(this.view.x, this.view.y, this.angle - Math.PI / 2);
     this.effects.map(function(e) { e.tick(that); });
     this.followers.map(function(e) { e.tick(that); });
   } else if (this.state == 'dead') {

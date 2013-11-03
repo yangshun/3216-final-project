@@ -27,6 +27,13 @@ var loadJoysticks = function() {
     socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
   });
 
+  $('#shieldContainer').on('touchstart', function() {
+    socket.emit('controller-input', { key: 'shield', name: myname });
+  });
+
+  $('#shieldContainer').on('touchend', function() {
+    socket.emit('controller-input', { key: 'unshield', name: myname });
+  });
   // rightJoystick  = new VirtualJoystick({
   //   container : document.getElementById('rightContainer'),
   //   mouseSupport  : true

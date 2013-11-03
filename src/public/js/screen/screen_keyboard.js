@@ -9,7 +9,6 @@ bindings['W'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key
 bindings['E'] = function() { Screen.controller_input({id: "kb1", name:"KB1", key:"move", length: 0.75, angle: Math.PI*1.75}); }
 
 
-
 var keyDown = [];
 var playerJoined = false;
 $(window).keydown(function(e) {
@@ -17,6 +16,8 @@ $(window).keydown(function(e) {
 
     if (key != 'F' && key != 'J' && keyDown.indexOf(key) < 0 && (key in bindings)) {
         keyDown.push(key);
+    } else if (key == 'L') {
+        Screen.controller_input({id: "kb1", name:"KB1", key:"shield"});
     }
 });
 
@@ -28,6 +29,8 @@ $(window).keyup(function(e) {
         Screen.controller_join({id: "kb1", name:"KB1", ninja:"orange"});
     } else if (key == 'K') {
         Screen.controller_input({id: "kb1", name:"KB1", key:"shoot", shoot: 1});
+    } else if (key == 'L') {
+        Screen.controller_input({id: "kb1", name:"KB1", key:"unshield"});
     }
     else {
         var idx = keyDown.indexOf(key);

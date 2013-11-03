@@ -1,6 +1,6 @@
 var JuggernautGun = function(ninja, view) {
   ShurikenGun.call(this, ninja, view);
-  this.shuriken = Shuriken;
+  this.shuriken = Rocket;
 }
 
 JuggernautGun.prototype = new ShurikenGun();

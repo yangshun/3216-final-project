@@ -5,24 +5,24 @@ if (path.length === 2 && path[1] !== '') {
 	// We have a room id
 	myroom = path[1];
 }
-socket.emit('client-register', {name: myname, type: 'screen', room: myroom });
+socket.emit('client-register', {name: myname, type: 'arena', room: myroom });
 
 // Socket Events
 socket.on('controller-input', function(data) {
-	Screen.controller_input(data);
+	Arena.controller_input(data);
 });
 
 socket.on('server-controller-join', function(data) {
-	socket.emit('screen-controller-join', Screen.controller_join(data));
+	socket.emit('arena-controller-join', Arena.controller_join(data));
 });
 
 socket.on('server-controller-leave', function(data) {
-	Screen.controller_leave(data);
+	Arena.controller_leave(data);
 });
 
-socket.on('server-screen-ready', function(data) {
+socket.on('server-arena-ready', function(data) {
 	if (data.success) {
-		$(function() {Screen.init();});
+		$(function() {Arena.init();});
 	} else {
 		console.log(data.error);
 	}

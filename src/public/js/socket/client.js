@@ -14,7 +14,7 @@ socket.on('server-message', function(data) {
 
 socket.on('server-num', function(data) {
   if (document.getElementById('connected')) {
-    document.getElementById('connected').innerHTML = 'Connected in '+data.room+', Controllers : '+data.clients+', Screens : '+data.screens;
+    document.getElementById('connected').innerHTML = 'Connected in '+data.room+', Controllers : '+data.clients+', Arenas : '+data.arenas;
   }
 });
 
@@ -53,7 +53,7 @@ function rttHeartBeat() {
 
   for (var i = 0; i < 5; i ++) {
     var time = performance.now();
-    socket.emit('screen-rttHeartBeat', {client_start_time: time});
+    socket.emit('arena-rttHeartBeat', {client_start_time: time});
   }
 
   setTimeout(function() {

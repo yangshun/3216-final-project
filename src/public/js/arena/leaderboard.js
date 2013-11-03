@@ -16,7 +16,9 @@ function LeaderboardController($scope) {
   $scope.updatePlayer = function(msg, data) {
     for (var i = 0; i < $scope.player_list.length; i++) {
       if ($scope.player_list[i].name == data.name) {
-        $scope.player_list[i].kills += data.kills;
+        if (data.kills) {
+          $scope.player_list[i].kills += data.kills;
+        }
         $scope.$apply();
         return;
       }

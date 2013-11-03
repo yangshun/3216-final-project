@@ -5,7 +5,7 @@
 
 module.exports = {
   index: function(req, res) {
-    res.render('index', { title: 'Prototype-1' });
+    res.render('index', { title: 'Nutty Ninjas' });
   },
 
   choose: function(req, res) {
@@ -16,17 +16,16 @@ module.exports = {
     res.redirect('/'+type+'/'+room);
   },
 
-  screen: function(req, res) {
-    // res.render('screen', { title: 'Prototype-1 Screen' });
-    res.render('screen', { title: 'Nutty Ninjas Arena' });
+  arena: function(req, res) {
+    res.render('arena', { title: 'Nutty Ninjas Arena' });
   },
 
   landing: function(req, res) {
     res.render('landing', { title: 'Nutty Ninjas' });
   },
 
-  screenWithRoom: function(req, res) {
-    res.render('screen', { title: 'Nutty Ninjas Arena' });
+  arenaWithRoom: function(req, res) {
+    res.render('arena', { title: 'Nutty Ninjas Arena' });
   },
 
   controller: function(req, res) {

@@ -69,10 +69,10 @@ var loadNinja = function() {
 // Socket Events
 // 1. Choose your ninja
 // 2. client-register
-// 3. Screen replies ok and you're good to go
+// 3. Arena replies ok and you're good to go
 // socket.emit('client-register', { type: 'controller', room: myroom, name: myname, ninja: 'fat ninja'});
 $(function() { loadNinja(); });
-socket.on('screen-controller-join', function(data) {
+socket.on('arena-controller-join', function(data) {
   if (data.success) {
     $(document).ready(loadJoysticks);
   }

@@ -1,4 +1,4 @@
-var Screen = (function() {
+var Arena = (function() {
   var init = function() {
     var gameCanvas = document.getElementById('gameCanvas');
     gameCanvas.width = window.innerWidth;

@@ -1,0 +1,88 @@
+extends layout
+
+block content
+  link(rel='stylesheet', href='/css/arena.css')
+  //- Libraries and utilities
+  script(type='text/javascript', src='/lib/box2d.js')
+  script(type='text/javascript', src='/lib/stats.min.js')
+  script(type='text/javascript', src='/js/misc/utilities.js')
+  script(type='text/javascript', src='/lib/pubsub.js')
+  script(type='text/javascript', src='/lib/angular.min.js')
+
+  //- Factories
+  script(type='text/javascript', src='/js/arena/factories/ninja_school.js')
+  script(type='text/javascript', src='/js/arena/factories/gun_factory.js')
+  
+  //- Game Models
+  script(type='text/javascript', src='/js/arena/models/player.js')
+  script(type='text/javascript', src='/js/arena/models/game_object.js')
+  script(type='text/javascript', src='/js/arena/models/collidable_object.js')
+  script(type='text/javascript', src='/js/arena/models/controllable_object.js')
+  script(type='text/javascript', src='/js/arena/models/ninja.js')
+  script(type='text/javascript', src='/js/arena/effects.js')
+  script(type='text/javascript', src='/js/arena/arena.js')
+  script(type='text/javascript', src='/js/arena/arena_keyboard.js')
+  script(type='text/javascript', src='/js/arena/arena_socket.js')
+
+  //- Guns
+  script(type='text/javascript', src='/js/arena/models/guns/shuriken_gun.js')
+  script(type='text/javascript', src='/js/arena/models/guns/arc_gun.js')
+  script(type='text/javascript', src='/js/arena/models/guns/juggernaut_gun.js')
+  script(type='text/javascript', src='/js/arena/models/guns/hulk_gun.js')
+
+  //- Shurikens
+  script(type='text/javascript', src='/js/arena/models/shurikens/shuriken.js')
+  script(type='text/javascript', src='/js/arena/models/shurikens/boomerang.js')
+
+  //- Game Maps
+  script(type='text/javascript', src='/js/arena/map/tile.js')
+  script(type='text/javascript', src='/js/arena/map/powerup.js')
+  script(type='text/javascript', src='/js/arena/map/map.js')
+
+  //- Managers
+  script(type='text/javascript', src='/js/arena/managers/collision.js')
+  script(type='text/javascript', src='/js/arena/managers/timedevent.js')
+
+  //- Game
+  script(type='text/javascript', src='/js/arena/game.js')
+  script(type='text/javascript', src='/js/arena/leaderboard.js')
+
+  block game
+
+  div(id="leaderboard", ng-app, ng-controller="LeaderboardController")
+    //- p {{player_list}}
+    table
+      tr
+        th Name
+        th Kills
+        th Deaths
+
+      tr(ng-repeat="player in player_list | orderBy:'-kills'")
+        td {{player.name}}
+        td {{player.kills}}
+        td {{player.deaths}}
+
+  script
+    var stats = new Stats();
+    stats.setMode(1); // 0: fps, 1: ms
+
+    // Align top-left
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.top = '0px';
+
+    document.body.appendChild( stats.domElement );
+
+    setInterval( function () {
+        stats.begin();
+        stats.end();
+    }, 1000 / 60 );
+
+  canvas(id='gameCanvas', height='420', width='720')
+
+  h1 = title
+  p Welcome to #{title}
+  p#ping Connecting ...
+  p#connected Total Clients : 0
+
+  div(id='fps_counter')

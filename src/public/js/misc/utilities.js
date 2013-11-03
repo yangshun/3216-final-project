@@ -36,3 +36,7 @@ Vector2D.prototype.tob2Vec2 = function(scale) {
 function toDegree(radian) {
   return radian / Math.PI * 180.0;
 }
+
+function toRadian(degree) {
+  return degree / 180.0 * Math.PI;
+}

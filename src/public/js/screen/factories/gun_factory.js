@@ -8,7 +8,6 @@ var GunFactory = {
 
   // data: {position: Vector2D, player: Player, color: String}
   makeGun: function(data) {
-    console.log(data);
     var gun_url = this.images[data.type] || this.images['bumblebee'];
     var gun_view = new createjs.Bitmap(gun_url);
     gun_view.name = "gun";
@@ -22,6 +21,8 @@ var GunFactory = {
       gun = new JuggernautGun(data.ninja, gun_view);
     } else if (data.type == 'hulk') {
       gun = new HulkGun(data.ninja, gun_view);
+    } else if (data.type == 'arc') {
+      gun = new ArcGun(data.ninja, gun_view);
     } else {
       gun = new ShurikenGun(data.ninja, gun_view);
     }

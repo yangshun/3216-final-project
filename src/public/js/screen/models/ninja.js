@@ -59,10 +59,10 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof SpeedTile) {
-    this.speed *= 2; 
+    this.speed += 100; 
     var object = this;
     TimedEventManager.addEvent(3000, function() {
-      object.speed /= 2;
+      object.speed -= 100;
     });
   }
 
@@ -138,6 +138,8 @@ Ninja.prototype.reset = function(position) {
   this.body.SetAngularVelocity(0);
  
   this.updateHitPointBar();
+
+  this.equipGun('none');
 };
 
 Ninja.prototype.addFollower = function(f) {

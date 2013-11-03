@@ -3,6 +3,8 @@ var ShurikenGun = function(ninja, view) {
   this.ninja = ninja;
   this.view = view;
   this.angleRange = 0.05; // In radian
+  this.delay = 300;
+  this.lastShoot = 0;
   var color = null;
   if (this.ninja) { color = this.ninja.color; }
   this.shuriken = {
@@ -20,8 +22,17 @@ ShurikenGun.prototype = new GameObject();
 
 ShurikenGun.prototype.constructor = ShurikenGun;
 
+ShurikenGun.prototype.checkDelay = function() {
+   var now = (new Date()).getTime();
+  if (this.lastShoot + this.delay > now) return false;
+  this.lastShoot = now;
+  return true;
+}
+
 ShurikenGun.prototype.makeShuriken = function(angle) {
-	var s = new Boomerang();
+  if (!this.checkDelay()) return false;
+
+	var s = new Shuriken();
 	for(var p in this.shuriken) {
 		s[p] = this.shuriken[p];
 	}

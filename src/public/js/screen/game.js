@@ -8,7 +8,7 @@ var Game = function() {
   var listener = new b2ContactListener();
 
   Box2D.customizeVTable(listener, [{
-      original: Box2D.b2ContactListener.prototype.PostSolve,
+      original: Box2D.b2ContactListener.prototype.PreSolve,
       replacement:
           function (thsPtr, contactPtr) {
               var contact = Box2D.wrapPointer( contactPtr, b2Contact );

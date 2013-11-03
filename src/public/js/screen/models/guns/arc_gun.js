@@ -1,13 +1,15 @@
-var HulkGun = function(ninja, view) {
+var ArcGun = function(ninja, view) {
   ShurikenGun.call(this, ninja, view);
-  this.delay = 500;
+  this.delay = 200;
 }
 
-HulkGun.prototype = new ShurikenGun();
-HulkGun.prototype.constructor = HulkGun;
+ArcGun.prototype = new ShurikenGun();
+ArcGun.prototype.constructor = ArcGun;
 
-HulkGun.prototype.makeOneShuriken = function(angle, offset) {
-   var s = new Shuriken();
+ArcGun.prototype.makeShuriken = function(angle) {
+  if (!this.checkDelay()) return false;
+
+  var s = new Boomerang();
   for(var p in this.shuriken) {
     s[p] = this.shuriken[p];
   }
@@ -15,8 +17,8 @@ HulkGun.prototype.makeOneShuriken = function(angle, offset) {
   var sign = 0;
   s.angle = angle + sign * Math.random() * this.angleRange;
   
-  var cX = 30 * Math.cos(-angle) + (this.ninja.size + offset) * Math.sin(-angle);
-  var cY = 30 * -Math.sin(-angle) + (this.ninja.size + offset) * Math.cos(-angle);
+  var cX = 30 * Math.cos(-angle) + this.ninja.size * Math.sin(-angle);
+  var cY = 30 * -Math.sin(-angle) + this.ninja.size * Math.cos(-angle);
   var centerVector = new Vector2D(s.ninja.view.x + cX, s.ninja.view.y + cY);
 
   var sView = new createjs.Bitmap("/images/shuriken-4-point-star.png");
@@ -51,12 +53,3 @@ HulkGun.prototype.makeOneShuriken = function(angle, offset) {
 
   s.shoot();
 }
-
-HulkGun.prototype.makeShuriken = function(angle) {
-  if (!this.checkDelay()) return false;
-  
-  for (var i = -30; i <= 30; i += 30) {
-    this.makeOneShuriken(angle, i);
-  }
-}
-

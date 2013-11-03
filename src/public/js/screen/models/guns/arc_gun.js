@@ -1,11 +1,14 @@
 var ArcGun = function(ninja, view) {
   ShurikenGun.call(this, ninja, view);
+  this.delay = 200;
 }
 
 ArcGun.prototype = new ShurikenGun();
 ArcGun.prototype.constructor = ArcGun;
 
 ArcGun.prototype.makeShuriken = function(angle) {
+  if (!this.checkDelay()) return false;
+
   var s = new Boomerang();
   for(var p in this.shuriken) {
     s[p] = this.shuriken[p];

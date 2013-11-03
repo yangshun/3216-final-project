@@ -1,5 +1,6 @@
 var HulkGun = function(ninja, view) {
   ShurikenGun.call(this, ninja, view);
+  this.delay = 500;
 }
 
 HulkGun.prototype = new ShurikenGun();
@@ -52,6 +53,8 @@ HulkGun.prototype.makeOneShuriken = function(angle, offset) {
 }
 
 HulkGun.prototype.makeShuriken = function(angle) {
+  if (!this.checkDelay()) return false;
+  
   for (var i = -30; i <= 30; i += 30) {
     this.makeOneShuriken(angle, i);
   }

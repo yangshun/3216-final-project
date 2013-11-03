@@ -52,6 +52,8 @@ JuggernautGun.prototype.makeOneShuriken = function(angle) {
 }
 
 JuggernautGun.prototype.makeShuriken = function(angle) {
+  if (!this.checkDelay()) return false;
+  
   this.makeOneShuriken(angle - Math.PI / 5);
   this.makeOneShuriken(angle);
   this.makeOneShuriken(angle + Math.PI / 5);

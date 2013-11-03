@@ -5,6 +5,7 @@ var Plasma = function() {
   this._type = 'plasma';
   this.width = 40;
   this.height = 20;
+  this.speed = 600;
 };
 
 Plasma.prototype = new Shuriken();

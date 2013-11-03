@@ -17,6 +17,8 @@ $(window).keydown(function(e) {
 
     if (key != 'F' && key != 'J' && keyDown.indexOf(key) < 0 && (key in bindings)) {
         keyDown.push(key);
+    } else if (key == 'L') {
+        Arena.controller_input({id: "kb1", name:"KB1", key:"shield"});
     }
 });
 
@@ -28,6 +30,8 @@ $(window).keyup(function(e) {
         Arena.controller_join({id: "kb1", name:"KB1", ninja:"orange"});
     } else if (key == 'K') {
         Arena.controller_input({id: "kb1", name:"KB1", key:"shoot", shoot: 1});
+    } else if (key == 'L') {
+        Arena.controller_input({id: "kb1", name:"KB1", key:"unshield"});
     }
     else {
         var idx = keyDown.indexOf(key);

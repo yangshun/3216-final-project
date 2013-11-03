@@ -1,10 +1,10 @@
 var GunFactory = {
-  images: { 'arc': '/images/cannon-arc.png',
-            'bumblebee': '/images/cannon-bumblebee.png',
-            'frost': '/images/cannon-frost.png',
-            'hulk': '/images/cannon-hulk.png',
-            'juggernaut': '/images/cannon-juggernaut.png',
-            'plasma': '/images/cannon-plasma.png'},
+  images: { 'banana': '/images/cannons/banana.png',
+            'frost': '/images/cannons/frost.png',
+            'hulk': '/images/cannons/hulk.png',
+            'juggernaut': '/images/cannons/juggernaut.png',
+            'laser': '/images/cannons/laser.png',
+            'plasma': '/images/cannons/plasma.png'},
 
   // data: {position: Vector2D, player: Player, color: String}
   makeGun: function(data) {
@@ -13,7 +13,7 @@ var GunFactory = {
       gun_view = new createjs.Shape();
       gun_view.name = "gun";
     } else {
-      var gun_url = this.images[data.type] || this.images['bumblebee'];
+      var gun_url = this.images[data.type] || this.images['frost'];
       gun_view = new createjs.Bitmap(gun_url);
       gun_view.name = "gun";
       gun_view.scaleX = GUN_WIDTH  / 623.0;
@@ -24,14 +24,20 @@ var GunFactory = {
 
     var gun; 
     switch (data.type) {
-      case 'arc':
-        gun = new ArcGun(data.ninja, gun_view);
+      case 'banana':
+        gun = new BananaGun(data.ninja, gun_view);
         break;
       case 'hulk':
         gun = new HulkGun(data.ninja, gun_view);
         break;
       case 'juggernaut':
         gun = new JuggernautGun(data.ninja, gun_view);
+        break;
+      case 'frost':
+        gun = new FrostGun(data.ninja, gun_view);
+        break;
+      case 'plasma':
+        gun = new PlasmaGun(data.ninja, gun_view);
         break;
       default:
         gun = new ShurikenGun(data.ninja, gun_view);

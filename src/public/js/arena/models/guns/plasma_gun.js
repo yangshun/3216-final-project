@@ -1,12 +1,14 @@
-var JuggernautGun = function(ninja, view) {
+var PlasmaGun = function(ninja, view) {
   ShurikenGun.call(this, ninja, view);
-  this.shuriken = Rocket;
+  this.shuriken = Plasma;
 }
 
-JuggernautGun.prototype = new ShurikenGun();
-JuggernautGun.prototype.constructor = JuggernautGun;
+PlasmaGun.prototype = new ShurikenGun();
+PlasmaGun.prototype.constructor = PlasmaGun;
 
-JuggernautGun.prototype.makeOneShuriken = function(angle) {
+PlasmaGun.prototype.makeShuriken = function(angle) {
+  if (!this.checkDelay()) return false;
+
   var sign = Math.random() > 0.5 ? 1.0 : -1.0;
   angle = angle + sign * Math.random() * this.angleRange;
   
@@ -18,12 +20,3 @@ JuggernautGun.prototype.makeOneShuriken = function(angle) {
   game.addShuriken(s);
   s.shoot();
 }
-
-JuggernautGun.prototype.makeShuriken = function(angle) {
-  if (!this.checkDelay()) return false;
-
-  this.makeOneShuriken(angle - Math.PI / 5);
-  this.makeOneShuriken(angle);
-  this.makeOneShuriken(angle + Math.PI / 5);
-}
-

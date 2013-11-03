@@ -57,6 +57,7 @@ var NinjaSchool = {
     
     ninja.equipGun('none');
 
+    ninja.ninja_shield = Shield.make(data.position.x - 15, data.position.y, 30, 7, ninja);
     return ninja;
   },
 

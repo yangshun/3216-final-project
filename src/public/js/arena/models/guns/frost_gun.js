@@ -1,12 +1,15 @@
-var JuggernautGun = function(ninja, view) {
+var FrostGun = function(ninja, view) {
   ShurikenGun.call(this, ninja, view);
-  this.shuriken = Rocket;
+  this.delay = 200;
+  this.shuriken = SnowFlake;
 }
 
-JuggernautGun.prototype = new ShurikenGun();
-JuggernautGun.prototype.constructor = JuggernautGun;
+FrostGun.prototype = new ShurikenGun();
+FrostGun.prototype.constructor = FrostGun;
 
-JuggernautGun.prototype.makeOneShuriken = function(angle) {
+FrostGun.prototype.makeShuriken = function(angle) {
+  if (!this.checkDelay()) return false;
+
   var sign = Math.random() > 0.5 ? 1.0 : -1.0;
   angle = angle + sign * Math.random() * this.angleRange;
   
@@ -18,12 +21,3 @@ JuggernautGun.prototype.makeOneShuriken = function(angle) {
   game.addShuriken(s);
   s.shoot();
 }
-
-JuggernautGun.prototype.makeShuriken = function(angle) {
-  if (!this.checkDelay()) return false;
-
-  this.makeOneShuriken(angle - Math.PI / 5);
-  this.makeOneShuriken(angle);
-  this.makeOneShuriken(angle + Math.PI / 5);
-}
-

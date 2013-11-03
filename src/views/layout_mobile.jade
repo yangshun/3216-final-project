@@ -3,8 +3,16 @@ html
   head
     title= title
 
+    //- Font
+    script(type="text/javascript", src="//use.typekit.net/rxt6ovh.js")
+    script(type="text/javascript") try{Typekit.load();}catch(e){}
+
     //- Stylesheets
-    
+    link(rel='stylesheet', href='/lib/jquery.mobile.custom.structure.css')
+    link(rel='stylesheet', href='/lib/jquery.mobile.custom.theme.css')
+    link(rel='stylesheet', href='/css/global.css')
+    link(rel='stylesheet', href='/css/controller.css')
+
     //- Utility
     script(type='application/javascript', src='/lib/fastclick.min.js')
     script(type='application/javascript', src='/lib/jquery.1.10.2.min.js')

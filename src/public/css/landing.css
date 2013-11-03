@@ -16,7 +16,7 @@ html, body {
 
 .desktop-container { 
 	overflow: hidden; 
-	background-image: url('../images/background.jpg'); 
+	background-image: url('../images/backgrounds/mountains.jpg'); 
 }
 
 .desktop-container div { 
@@ -25,7 +25,7 @@ html, body {
 
 .mobile-container { 
 	min-height: 460px;
-	background-image: url('../images/background-mobile.jpg'); 
+	background-image: url('../images/backgrounds/jungle.jpg'); 
 	display: none; 
 	text-align: center; 
 	overflow: 
@@ -129,30 +129,5 @@ a {
 }
 
 a:hover {
-	color: #fff;
-}
-
-input {
-	width: 240px;
-	padding: 5px;
-	font-size: 1em;
-	text-align: center;
-	border: none;
-	outline: none;
-	font-family: "peachy-keen", sans-serif;
-}
-
-input:focus {
-	outline: none;
-}
-
-p {
-	margin: 15px 0;
-	font-size: 16px;
-	color: #fed61b;
-}
-
-p.white {
-	margin: 5px 0;
 	color: #fff;
 }

@@ -290,7 +290,7 @@ VirtualJoystick.prototype._buildJoystickBase	= function()
 	// ctx.stroke();
 	var imageObj = new Image();
 	
-	imageObj.src = '/images/base.png';
+	imageObj.src = '/images/controller/base.png';
 	imageObj.onload = function() {
 		ctx.drawImage(imageObj, 0, 0, 160, 160);
 	};
@@ -314,7 +314,7 @@ VirtualJoystick.prototype._buildJoystickStick	= function()
 	// ctx.stroke();
 	var imageObj = new Image();
 	
-	imageObj.src = '/images/stick.png';
+	imageObj.src = '/images/controller/stick.png';
 	imageObj.onload = function() {
 		ctx.drawImage(imageObj, 0, 0, 100, 100);
 	};

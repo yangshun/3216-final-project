@@ -57,12 +57,18 @@ var loadJoysticks = function() {
 
 var loadNinja = function() {
   // Figure out what is checked and his name
+ 
   $('#goBtn').on('click', function() {
-    var myninja = $('input:radio[name="ninjaChoose"]:checked')[0].value;
-    myname = $('#playername').val();
-    $('.carousell').css('display', 'none');
-    var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
-    socket.emit('client-register', data);
+     var myname = $('#playername').val();
+    if (myname) {
+      var myninja = $('input:radio[name="ninjaChoose"]:checked')[0].value;
+      
+      $('.carousell').css('display', 'none');
+      var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
+      socket.emit('client-register', data);
+    } else {
+      alert('Please enter a name!');
+    }
   });
 };
 

@@ -3,17 +3,14 @@ extends layout_mobile
 block header
 
 block content
-	link(rel='stylesheet', href='/lib/jquery.mobile.custom.structure.css')
-	link(rel='stylesheet', href='/lib/jquery.mobile.custom.theme.css')
-	link(rel='stylesheet', href='/css/controller.css')
 
 	script(type='text/javascript', src='/lib/virtualjoystick.js')
 	script(type='text/javascript', src='/js/controller/controller.js')
 	div(class="carousell" id="chooseName")
-		p What is your name?
-		input(type = 'textfield',id='playername',name = 'name', value = '')
+		p Enter your name
+		input(type = 'textfield',id='playername',name = 'name', value = 'Player')
 	div(class="carousell" id="chooseNinja")
-		p Choose your Ninja!
+		p Choose a Nutty Ninja!
 		img(id="red-ninja" src="/images/ninja-red.png" width="128" height="128")
 		input(type = 'radio', name='ninjaChoose', id='ninja-red', value = 'red', checked='checked')
 		img(id="yellow-ninja" src="/images/ninja-yellow.png" width="128" height="128")
@@ -22,4 +19,5 @@ block content
 		input(type = 'button', value = 'Play!')
 	div(class="joystick joystick-left" id="leftContainer")
 	div(class="joystick joystick-right" id="rightContainer")
-		img(id="shoot-button" src="/images/shoot.png" width="128" height="128")
+		img(id="shoot-button" src="/images/controller/shoot.png" width="100" height="100")
+		img(id="block-button" src="/images/controller/block.png" width="100" height="100")

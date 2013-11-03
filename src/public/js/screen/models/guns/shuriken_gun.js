@@ -21,7 +21,7 @@ ShurikenGun.prototype = new GameObject();
 ShurikenGun.prototype.constructor = ShurikenGun;
 
 ShurikenGun.prototype.makeShuriken = function(angle) {
-	var s = new Boomerang();
+	var s = new Shuriken();
 	for(var p in this.shuriken) {
 		s[p] = this.shuriken[p];
 	}

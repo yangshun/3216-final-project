@@ -30,12 +30,10 @@ Ninja.prototype.shoot = function() {
 
 Ninja.prototype.shield = function() {
   // Might want to do effects here
-  console.log('shielding');
   this.ninja_shield.active(true);
 };
 
 Ninja.prototype.unshield = function() {
-  console.log('unshielding');
   this.ninja_shield.active(false);
 };
 

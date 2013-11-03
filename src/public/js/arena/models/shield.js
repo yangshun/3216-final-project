@@ -54,7 +54,7 @@ Shield.make = function(x, y, width, height, ninja) {
   body.CreateFixture(fixture);
   body.SetActive(false);
 
-  var view = new createjs.Bitmap('images/katana.png');
+  var view = new createjs.Bitmap('/images/katana.png');
   view.name = "body";
   view.scaleX = width / (1969 / 2.0);
   view.scaleY = height / (206 / 2.0);

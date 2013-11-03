@@ -23,15 +23,15 @@ var loadJoysticks = function() {
     mouseSupport  : true
   });
 
-  $('#rightContainer').on('touchstart', function() {
+  $('#shoot-button').on('touchstart', function() {
     socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
   });
 
-  $('#shieldContainer').on('touchstart', function() {
+  $('#block-button').on('touchstart', function() {
     socket.emit('controller-input', { key: 'shield', name: myname });
   });
 
-  $('#shieldContainer').on('touchend', function() {
+  $('#block-button').on('touchend', function() {
     socket.emit('controller-input', { key: 'unshield', name: myname });
   });
   // rightJoystick  = new VirtualJoystick({

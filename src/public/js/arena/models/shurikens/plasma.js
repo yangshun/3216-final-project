@@ -16,7 +16,7 @@ Plasma.make = function(ninja, centerVector, angle) {
   s.ninja = ninja;
   s.angle = angle;
 
-  var sView = new createjs.Bitmap("/images/projectiles/Plasma.png");
+  var sView = new createjs.Bitmap("/images/projectiles/plasma.png");
   sView.scaleX = s.width / 240.0;
   sView.scaleY = s.height / 113.0;
   sView.regX = 240.0 / 2;

@@ -54,7 +54,8 @@ var NinjaSchool = {
     ninja.body = body;
     ninja.body.actor = ninja;
     ninja.view = view;
-    ninja.equipGun('bumblebee');
+    
+    ninja.equipGun('none');
 
     return ninja;
   },

@@ -11,6 +11,10 @@ var HulkFist = function() {
 HulkFist.prototype = new Shuriken();
 HulkFist.prototype.constructor = HulkFist;
 
+HulkFist.offsetX = function() {
+  return 70.0;
+}
+
 HulkFist.make = function(ninja, centerVector, angle) {
   var s = new HulkFist();  
   s.ninja = ninja;

@@ -10,6 +10,10 @@ var SnowFlake = function() {
 SnowFlake.prototype = new Shuriken();
 SnowFlake.prototype.constructor = SnowFlake;
 
+SnowFlake.offsetX = function() {
+  return 40.0;
+}
+
 SnowFlake.make = function(ninja, centerVector, angle) {
   var s = new SnowFlake();  
   s.ninja = ninja;

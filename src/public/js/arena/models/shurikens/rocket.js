@@ -10,6 +10,10 @@ var Rocket = function() {
 Rocket.prototype = new Shuriken();
 Rocket.prototype.constructor = Rocket;
 
+Rocket.offsetX = function() {
+  return 40.0;
+}
+
 Rocket.make = function(ninja, centerVector, angle) {
   var s = new Rocket();  
   s.ninja = ninja;

@@ -43,6 +43,10 @@ Banana.prototype.tick = function() {
   }
 };
 
+Banana.offsetX = function() {
+  return 70.0;
+}
+
 Banana.make = function(ninja, centerVector, angle) {
   var s = new Banana();  
   s.ninja = ninja;

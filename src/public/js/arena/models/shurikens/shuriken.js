@@ -63,6 +63,10 @@ Shuriken.prototype.tick = function() {
   }
 };
 
+Shuriken.offsetX = function() {
+  return 30.0;
+}
+
 Shuriken.make = function(ninja, centerVector, angle) {
   var s = new Shuriken();  
   s.ninja = ninja;

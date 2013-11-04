@@ -11,6 +11,10 @@ var Plasma = function() {
 Plasma.prototype = new Shuriken();
 Plasma.prototype.constructor = Plasma;
 
+Plasma.offsetX = function() {
+  return 40.0;
+}
+
 Plasma.make = function(ninja, centerVector, angle) {
   var s = new Plasma();  
   s.ninja = ninja;

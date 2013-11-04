@@ -9,12 +9,14 @@ block content
 	div(class="pre-game-container")
 		div(class="choose-name-container")
 			p Enter your name
-			input(type = 'textfield',id='playername',name = 'name', value = 'Player')
+			input(type = 'textfield',id='playername',name = 'name', value = '')
 		div(class="choose-ninja")
 			p Choose a Nutty Ninja!
-			img(id="red-ninja" src="/images/ninja-red.png" width="128" height="128")
+			label(for="ninja-red")
+				img(id="red-ninja" src="/images/ninja-red.png" width="128" height="128")
 			input(type = 'radio', name='ninjaChoose', id='ninja-red', value = 'red', checked='checked')
-			img(id="yellow-ninja" src="/images/ninja-yellow.png" width="128" height="128")
+			label(for="ninja-yellow")
+				img(id="yellow-ninja" src="/images/ninja-yellow.png" width="128" height="128")
 			input(type="radio", name='ninjaChoose', id='ninja-yellow', value = 'yellow')
 		div(class="join-button")
 			a Play!
@@ -23,4 +25,4 @@ block content
 			div(class="joystick joystick-left" id="left-section")
 			div(class="joystick joystick-right" id="right-section")
 				img(class="controller-button" id="shoot-button" src="/images/controller/shoot.png")
-				img(class="controller-button" id="block-button" src="/images/controller/block.png")
+				//- img(class="controller-button" id="block-button" src="/images/controller/block.png")

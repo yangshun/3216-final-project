@@ -101,13 +101,13 @@ html.game-mode .controller-container {
 }
 
 .controller-button {
-	width: 100px;
-	height: 100px;
+	width: 50%;
 	display: inline-block;
+	/*pointer-events: none;*/
 }
 
 #shoot-button {
-	margin-top: 20px;
+	margin-top: 50px;
 	margin-left: 20px;
 }
 

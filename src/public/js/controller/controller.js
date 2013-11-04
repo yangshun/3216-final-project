@@ -21,7 +21,7 @@ var loadJoysticks = function() {
     mouseSupport  : true
   });
 
-  $('#shoot-button').on('touchstart', function() {
+  $('#right-section').on('touchstart', function() {
     socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
   });
 

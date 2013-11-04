@@ -121,13 +121,3 @@ html, body {
 .text-container h3, h4, h5 {
 	margin: 10px 0; 
 }
-
-a {
-	color: #fed61b;
-	cursor: pointer;
-	text-decoration: none;
-}
-
-a:hover {
-	color: #fff;
-}

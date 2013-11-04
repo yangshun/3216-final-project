@@ -6,18 +6,21 @@ block content
 
 	script(type='text/javascript', src='/lib/virtualjoystick.js')
 	script(type='text/javascript', src='/js/controller/controller.js')
-	div(class="carousell" id="chooseName")
-		p Enter your name
-		input(type = 'textfield',id='playername',name = 'name', value = 'Player')
-	div(class="carousell" id="chooseNinja")
-		p Choose a Nutty Ninja!
-		img(id="red-ninja" src="/images/ninja-red.png" width="128" height="128")
-		input(type = 'radio', name='ninjaChoose', id='ninja-red', value = 'red', checked='checked')
-		img(id="yellow-ninja" src="/images/ninja-yellow.png" width="128" height="128")
-		input(type = 'radio', name='ninjaChoose', id='ninja-yellow', value = 'yellow')
-	div(class="carousell" id="goBtn")
-		input(type = 'button', value = 'Play!')
-	div(class="joystick joystick-left" id="leftContainer")
-	div(class="joystick joystick-right" id="rightContainer")
-		img(id="shoot-button" src="/images/controller/shoot.png" width="120" height="120")
-		img(id="block-button" src="/images/controller/block.png" width="120" height="120")
+	div(class="pre-game-container")
+		div(class="choose-name-container")
+			p Enter your name
+			input(type = 'textfield',id='playername',name = 'name', value = 'Player')
+		div(class="choose-ninja")
+			p Choose a Nutty Ninja!
+			img(id="red-ninja" src="/images/ninja-red.png" width="128" height="128")
+			input(type = 'radio', name='ninjaChoose', id='ninja-red', value = 'red', checked='checked')
+			img(id="yellow-ninja" src="/images/ninja-yellow.png" width="128" height="128")
+			input(type="radio", name='ninjaChoose', id='ninja-yellow', value = 'yellow')
+		div(class="join-button")
+			a Play!
+	div(class="controller-container")
+		div(class="controller-inner-container")
+			div(class="joystick joystick-left" id="left-section")
+			div(class="joystick joystick-right" id="right-section")
+				img(class="controller-button" id="shoot-button" src="/images/controller/shoot.png")
+				img(class="controller-button" id="block-button" src="/images/controller/block.png")

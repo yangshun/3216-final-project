@@ -14,6 +14,8 @@ CONFIG_TILES = {
   4: {image:'rock-4.png', w: 360, h: 360},
   5: {image:'tree.png', w: 240, h: 211},
   6: {image:'tree-2.png', w: 360, h: 360},
+  7: {image:'hut.png', w: 360, h: 360},
+  8: {image:'hut-2.png', w: 360, h: 360},
   health: {image:'first-aid-kit.png', w: 300, h: 256},
   speed: {image:'haste-boots.png', w: 300, h: 300}
 };
@@ -86,8 +88,8 @@ Map.prototype.generateRandomMap = function() {
         t.initShape();
         t.initBody();
       } else if (Math.random() < 0.05) {
-        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', 6));
-        t.initShape(CONFIG_TILES[5].w, CONFIG_TILES[5].h);
+        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', 8));
+        t.initShape(CONFIG_TILES[7].w, CONFIG_TILES[7].h);
         t.initBody();
         this.destructible.push(t);
       } else {

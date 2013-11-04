@@ -141,12 +141,14 @@ RoundObstacleTile.prototype.collide = function(other) {
 };
 
 
-var TexturedObstacleTile = function(x, y, r, img) {
+var TexturedObstacleTile = function(x, y, r, img, data) {
   RoundObstacleTile.call(this);
   this.x = x * TILE_WIDTH;
   this.y = y * TILE_HEIGHT;
   this.tileX = x;
   this.tileY = y;
+  this.tileW = data.tileW || 1;
+  this.tileH = data.tileH || 1;
   this.rotation = r || 0; // Rotation in degrees
   this.img = img;
 
@@ -166,12 +168,41 @@ TexturedObstacleTile.prototype.initShape = function(w, h) {
   this.img_height = h;
   this.view = new createjs.Bitmap(this.img);
 
-  this.view.scaleX = TILE_WIDTH / this.img_width;
-  this.view.scaleY = TILE_HEIGHT / this.img_height;
-  this.view.regX = 0; //this.img_width / 2;
-  this.view.regY = 0; //this.img_height / 2;
-  this.view.x = this.x;
-  this.view.y = this.y;
+  var canvasWidth = this.tileW * TILE_WIDTH;
+  var canvasHeight = this.tileH * TILE_HEIGHT;
+
+  var scaleX = canvasWidth / this.img_width;
+  var scaleY = canvasHeight / this.img_height;
+  this.view.scaleX = scaleX;
+  this.view.scaleY = scaleY;
+  
+  this.view.regX = w / 2;
+  this.view.regY = h / 2;
+  this.view.x = this.x + canvasWidth / 2;
+  this.view.y = this.y + canvasHeight / 2;
+  this.view.rotation = this.rotation;
 
   game.stage.addChild(this.view);
+};
+
+TexturedObstacleTile.prototype.initBody = function() {
+  var fixture = new b2FixtureDef();
+  fixture.set_density(1);
+  fixture.set_restitution(0.0);
+  fixture.set_friction(1.0);
+  
+  var shape = new b2PolygonShape();
+  shape.SetAsBox(this.tileW*TILE_WIDTH/SCALE/2, this.tileH*TILE_HEIGHT/SCALE/2);
+  fixture.set_shape(shape);
+
+  var bodyDef = new b2BodyDef();
+  var position = new Vector2D(this.x + (this.tileW * TILE_WIDTH) / 2, this.y+(this.tileH * TILE_HEIGHT) / 2);
+  bodyDef.set_type(Box2D.b2_staticBody);
+  bodyDef.set_position(position.tob2Vec2(SCALE));
+
+  var body = game.box.CreateBody(bodyDef);
+  body.CreateFixture(fixture);
+
+  this.body = body;
+  this.body.actor = this;
 };

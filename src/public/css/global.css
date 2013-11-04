@@ -22,3 +22,13 @@ p.white {
 	margin: 5px 0;
 	color: #fff;
 }
+
+a {
+	color: #fed61b;
+	cursor: pointer;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #fff;
+}

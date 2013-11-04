@@ -8,12 +8,14 @@ CONFIG_TILES = {
   terrain: '/images/terrain/jungle/',
   powerup: '/images/powerups/',
   image: '/images/',
-  1: {image:'rock.png', w: 360, h: 180},
-  2: {image:'rock-2.png', w: 240, h: 240},
-  3: {image:'rock-3.png', w: 360, h: 360},
-  4: {image:'rock-4.png', w: 360, h: 360},
-  5: {image:'tree.png', w: 240, h: 211},
-  6: {image:'tree-2.png', w: 360, h: 360},
+  1: {image:'rock.png', w: 360, h: 180, tileW: 1, tileH: 1},
+  2: {image:'rock-3.png', w: 360, h: 360, tileW: 1, tileH: 1},
+  3: {image:'rock-4.png', w: 360, h: 360, tileW: 1, tileH: 1},
+  4: {image:'tree-2.png', w: 360, h: 345, tileW: 2, tileH: 2},
+  5: {image:'hut.png', w: 600, h: 600, tileW: 2, tileH: 2},
+  6: {image:'hut-2.png', w: 600, h: 600, tileW: 2, tileH: 2},
+  // 8: {image:'tree.png', w: 360, h: 360},
+  // 2: {image:'rock-2.png', w: 240, h: 240},
   health: {image:'first-aid-kit.png', w: 300, h: 256},
   speed: {image:'haste-boots.png', w: 300, h: 300}
 };
@@ -86,8 +88,9 @@ Map.prototype.generateRandomMap = function() {
         t.initShape();
         t.initBody();
       } else if (Math.random() < 0.05) {
-        var type = 5;
-        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', type));
+        var type = Math.round(Math.random() * 5) + 1;
+        var r = Math.round(Math.random() * 4) * 90;
+        var t = new TexturedObstacleTile(j,i,r,getPath('terrain', type), CONFIG_TILES[type]);
         t.initShape(CONFIG_TILES[type].w, CONFIG_TILES[type].h);
         t.initBody();
         this.destructible.push(t);

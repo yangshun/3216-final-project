@@ -33,6 +33,9 @@ var GunFactory = {
       case 'juggernaut':
         gun = new JuggernautGun(data.ninja, gun_view);
         break;
+      case 'laser':
+        gun = new LaserGun(data.ninja, gun_view);
+        break;
       case 'frost':
         gun = new FrostGun(data.ninja, gun_view);
         break;

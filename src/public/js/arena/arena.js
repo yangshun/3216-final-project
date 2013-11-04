@@ -10,7 +10,7 @@ var Arena = (function() {
     game.canvas = gameCanvas;
     game.stage = stage;
     game.map = new Map();
-    game.map.generateSimpleMap();
+    game.map.generateRandomMap();
 
     createjs.Ticker.setFPS(60);
     createjs.Ticker.addEventListener('tick', handleTick);

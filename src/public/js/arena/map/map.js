@@ -4,6 +4,18 @@ CONFIG_MAX = {
   guntile : 5
 };
 
+CONFIG_TILES = {
+  path: '/images/terrain/jungle/',
+  1: {image: 'rock.png', w: 360, h: 180},
+  2: {image: 'rock-2.png', w: 240, h: 240},
+  3: {image: 'rock-3.png', w: 360, h: 360},
+  4: {image:'rock-4.png', w: 360, h: 360}
+};
+
+function getPath(num) {
+  return CONFIG_TILES.path + CONFIG_TILES[num].image;
+}
+
 var Map = function() {
   this.height = Math.floor(game.canvas.height / TILE_HEIGHT); // # of tiles
   this.width = Math.floor(game.canvas.width / TILE_WIDTH); // # of tiles
@@ -33,17 +45,17 @@ Map.prototype.clearMap = function() {
   this.tileMap = [];
 }
 
-Map.prototype.generateSimpleMap = function() {
-  this.clearMap();
+Map.prototype.generateMap = function() {
+  if (!this.tileMap) this.generateASCIIMap();
+
   for(var i=-1;i<=this.height;i++){
-    var arr = [];
     for(var j=-1;j<=this.width;j++){
       if(i==-1 || j==-1 || i==this.height || j==this.width) {
         var t = new ObstacleTile(j,i,0,'#000000');
         t.initShape();
         t.initBody();
-      } else if (Math.random() < 0.05) {
-        var t = new RoundObstacleTile(j,i,0,'#111111');
+      } else if (this.tileMap[i][j] != 0) {
+        var t = new TexturedObstacleTile(j,i,0,getPath(2));
         t.initShape();
         t.initBody();
         this.destructible.push(t);
@@ -57,6 +69,44 @@ Map.prototype.generateSimpleMap = function() {
     this.tileMap.push(arr);
   }
 }
+
+Map.prototype.generateRandomMap = function() {
+  this.clearMap();
+  for(var i=-1;i<=this.height;i++){
+    var arr = [];
+    for(var j=-1;j<=this.width;j++){
+      if(i==-1 || j==-1 || i==this.height || j==this.width) {
+        var t = new ObstacleTile(j,i,0,'#000000');
+        t.initShape();
+        t.initBody();
+      } else if (Math.random() < 0.05) {
+        var t = new TexturedObstacleTile(j,i,0,getPath(2));
+        t.initShape(CONFIG_TILES[2].w, CONFIG_TILES[2].h);
+        t.initBody();
+        this.destructible.push(t);
+      } else {
+        var t = new Tile(j,i,0);
+        this.blankTiles.push(t);
+      }
+
+      arr.push(t);
+    }
+    this.tileMap.push(arr);
+  }
+}
+
+Map.prototype.readASCIIMAP = function(opt) {
+  var opt = opt || 'stretch';
+  this.clearMap();
+  this.tileMap = [];
+  for (var i=0;i<this.height;i++) {
+    var row = [];
+    for (var j=0;j<this.width;j++) {
+      row.append();
+    }
+    this.tileMap.push(row);
+  }
+};
 
 Map.prototype.getRandomBlankTile = function() {
   // Get a tile that has no obstacle

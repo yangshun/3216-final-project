@@ -38,17 +38,17 @@ Ninja.prototype.unshield = function() {
 };
 
 Ninja.prototype.destroy = function() {
-  this.effects.map(function(e) { e.destroy(); });
-  this.effects = null;
-
-  this.view = null;
-
   this.ShurikenGun.destroy();
   this.ShurikenGun = null;
   
-  game.removeNinja(this);
+  this.effects.map(function(e) { e.destroy(); });
+  this.effects = null;
+
   this.followers.map(function(f) { f.destroy(); });
   this.followers = [];
+  
+  game.removeNinja(this);
+  this.view = null;
   delete this;
 };
 

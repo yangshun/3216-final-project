@@ -24,8 +24,7 @@ var Arena = (function() {
 
     queue = new createjs.LoadQueue();
     queue.installPlugin(createjs.Sound);
-    queue.loadManifest([{id: "shooting-sound-1", src: "/sound/shooting-sound-1.mp3"},
-                       {id: "shooting-sound-2", src: "/sound/shooting-sound-2.mp3"}]);
+    queue.loadManifest(SoundManager.sounds);
     queue.addEventListener("complete", function() {
       game.start();
     });

@@ -32,6 +32,7 @@ var Game = function() {
 Game.prototype.start = function() {
   createjs.Ticker.setFPS(60);
   createjs.Ticker.addEventListener('tick', _.bind(this.handleTick, this));
+  createjs.Sound.play('bgm', {loop: -1});
   this.state = "PLAYING";
 }
 

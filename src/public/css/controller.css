@@ -60,25 +60,24 @@ html.game-mode .pre-game-container {
 	height: 100%;
 	-webkit-user-select	: none;
 	-moz-user-select	: none;
-	background: #333333; /* Old browsers */
-	background: -moz-linear-gradient(left,  #333333 0%, #666666 100%); /* FF3.6+ */
-	background: -webkit-gradient(linear, left top, right top, color-stop(0%,#333333), color-stop(100%,#666666)); /* Chrome,Safari4+ */
-	background: -webkit-linear-gradient(left,  #333333 0%,#666666 100%); /* Chrome10+,Safari5.1+ */
-	background: -o-linear-gradient(left,  #333333 0%,#666666 100%); /* Opera 11.10+ */
-	background: -ms-linear-gradient(left,  #333333 0%,#666666 100%); /* IE10+ */
-	background: linear-gradient(to right,  #333333 0%,#666666 100%); /* W3C */
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#333333', endColorstr='#666666',GradientType=1 ); /* IE6-9 */
+	/*background: #333333;*/
 	border-radius: 100px;
 }
 
 .controller-inner-container {
-	background-color: #222;
+	/*background-color: #222;*/
 	border-radius: 80px;
 	margin: 25px;
-	width: 100%;
+	margin-right: 0;
+	width: 85%;
 }
 
 html.game-mode .controller-container {
+	display: -webkit-box;
+	display: -moz-box;
+	display: -webkit-flexbox;
+	display: -ms-flexbox;
+	display: -webkit-flex;
 	display: flex;
 }
 
@@ -108,7 +107,7 @@ html.game-mode .controller-container {
 }
 
 #shoot-button {
-	margin-top: 60px;
+	margin-top: 20px;
 	margin-left: 20px;
 }
 

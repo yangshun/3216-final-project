@@ -62,7 +62,10 @@ Ninja.prototype.collide = function(anotherObject) {
     }
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
-      PubSub.publish('ninja.death', {name:anotherObject.ninja.player.name , kills:1});
+      PubSub.publish('ninja.death', {
+        killer : anotherObject.ninja.player.name,
+        victim: this.player.name
+      });
     }
   }
 

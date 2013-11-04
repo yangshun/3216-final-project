@@ -78,6 +78,14 @@ Ninja.prototype.collide = function(anotherObject) {
     });
   }
 
+  if ((anotherObject instanceof SnowFlake) && (this.speed > 50.0)){
+    this.speed -= 50.0; 
+    var object = this;
+    TimedEventManager.addEvent(3000, function() {
+      object.speed += 50.0;
+    });
+  }
+
   if (anotherObject instanceof GunTile) {
     this.equipGun(anotherObject.gun_type);
   }

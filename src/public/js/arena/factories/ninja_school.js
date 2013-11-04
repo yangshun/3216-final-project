@@ -49,6 +49,14 @@ var NinjaSchool = {
     name_view.textAlign = "center";
     name_view.x = 0;
     name_view.y = - ninja.size - 45;
+    var bgw = name_view.getBounds().width + 10;
+    var bgh = name_view.getBounds().height;
+    var name_bg_view = new createjs.Shape();
+    name_bg_view.name = "name_bg";
+    name_bg_view.graphics.beginFill("white").drawRect(-bgw / 2.0, -ninja.size - bgh - 24, bgw, bgh);
+    name_bg_view.alpha = 0.75;
+
+    view.addChild(name_bg_view);
     view.addChild(name_view);
 
     ninja.body = body;

@@ -24,6 +24,11 @@ block content
         a(onclick="joinRoom()") JOIN
   script
     $(document).ready(function() {
+      entryAnimation();
+      $('.katana').click(repeatSwordAnimation);
+    });
+
+    function entryAnimation() {
       $('.logo').addClass('animated bounceInDown');
       $('.logo-img').addClass('animated bounceInDown');
       setTimeout(function() {
@@ -34,7 +39,17 @@ block content
       }, 1000);
       $('.katana-left').addClass('katana-left-final');
       $('.katana-right').addClass('katana-right-final');
-    });
+    }
+
+    function repeatSwordAnimation() {
+      $('.katana-left').removeClass('katana-left-final');
+      $('.katana-right').removeClass('katana-right-final');
+      setTimeout(function() {
+        $('.katana-left').addClass('katana-left-final');
+        $('.katana-right').addClass('katana-right-final');
+      }, 1000);
+      
+    }
 
     function joinRoom() {
       window.location.href = '/join/' + $('#room-number').val();

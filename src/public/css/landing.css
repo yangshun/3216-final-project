@@ -67,13 +67,14 @@ html, body {
 	transition: all 1.0s ease-in-out;
 	-webkit-transition: all 1.0s ease-in-out;
 	-ms-transition: all 1.0s ease-in-out;
+	cursor: pointer;
 }
 
 .katana-right { 
 	right: -400px;
-	transform: translateY(900px) translateX(-300px) rotate(-60deg); 
-	-webkit-transform: translateY(900px) translateX(-300px) rotate(-60deg); 
-	-ms-transform: translateY(900px) translateX(-300px) rotate(-60deg); 
+	transform: translateY(1000px) translateX(-300px) rotate(-60deg); 
+	-webkit-transform: translateY(1000px) translateX(-300px) rotate(-60deg); 
+	-ms-transform: translateY(1000px) translateX(-300px) rotate(-60deg); 
 }
 
 .katana-right-final {
@@ -84,9 +85,9 @@ html, body {
 
 .katana-left {
 	left: -400px;
-	transform: translateY(900px) translateX(300px) rotate(60deg) scale(-1, 1); 
-	-webkit-transform: translateY(900px) translateX(300px) rotate(60deg) scale(-1, 1); 
-	-ms-transform: translateY(900px) translateX(300px) rotate(60deg) scale(-1, 1); 
+	transform: translateY(1000px) translateX(300px) rotate(60deg) scale(-1, 1); 
+	-webkit-transform: translateY(1000px) translateX(300px) rotate(60deg) scale(-1, 1); 
+	-ms-transform: translateY(1000px) translateX(300px) rotate(60deg) scale(-1, 1); 
 }
 
 .katana-left-final {

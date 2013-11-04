@@ -15,11 +15,9 @@ if (path.length === 2 && path[1] !== '') {
 var loadJoysticks = function() {
   console.log(myname);
   // Re-display the joystick divs
-  $('.joystick').css('display', 'block');
-  console.log('sdfajsflk');
-
+  // $('.joystick').css('display', 'block');
   leftJoystick  = new VirtualJoystick({
-    container : document.getElementById('leftContainer'),
+    container : document.getElementById('left-section'),
     mouseSupport  : true
   });
 
@@ -65,12 +63,11 @@ var loadJoysticks = function() {
 var loadNinja = function() {
   // Figure out what is checked and his name
  
-  $('#goBtn').on('click', function() {
-     var myname = $('#playername').val();
+  $('.join-button').on('click', function() {
+    var myname = $('#playername').val();
     if (myname) {
       var myninja = $('input:radio[name="ninjaChoose"]:checked')[0].value;
-      
-      $('.carousell').css('display', 'none');
+      $('html').addClass('game-mode');
       var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
       socket.emit('client-register', data);
     } else {
@@ -85,9 +82,10 @@ var loadNinja = function() {
 // 3. Arena replies ok and you're good to go
 // socket.emit('client-register', { type: 'controller', room: myroom, name: myname, ninja: 'fat ninja'});
 $(function() { loadNinja(); });
+
 socket.on('arena-controller-join', function(data) {
   if (data.success) {
-    $(document).ready(loadJoysticks);
+    loadJoysticks();
   }
 });
 

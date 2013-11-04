@@ -5,15 +5,19 @@ CONFIG_MAX = {
 };
 
 CONFIG_TILES = {
-  path: '/images/terrain/jungle/',
-  1: {image: 'rock.png', w: 360, h: 180},
-  2: {image: 'rock-2.png', w: 240, h: 240},
-  3: {image: 'rock-3.png', w: 360, h: 360},
-  4: {image:'rock-4.png', w: 360, h: 360}
+  terrain: '/images/terrain/jungle/',
+  powerup: '/images/powerups/',
+  image: '/images/',
+  1: {image:'rock.png', w: 360, h: 180},
+  2: {image:'rock-2.png', w: 240, h: 240},
+  3: {image:'rock-3.png', w: 360, h: 360},
+  4: {image:'rock-4.png', w: 360, h: 360},
+  health: {image:'first-aid-kit.png', w: 300, h: 256},
+  speed: {image:'haste-boots.png', w: 300, h: 300}
 };
 
-function getPath(num) {
-  return CONFIG_TILES.path + CONFIG_TILES[num].image;
+function getPath(type, num) {
+  return CONFIG_TILES[type] + CONFIG_TILES[num].image;
 }
 
 var Map = function() {
@@ -55,7 +59,7 @@ Map.prototype.generateMap = function() {
         t.initShape();
         t.initBody();
       } else if (this.tileMap[i][j] != 0) {
-        var t = new TexturedObstacleTile(j,i,0,getPath(2));
+        var t = new TexturedObstacleTile(j,i,0,getTerrainPath(2));
         t.initShape();
         t.initBody();
         this.destructible.push(t);
@@ -80,7 +84,7 @@ Map.prototype.generateRandomMap = function() {
         t.initShape();
         t.initBody();
       } else if (Math.random() < 0.05) {
-        var t = new TexturedObstacleTile(j,i,0,getPath(2));
+        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', 2));
         t.initShape(CONFIG_TILES[2].w, CONFIG_TILES[2].h);
         t.initBody();
         this.destructible.push(t);
@@ -175,16 +179,18 @@ Map.prototype.generatePowerup = function(x, y, type) {
   var p;
   switch (type) {
     case 'healthtile':
-      p = new HealthTile(x, y, 0);
+      p = new HealthTile(x, y, 0, getPath('powerup', 'health'));
+      p.initShape(CONFIG_TILES['health'].w, CONFIG_TILES['health'].h);
       break;
     case 'speedtile':
-      p = new SpeedTile(x, y, 0);
+      p = new SpeedTile(x, y, 0, getPath('powerup', 'speed'));
+      p.initShape(CONFIG_TILES['speed'].w, CONFIG_TILES['speed'].h);
       break;
     case 'guntile':
       p = new GunTile(x, y, 0);
+      p.initShape();
       break;
   }
-  p.initShape();
   p.initBody();
   this.destructible.push(p);
 };

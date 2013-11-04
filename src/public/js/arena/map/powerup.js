@@ -1,30 +1,34 @@
 // ===== Powerups =====
 
-var Powerup = function(x, y, r, c) {
+var Powerup = function(x, y, r, img) {
   Tile.call(this);
   this.x = x * TILE_WIDTH;
   this.y = y * TILE_HEIGHT;
   this.tileX = x;
   this.tileY = y;
   this.rotation = r || 0; // Rotation in degrees
-  this.color = c || "#00ff00";
-
-  this.heal = 10;
 
   this.view = null;
   this.body = null;
   this.dead = false;
-  this._type = 'tile_health';
+  this._type = 'tile_powerup';
 };
 
 Powerup.prototype = new Tile();
 Powerup.prototype.constructor = Powerup;
 
-Powerup.prototype.initShape = function(c) {
-  this.color = c || this.color;
+Powerup.prototype.initShape = function(w, h) {
+  this.img_width = w;
+  this.img_height = h;
 
-  this.view = new createjs.Shape();
-  this.view.graphics.beginFill(this.color).drawCircle(this.x + TILE_WIDTH / 2, this.y + TILE_HEIGHT / 2, TILE_WIDTH / 2);
+  this.view = new createjs.Bitmap(this.img);
+  this.view.scaleX = TILE_WIDTH / this.img_width;
+  this.view.scaleY = TILE_HEIGHT / this.img_height;
+  this.view.regX = 0; //this.img_width / 2;
+  this.view.regY = 0; //this.img_height / 2;
+  this.view.x = this.x;
+  this.view.y = this.y;
+
   game.stage.addChild(this.view);
 };
 
@@ -61,9 +65,7 @@ Powerup.prototype.destroy = function() {
 // Gun Pickup Tiles
 
 var GunTile = function(x, y, r, gun_type) {
-
-
-  Tile.call(this);
+  Powerup.call(this);
   this.x = x * TILE_WIDTH;
   this.y = y * TILE_HEIGHT;
   this.tileX = x;
@@ -110,14 +112,14 @@ GunTile.prototype.tick = function() {
 
 // HealthTile
 
-var HealthTile = function(x, y, r, c) {
-  Tile.call(this);
+var HealthTile = function(x, y, r, img) {
+  Powerup.call(this);
   this.x = x * TILE_WIDTH;
   this.y = y * TILE_HEIGHT;
   this.tileX = x;
   this.tileY = y;
   this.rotation = r || 0; // Rotation in degrees
-  this.color = c || "#00ff00";
+  this.img = img;
 
   this.heal = 10;
 
@@ -133,14 +135,14 @@ HealthTile.prototype.constructor = HealthTile;
 
 // SpeedTile
 
-var SpeedTile = function(x, y, r, c) {
-  Tile.call(this);
+var SpeedTile = function(x, y, r, img) {
+  Powerup.call(this);
   this.x = x * TILE_WIDTH;
   this.y = y * TILE_HEIGHT;
   this.tileX = x;
   this.tileY = y;
   this.rotation = r || 0; // Rotation in degrees
-  this.color = c || "#ff0000";
+  this.img = img;
 
   this.heal = 10;
 

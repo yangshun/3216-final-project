@@ -14,16 +14,13 @@ function LeaderboardController($scope) {
   };
   
   $scope.updatePlayer = function(msg, data) {
-    for (var i = 0; i < $scope.player_list.length; i++) {
-      if ($scope.player_list[i].name == data.name) {
-        if (data.kills) {
-          $scope.player_list[i].kills += data.kills;
-        }
-        $scope.$apply();
-        return;
-      }
-    }
-    return false;
+    var killer =_.findWhere($scope.player_list, {name : data.killer});
+    killer.kills += 1;
+    var victim = _.findWhere($scope.player_list, {name : data.victim});
+    victim.deaths += 1;
+
+    $scope.$apply();
+    return killer && victim
   };
 
   $scope.removePlayer = function(msg, data) {

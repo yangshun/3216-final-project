@@ -43,7 +43,8 @@ def deploy():
         run("npm install");
         print(yellow('Restart Server ...'))
         time.sleep(1)
-        run("forever stop app.js")
+        with settings(warn_only=True):
+            run("forever stop app.js")
         run("forever start app.js")
         sanity_check_status = sanity_check()
         if sanity_check_status == 1:

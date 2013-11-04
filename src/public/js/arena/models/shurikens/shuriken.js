@@ -45,12 +45,12 @@ Shuriken.prototype.changeLinearVelocity = function(v) {
 // Override collision callback
 Shuriken.prototype.collide = function(anotherObject) {
   // Our shuriken are like paper, and it goes away with with any collision
-  var that = this;
-  TimedEventManager.addEvent(100, function() {
-    that.dead = true;
-  });
+  // var that = this;
+  // TimedEventManager.addEvent(100, function() {
+  //   that.dead = true;
+  // });
   this.view.alpha = 0.5;
-  //this.dead = true;
+  this.dead = true;
   PubSub.publish('shuriken.'+this._type+'.death', {shuriken: this});
 };
 

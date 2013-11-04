@@ -12,9 +12,6 @@ var Arena = (function() {
     game.map = new Map();
     game.map.generateRandomMap();
 
-    createjs.Ticker.setFPS(60);
-    createjs.Ticker.addEventListener('tick', handleTick);
-
     // Sample call to register collision
     CollisionManager.registerCallback(HealthTile, Ninja, function(objA, objB) {
       TimedEventManager.addEvent(2000, function() {
@@ -24,20 +21,15 @@ var Arena = (function() {
       });
       console.log((new Date).getTime() + ": Ninja is eating health woots");
     });
+
+    queue = new createjs.LoadQueue();
+    queue.installPlugin(createjs.Sound);
+    queue.loadManifest([{id: "shooting-sound-1", src: "/sound/shooting-sound-1.mp3"},
+                       {id: "shooting-sound-2", src: "/sound/shooting-sound-2.mp3"}]);
+    queue.addEventListener("complete", function() {
+      game.start();
+    });
   };
-
-  var handleTick = function(ticker_data) {
-    var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
-    game.box.Step(timestep, 8.0, 3.0);
-    game.box.ClearForces();
-
-    game.ninjas.map(function(s){s.tick();});
-    game.shurikens.map(function(s){s.tick();});
-    game.map.tick();
-
-    game.stage.update();
-    TimedEventManager.tick();
-  }
 
   var controller_input = function(data) {
     var ninjaToHandle = _.find(game.ninjas, function(ninja) {

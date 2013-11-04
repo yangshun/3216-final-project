@@ -3,6 +3,7 @@ var Game = function() {
   this.ninjas = [];
   this.shurikens = [];
   this.stage = null;
+  this.state = "LOADING";
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -26,6 +27,25 @@ var Game = function() {
   };
   PubSub.subscribe('ninja.create', blinkOn);
   PubSub.subscribe('ninja.revive', blinkOn);
+}
+
+Game.prototype.start = function() {
+  createjs.Ticker.setFPS(60);
+  createjs.Ticker.addEventListener('tick', _.bind(this.handleTick, this));
+  this.state = "PLAYING";
+}
+
+Game.prototype.handleTick = function(ticker_data) {
+  var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
+  this.box.Step(timestep, 8.0, 3.0);
+  this.box.ClearForces();
+
+  this.ninjas.map(function(s){s.tick();});
+  this.shurikens.map(function(s){s.tick();});
+  this.map.tick();
+
+  this.stage.update();
+  TimedEventManager.tick();
 }
 
 Game.prototype.addNinja = function(data) {

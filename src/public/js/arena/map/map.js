@@ -61,7 +61,7 @@ Map.prototype.generateMap = function() {
         t.initShape();
         t.initBody();
       } else if (this.tileMap[i][j] != 0) {
-        var t = new TexturedObstacleTile(j,i,0,getTerrainPath(2));
+        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', 2));
         t.initShape();
         t.initBody();
         this.destructible.push(t);
@@ -86,8 +86,9 @@ Map.prototype.generateRandomMap = function() {
         t.initShape();
         t.initBody();
       } else if (Math.random() < 0.05) {
-        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', 6));
-        t.initShape(CONFIG_TILES[5].w, CONFIG_TILES[5].h);
+        var type = 5;
+        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', type));
+        t.initShape(CONFIG_TILES[type].w, CONFIG_TILES[type].h);
         t.initBody();
         this.destructible.push(t);
       } else {

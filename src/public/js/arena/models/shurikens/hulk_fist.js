@@ -1,7 +1,7 @@
 var HulkFist = function() {
   Shuriken.call(this);
   this._type = 'hulk_fist';
-  this.width = 40;
+  this.width = 60;
   this.height = 35;
   this.density = 1;
   this.damage = 3;
@@ -21,10 +21,10 @@ HulkFist.make = function(ninja, centerVector, angle) {
   s.angle = angle;
 
   var sView = new createjs.Bitmap("/images/projectiles/hulk-fist.png");
-  sView.scaleX = s.width / 200.0;
-  sView.scaleY = s.height / 173.0;
-  sView.regX = 200.0 / 2;
-  sView.regY = 173.0 / 2;
+  sView.scaleX = s.width / 300.0;
+  sView.scaleY = s.height / 142.0;
+  sView.regX = 300.0 / 2;
+  sView.regY = 142.0 / 2;
   sView.x = centerVector.x;
   sView.y = centerVector.y;
 

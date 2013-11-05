@@ -21,7 +21,10 @@ var loadJoysticks = function() {
     mouseSupport  : true
   });
 
-  $('#right-section').on('touchstart', function() {
+  $('#shoot-button').on('touchstart', function() {
+    if ("vibrate" in window.navigator) {
+      window.navigator.vibrate(200); 
+    } 
     socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
   });
 

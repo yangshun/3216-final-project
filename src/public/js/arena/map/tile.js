@@ -92,7 +92,7 @@ var RoundObstacleTile = function(x, y, r, c) {
   this.view = null;
   this.body = null;
 
-  this.hitpoint = 3;
+  this.hitpoint = 30;
   this.dead = false;
 };
 
@@ -132,7 +132,7 @@ RoundObstacleTile.prototype.initBody = function() {
 RoundObstacleTile.prototype.collide = function(other) {
   if (other instanceof Shuriken) {
     this.hitpoint -= other.damage;
-    this.view.alpha = this.hitpoint / 3 * 0.25 + 0.75;
+    this.view.alpha = this.hitpoint / 30 * 0.50 + 0.50;
   }
 
   if (this.hitpoint <= 0) {
@@ -155,7 +155,7 @@ var TexturedObstacleTile = function(x, y, r, img, data) {
   this.view = null;
   this.body = null;
 
-  this.hitpoint = 3;
+  this.hitpoint = 30;
   this.dead = false;
 };
 

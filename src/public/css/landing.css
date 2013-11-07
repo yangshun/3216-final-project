@@ -8,8 +8,7 @@ html, body {
 .landing-container { 
 	position: relative; 
 	width: 100%; 
-	height: 100%; 
-	background-size: cover; 
+	height: 100%;
 	background-repeat: no-repeat;
 	background-position: center top;
 }
@@ -26,6 +25,7 @@ html, body {
 .mobile-container { 
 	min-height: 460px;
 	background-image: url('../images/backgrounds/jungle.jpg'); 
+	background-size: cover; 
 	display: none; 
 	text-align: center; 
 	overflow: 

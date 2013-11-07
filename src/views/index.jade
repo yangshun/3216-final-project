@@ -18,10 +18,13 @@ block content
       h5
         a(href="/join/", class="webapp-link") QUICK JOIN
       p(class="white") - OR -
-      p Enter a room number<br/> to join the game
-      input(id="room-number")
       h5
-        a(onclick="joinRoom()") JOIN
+        a(onclick="revealInput()", class="to-be-hidden") JOIN A ROOM
+        div(class="room-section", style="display:none")
+          p Enter the room number<br/> to join the game
+          input(id="room-number")
+          a(onclick="joinRoom()") JOIN!
+        p(class="white to-be-hidden") <br/>Please lock your phone's orientation to Portrait mode before playing
   script
     $(document).ready(function() {
       entryAnimation();
@@ -48,15 +51,17 @@ block content
         $('.katana-left').addClass('katana-left-final');
         $('.katana-right').addClass('katana-right-final');
       }, 1000);
-      
     }
-
 
     $(".webapp-link").on("click", function(event){
       event.preventDefault();
       window.location.href = $(event.target).attr("href");
-      }
-    )
+    });
+
+    function revealInput() {
+      $('.to-be-hidden').hide();
+      $('.room-section').show();
+    }
 
     function joinRoom() {
       window.location.href = '/join/' + $('#room-number').val();

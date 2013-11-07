@@ -11,6 +11,9 @@ var Shield = function(x, y, body, bitmapView) {
 
   this.dead = false;
   this._type = 'shield';
+  this.slowEffect = null;
+
+  this.damageable = true;
 };
 
 Shield.prototype = new CollidableObject();
@@ -18,6 +21,13 @@ Shield.prototype.constructor = Shield;
 Shield.prototype.active = function(activate, x, y) {
   this.body.SetActive(activate);
   this.view.alpha = activate ? 1 : 0;
+  if (activate) {
+    this.slowEffect = this.slowEffect || new SpeedEffect(this.ninja, -150, 50);
+  } else {
+    this.slowEffect.remove();
+    this.slowEffect.destroy();
+    this.slowEffect = null;
+  }
 };
 
 Shield.prototype.collide = function(anotherObject) {

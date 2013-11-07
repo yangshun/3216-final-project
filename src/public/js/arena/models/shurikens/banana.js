@@ -3,6 +3,7 @@ var Banana = function() {
   this._type = 'banana';
   this.width = 24;
   this.height = 16;
+  this.turn = 1;
 };
 
 Banana.prototype = new Shuriken();
@@ -27,12 +28,10 @@ Banana.prototype.tick = function() {
     }
   }
 
-//  this.last_tick =  Math.max(this.last_tick * 0.80, 0.003) || 0.03;
-//  var mag = this.last_tick * Math.sqrt(x*x + y*y);
   var mag = 0.003 * Math.sqrt(x*x + y*y);
 
-  var newX = mag * Math.cos(angle);
-  var newY = mag * Math.sin(angle);
+  var newX = mag * this.turn * Math.cos(angle);
+  var newY = mag * this.turn * Math.sin(angle);
 
   this.body.ApplyLinearImpulse(new b2Vec2(newX, newY), this.body.GetPosition());
   this.view.x = this.body.GetPosition().get_x() * SCALE;
@@ -47,7 +46,7 @@ Banana.offsetX = function() {
   return 70.0;
 }
 
-Banana.make = function(ninja, centerVector, angle) {
+Banana.make = function(ninja, centerVector, angle, turn) {
   var s = new Banana();  
   s.ninja = ninja;
   s.angle = angle;
@@ -81,6 +80,6 @@ Banana.make = function(ninja, centerVector, angle) {
   s.body = body;
   s.body.actor = s;
   s.view = sView;
-
+  s.turn = turn;
   return s;
 }

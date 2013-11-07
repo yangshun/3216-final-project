@@ -1,8 +1,8 @@
 // TODO: pass parameters to constructor
 var Ninja = function(player, color) {
   ControllableObject.call(this, player);
-  this.hitPoint = 10;
-  this.maxHitPoint = 10;
+  this.hitPoint = 100;
+  this.maxHitPoint = 100;
   this.color = color;
   this.size = NINJA_RADIUS;
   this.speed = 250.0;
@@ -14,6 +14,7 @@ var Ninja = function(player, color) {
   this.followers = [];
 
   this.ninja_shield = null;
+  this.shielding = false;
 
   this._type = 'ninja';
 };
@@ -25,16 +26,20 @@ Ninja.prototype.move = function(angle, speed) {
 };
 
 Ninja.prototype.shoot = function() {
-  this.ShurikenGun.makeShuriken(this.angle);
+  if (!this.shielding) {
+    this.ShurikenGun.makeShuriken(this.angle);
+  }
 };
 
 Ninja.prototype.shield = function() {
   // Might want to do effects here
   this.ninja_shield.active(true);
+  this.shielding = true;
 };
 
 Ninja.prototype.unshield = function() {
   this.ninja_shield.active(false);
+  this.shielding = false;
 };
 
 Ninja.prototype.destroy = function() {
@@ -60,13 +65,7 @@ Ninja.prototype.collide = function(anotherObject) {
     } else {
       this.hitPoint -= anotherObject.damage;
     }
-    if (this.hitPoint <= 0) { 
-      this.state = 'dead'; 
-      PubSub.publish('ninja.death', {
-        killer : anotherObject.ninja.player.name,
-        victim: this.player.name
-      });
-    }
+
   }
 
   if (anotherObject instanceof HealthTile) {
@@ -74,23 +73,30 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof SpeedTile) {
-    this.speed += 100; 
-    var object = this;
-    TimedEventManager.addEvent(3000, function() {
-      object.speed -= 100;
-    });
+    this.addEffect(new SpeedEffect(this, 100, 50, 3000));
   }
 
-  if ((anotherObject instanceof SnowFlake) && (this.speed > 50.0)){
-    this.speed -= 50.0; 
-    var object = this;
-    TimedEventManager.addEvent(3000, function() {
-      object.speed += 50.0;
-    });
+  if ((anotherObject instanceof SnowFlake)){
+    this.addEffect(new SpeedEffect(this, -50, 50, 3000));
   }
 
   if (anotherObject instanceof GunTile) {
     this.equipGun(anotherObject.gun_type);
+  }
+
+  if (anotherObject instanceof Shield) {
+    this.hitPoint -= 0.5;
+  }
+  if (anotherObject.damageable) {
+    if (this.hitPoint <= 0) { 
+      console.log(anotherObject);
+      this.state = 'dead'; 
+      PubSub.publish('ninja.death', {
+        killer : anotherObject.ninja.player.name,
+        victim: this.player.name,
+        ninja_victim: this
+      });
+    }
   }
 
   this.updateHitPointBar();
@@ -156,8 +162,9 @@ Ninja.prototype.removeEffect = function(e) {
 
 Ninja.prototype.reset = function(position) {
   this.state = 'live';
-  this.hitPoint = 10;
+  this.hitPoint = this.maxHitPoint;
   this.angle = 0.0;
+  this.speed = 250.0;
   
   this.body.SetActive(true);
   this.body.SetTransform(position.tob2Vec2(SCALE), 0.0);
@@ -192,6 +199,9 @@ Ninja.prototype.tick = function() {
   } else if (this.state == 'dead') {
     this.state = 'reviving';
     this.body.SetActive(false);
+ 
+    this.effects.map(function(e) { e.destroy(that); });
+    this.effects = [];
     game.reviveNinja(this, 1000.0);
   } else if (this.state == 'remove') {
     PubSub.publish('ninja.remove', {name: this.player.name, ninja: this });

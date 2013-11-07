@@ -25,8 +25,13 @@ var Game = function() {
   var blinkOn = function(msg, data) {
     data.ninja.addEffect(new BlinkEffect(data.ninja));
   };
+
+  var deathOn = function(msg, data) {
+    var deathEffect = new DeathEffect(data.ninja_victim);
+  }
   PubSub.subscribe('ninja.create', blinkOn);
   PubSub.subscribe('ninja.revive', blinkOn);
+  PubSub.subscribe('ninja.death', deathOn);
 }
 
 Game.prototype.start = function() {

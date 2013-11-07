@@ -94,4 +94,75 @@ BlinkEffect.prototype.destroy = function() {
   delete this;
 };
 
+// Death effect
+var DeathEffect = function(ninja) {
+  Effect.call(this);
+  this.view = ninja.view.getChildByName('body').clone();
+  this.view.x = ninja.view.x;
+  this.view.y = ninja.view.y;
+  game.stage.addChild(this.view);
+  
+  this.interval = 100; 
+  this.numCalled = 0;
+  this.numFrame = 60;
 
+  var sign = Math.random() > 0.5 ? 1 : -1;
+  this.deltaX = Math.random() * 20.0 * sign;
+  sign = Math.random() > 0.5 ? 1 : -1;
+  this.deltaY = Math.random() * 20.0 * sign;
+
+  var that = this;
+  var DeathEvent = function () {
+    that.view.rotation += 10;
+    that.view.alpha -= 0.05;
+    that.view.rotation += 10;
+    that.view.scaleX *= 1.1;
+    that.view.scaleY *= 1.1;
+    that.view.y += that.deltaY;
+    that.view.x += that.deltaX;
+    TimedEventManager.addEvent(1.0/that.numFrame, DeathEvent);
+    that.numCalled++;
+    if (that.numCalled >= that.numFrame) {
+      that.destroy();
+    }
+  };
+  DeathEvent();
+};
+
+DeathEffect.prototype = new Effect();
+DeathEffect.prototype.constructor = DeathEffect;
+
+DeathEffect.prototype.destroy = function() {
+  game.stage.removeChild(this.view);
+  delete this;
+};
+
+// Speed Effect
+var SpeedEffect = function(ninja, change, minimum, duration) {
+  Effect.call(this);
+  this.ninja = ninja;
+  this.start = (new Date()).getTime();
+  this.duration = duration || Infinity;
+
+  var old = ninja.speed;
+  ninja.speed = Math.max(minimum, ninja.speed + change);
+  this.real_change = old - ninja.speed;
+};
+
+SpeedEffect.prototype = new Effect();
+SpeedEffect.prototype.constructor = SpeedEffect;
+SpeedEffect.prototype.tick = function (ninja) {
+  if ((new Date()).getTime() - this.start > this.duration) {
+    this.remove();
+    this.destroy();
+  }
+};
+
+SpeedEffect.prototype.remove = function() {
+  this.ninja.speed += this.real_change;
+};
+
+SpeedEffect.prototype.destroy = function() {
+  this.ninja.removeEffect(this);
+  delete this;
+};

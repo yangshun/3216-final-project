@@ -14,6 +14,7 @@ var Ninja = function(player, color) {
   this.followers = [];
 
   this.ninja_shield = null;
+  this.shielding = false;
 
   this._type = 'ninja';
 };
@@ -25,16 +26,20 @@ Ninja.prototype.move = function(angle, speed) {
 };
 
 Ninja.prototype.shoot = function() {
-  this.ShurikenGun.makeShuriken(this.angle);
+  if (!this.shielding) {
+    this.ShurikenGun.makeShuriken(this.angle);
+  }
 };
 
 Ninja.prototype.shield = function() {
   // Might want to do effects here
   this.ninja_shield.active(true);
+  this.shielding = true;
 };
 
 Ninja.prototype.unshield = function() {
   this.ninja_shield.active(false);
+  this.shielding = false;
 };
 
 Ninja.prototype.destroy = function() {

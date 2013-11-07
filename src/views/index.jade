@@ -16,7 +16,7 @@ block content
     img(class="logo-img" src="/images/logo.png")
     div(class="text-container")
       h5
-        a(href="/join/") QUICK JOIN
+        a(href="/join/", class="webapp-link") QUICK JOIN
       p(class="white") - OR -
       p Enter a room number<br/> to join the game
       input(id="room-number")
@@ -50,6 +50,13 @@ block content
       }, 1000);
       
     }
+
+
+    $(".webapp-link").on("click", function(event){
+      event.preventDefault();
+      window.location.href = $(event.target).attr("href");
+      }
+    )
 
     function joinRoom() {
       window.location.href = '/join/' + $('#room-number').val();

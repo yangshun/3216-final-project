@@ -87,8 +87,6 @@ var loadNinja = function() {
 // socket.emit('client-register', { type: 'controller', room: myroom, name: myname, ninja: 'fat ninja'});
 $(function() { 
   loadNinja();
-  // $('html').addClass('game-mode');
-  // loadJoysticks();
 });
 
 socket.on('arena-controller-join', function(data) {

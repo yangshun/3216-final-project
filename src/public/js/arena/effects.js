@@ -94,4 +94,28 @@ BlinkEffect.prototype.destroy = function() {
   delete this;
 };
 
+// Speed Effect
+var SpeedEffect = function(ninja, change, minimum, duration) {
+  Effect.call(this);
+  this.ninja = ninja;
+  this.start = (new Date()).getTime();
+  this.duration = duration || 2000;
 
+  var old = ninja.speed;
+  ninja.speed = Math.max(minimum, ninja.speed + change);
+  this.real_change = old - ninja.speed;
+};
+
+SpeedEffect.prototype = new Effect();
+SpeedEffect.prototype.constructor = SpeedEffect;
+SpeedEffect.prototype.tick = function (ninja) {
+  if ((new Date()).getTime() - this.start > this.duration) {
+    this.destroy();
+  }
+};
+
+SpeedEffect.prototype.destroy = function() {
+  this.ninja.speed += this.real_change;
+  this.ninja.removeEffect(this);
+  delete this;
+};

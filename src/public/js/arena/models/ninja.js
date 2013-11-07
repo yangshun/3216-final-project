@@ -74,19 +74,11 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof SpeedTile) {
-    this.speed += 100; 
-    var object = this;
-    TimedEventManager.addEvent(3000, function() {
-      object.speed -= 100;
-    });
+    this.addEffect(new SpeedEffect(this, 100, 50, 3000));
   }
 
-  if ((anotherObject instanceof SnowFlake) && (this.speed > 50.0)){
-    this.speed -= 50.0; 
-    var object = this;
-    TimedEventManager.addEvent(3000, function() {
-      object.speed += 50.0;
-    });
+  if ((anotherObject instanceof SnowFlake)){
+    this.addEffect(new SpeedEffect(this, -50, 50, 3000));
   }
 
   if (anotherObject instanceof GunTile) {
@@ -155,6 +147,7 @@ Ninja.prototype.removeEffect = function(e) {
 };
 
 Ninja.prototype.reset = function(position) {
+  _.map(function(e) { e.destroy(); }, this.effects);
   this.state = 'live';
   this.hitPoint = 10;
   this.angle = 0.0;

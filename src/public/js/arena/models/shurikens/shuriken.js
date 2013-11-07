@@ -13,6 +13,8 @@ var Shuriken = function(data) {
   // Angular velocity of shuriken, in degree / sec
   this.rotation_step = 3 * 360.0;
   this._type = 'shuriken';
+
+  this.damageable = true;
 };
 
 Shuriken.prototype = new CollidableObject();

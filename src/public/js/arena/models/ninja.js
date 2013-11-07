@@ -60,13 +60,7 @@ Ninja.prototype.collide = function(anotherObject) {
     } else {
       this.hitPoint -= anotherObject.damage;
     }
-    if (this.hitPoint <= 0) { 
-      this.state = 'dead'; 
-      PubSub.publish('ninja.death', {
-        killer : anotherObject.ninja.player.name,
-        victim: this.player.name
-      });
-    }
+
   }
 
   if (anotherObject instanceof HealthTile) {
@@ -86,7 +80,17 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof Shield) {
-    this.hitpoints -= 0.5;
+    this.hitPoint -= 0.5;
+  }
+  if (anotherObject.damageable) {
+    if (this.hitPoint <= 0) { 
+      console.log(anotherObject);
+      this.state = 'dead'; 
+      PubSub.publish('ninja.death', {
+        killer : anotherObject.ninja.player.name,
+        victim: this.player.name
+      });
+    }
   }
 
   this.updateHitPointBar();
@@ -151,10 +155,10 @@ Ninja.prototype.removeEffect = function(e) {
 };
 
 Ninja.prototype.reset = function(position) {
-  _.map(function(e) { e.destroy(); }, this.effects);
   this.state = 'live';
-  this.hitPoint = 10;
+  this.hitPoint = this.maxHitPoint;
   this.angle = 0.0;
+  this.speed = 250.0;
   
   this.body.SetActive(true);
   this.body.SetTransform(position.tob2Vec2(SCALE), 0.0);
@@ -189,6 +193,9 @@ Ninja.prototype.tick = function() {
   } else if (this.state == 'dead') {
     this.state = 'reviving';
     this.body.SetActive(false);
+ 
+    this.effects.map(function(e) { e.destroy(that); });
+    this.effects = [];
     game.reviveNinja(this, 1000.0);
   } else if (this.state == 'remove') {
     PubSub.publish('ninja.remove', {name: this.player.name, ninja: this });

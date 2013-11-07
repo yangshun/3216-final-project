@@ -99,7 +99,7 @@ var SpeedEffect = function(ninja, change, minimum, duration) {
   Effect.call(this);
   this.ninja = ninja;
   this.start = (new Date()).getTime();
-  this.duration = duration || 2000;
+  this.duration = duration || Infinity;
 
   var old = ninja.speed;
   ninja.speed = Math.max(minimum, ninja.speed + change);
@@ -110,12 +110,16 @@ SpeedEffect.prototype = new Effect();
 SpeedEffect.prototype.constructor = SpeedEffect;
 SpeedEffect.prototype.tick = function (ninja) {
   if ((new Date()).getTime() - this.start > this.duration) {
+    this.remove();
     this.destroy();
   }
 };
 
-SpeedEffect.prototype.destroy = function() {
+SpeedEffect.prototype.remove = function() {
   this.ninja.speed += this.real_change;
+};
+
+SpeedEffect.prototype.destroy = function() {
   this.ninja.removeEffect(this);
   delete this;
 };

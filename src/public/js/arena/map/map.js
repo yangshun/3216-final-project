@@ -38,7 +38,7 @@ var Map = function() {
     guntile: 0
   };
 
-  this.bgpath = '/images/terrain/jungle/jungle.jpg';
+  this.bgpath = '/images/terrain/jungle/jungle2.jpg';
   this.background = new createjs.Bitmap(this.bgpath);
   game.stage.addChild(this.background);
 };

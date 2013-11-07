@@ -70,6 +70,7 @@ block content
         div(class="status-middle-section countdown-timer") {{ time_left }}
         div(class="status-right-section score dire") 8 - Dire 
     div(class="status-right-section")
+      p {{ game_message }}
 
   div(class="leaderboard", ng-controller="LeaderboardController")
     //- p {{player_list}}

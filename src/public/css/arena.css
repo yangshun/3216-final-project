@@ -32,8 +32,8 @@ body {
 	width: 35%;
 }
 
-.status-bar .status-left-section {
-	
+.status-bar .status-right-section {
+	text-align: center;
 }
 
 .status-bar .status-left-section p {

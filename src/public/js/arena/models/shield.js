@@ -18,7 +18,7 @@ Shield.prototype.constructor = Shield;
 Shield.prototype.active = function(activate, x, y) {
   this.body.SetActive(activate);
   this.view.alpha = activate ? 1 : 0;
-  this.ninja.addEffect(new SlowEffect(this, -50, 50));
+  this.ninja.addEffect(new SpeedEffect(this, -50, 50, 10000000));
 };
 
 Shield.prototype.collide = function(anotherObject) {

@@ -1,8 +1,8 @@
 // TODO: pass parameters to constructor
 var Ninja = function(player, color) {
   ControllableObject.call(this, player);
-  this.hitPoint = 10;
-  this.maxHitPoint = 10;
+  this.hitPoint = 100;
+  this.maxHitPoint = 100;
   this.color = color;
   this.size = NINJA_RADIUS;
   this.speed = 250.0;
@@ -83,6 +83,10 @@ Ninja.prototype.collide = function(anotherObject) {
 
   if (anotherObject instanceof GunTile) {
     this.equipGun(anotherObject.gun_type);
+  }
+
+  if (anotherObject instanceof Shield) {
+    this.hitpoints -= 0.5;
   }
 
   this.updateHitPointBar();

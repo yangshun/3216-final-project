@@ -4,7 +4,7 @@ var HulkFist = function() {
   this.width = 60;
   this.height = 35;
   this.density = 1;
-  this.damage = 3;
+  this.damage = 30;
   this.rotation_step = 0;
 };
 

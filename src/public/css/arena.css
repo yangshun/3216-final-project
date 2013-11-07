@@ -37,7 +37,13 @@ body {
 }
 
 .status-bar .status-left-section p {
-	font-size: 12px;
+	font-size: 16px;
+	line-height: 48px;
+	margin: 0;
+}
+
+.status-bar .status-left-section p i {
+	padding-left: 20px;
 }
 
 .green {
@@ -73,7 +79,7 @@ body {
 }
 
 .status-bar .status-middle-section .countdown-timer {
-	/*padding: 0 10px;*/
+
 }
 
 

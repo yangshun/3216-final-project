@@ -55,11 +55,23 @@ block content
 
   //- Game
   script(type='text/javascript', src='/js/arena/game.js')
-  script(type='text/javascript', src='/js/arena/leaderboard.js')
+  script(type='text/javascript', src='/js/arena/arena-controller.js')
+  script(type='text/javascript', src='/js/arena/leaderboard-controller.js')
 
   block game
 
-  div(id="leaderboard", ng-app, ng-controller="LeaderboardController")
+  div(class="status-bar")
+    div(class="status-left-section")
+      p &nbsp;To join the game, log on to 
+        span(class="green") {{ current_url }} 
+        on on your mobile device!
+    div(class="status-middle-section")
+        div(class="status-left-section score radiant") Radiant - 5
+        div(class="status-middle-section countdown-timer") {{ time_left }}
+        div(class="status-right-section score dire") 8 - Dire 
+    div(class="status-right-section")
+
+  div(class="leaderboard", ng-controller="LeaderboardController")
     //- p {{player_list}}
     table
       tr
@@ -74,12 +86,12 @@ block content
 
   script
     var stats = new Stats();
-    stats.setMode(1); // 0: fps, 1: ms
+    stats.setMode(0); // 0: fps, 1: ms
 
     // Align top-left
     stats.domElement.style.position = 'absolute';
     stats.domElement.style.left = '0px';
-    stats.domElement.style.top = '0px';
+    stats.domElement.style.top = '48px';
 
     document.body.appendChild( stats.domElement );
 

@@ -4,17 +4,76 @@ body {
   margin: 0;
 }
 
-a {
-  color: #00B7FF;
-}
-
-#leaderboard {
+.leaderboard {
 	text-align: left;
 	position: absolute;
 	right: 0;
-	top: 0; 
+	top: 48px; 
 	width: 200px;
 	padding: 20px;
 	color: #fff;
 	background-color: rgba(0, 0, 0, 0.7);
 }
+
+.status-bar {
+	height: 48px;
+	/*background-color: #fed61b;*/
+	background-image: url('navy_blue.png');
+	background-repeat: repeat;
+	border-bottom: 2px solid #e4c018;
+}
+
+.status-bar div {
+	display: inline-block;
+}
+
+.status-bar .status-left-section,
+.status-bar .status-right-section {
+	width: 35%;
+}
+
+.status-bar .status-left-section {
+	
+}
+
+.status-bar .status-left-section p {
+	font-size: 12px;
+}
+
+.green {
+	color: green;
+}
+
+.status-bar .status-middle-section {
+	text-align: center;
+	width: 30%;
+}
+
+.status-bar .status-middle-section {
+	margin: 0;
+	font-size: 24px;
+	line-height: 48px;
+	color: #fed61b;
+}
+
+.status-bar .score {
+	font-size: 18px;
+}
+
+.status-bar .score.radiant {
+	color: red;
+}
+
+.status-bar .score.dire {
+	color: #56a854;
+}
+
+.status-bar .countdown-timer {
+
+}
+
+.status-bar .status-middle-section .countdown-timer {
+	/*padding: 0 10px;*/
+}
+
+

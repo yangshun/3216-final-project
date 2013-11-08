@@ -10,8 +10,8 @@ var Arena = (function() {
     game.canvas = gameCanvas;
     game.stage = stage;
     game.map = new Map();
-    //game.map.generateRandomMap();
-    game.map.generateMap('iceworld');
+    // game.map.generateRandomMap();
+    // game.map.generateMap('iceworld');
 
     // Sample call to register collision
     CollisionManager.registerCallback(HealthTile, Ninja, function(objA, objB) {
@@ -27,7 +27,7 @@ var Arena = (function() {
     queue.installPlugin(createjs.Sound);
     queue.loadManifest(SoundManager.sounds);
     queue.addEventListener("complete", function() {
-      game.start();
+      game.restart();
     });
   };
 
@@ -114,3 +114,7 @@ document.addEventListener("keydown", function(e) {
     setTimeout(resize, 1000);
   }
 }, false);
+
+$(function() {
+  $('#pause-button').on('click', function() { game.pause(); });
+});

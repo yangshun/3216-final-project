@@ -32,26 +32,54 @@ var Game = function() {
   PubSub.subscribe('ninja.create', blinkOn);
   PubSub.subscribe('ninja.revive', blinkOn);
   PubSub.subscribe('ninja.death', deathOn);
+
+  createjs.Ticker.addEventListener('tick', _.bind(this.handleTick, this));
+}
+
+Game.prototype.restart = function() {
+  game.map.generateMap('iceworld');
+  
+  _.each(this.shurikens, function(shuriken) { 
+    shuriken.destroy(); 
+  });
+  
+  _.each(this.ninjas, function(ninja) {
+    ninja.dead();
+    this.revive(ninja);
+  });
+
+  createjs.Ticker.setFPS(60);
+  this.start();
 }
 
 Game.prototype.start = function() {
-  createjs.Ticker.setFPS(60);
-  createjs.Ticker.addEventListener('tick', _.bind(this.handleTick, this));
   createjs.Sound.play('bgm', {loop: -1});
+  createjs.Ticker.setPaused(false);
   this.state = "PLAYING";
 }
 
+Game.prototype.pause = function() {
+  if (this.state === 'PAUSED') {
+    this.start();
+  } else if (this.state === 'PLAYING') {
+    createjs.Ticker.setPaused(true);
+    this.state = "PAUSED";
+  }
+}
+
 Game.prototype.handleTick = function(ticker_data) {
-  var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
-  this.box.Step(timestep, 8.0, 3.0);
-  this.box.ClearForces();
+  if (this.state === "PLAYING") {
+    var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
+    this.box.Step(timestep, 8.0, 3.0);
+    this.box.ClearForces();
 
-  this.ninjas.map(function(s){s.tick();});
-  this.shurikens.map(function(s){s.tick();});
-  this.map.tick();
+    this.ninjas.map(function(s){s.tick();});
+    this.shurikens.map(function(s){s.tick();});
+    this.map.tick();
 
-  this.stage.update();
-  TimedEventManager.tick();
+    this.stage.update();
+    TimedEventManager.tick();
+  }
 }
 
 Game.prototype.addNinja = function(data) {

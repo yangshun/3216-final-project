@@ -176,6 +176,14 @@ Ninja.prototype.reset = function(position) {
   this.equipGun('none');
 };
 
+Ninja.prototype.dead = function() {
+  this.state = 'reviving';
+  this.body.SetActive(false);
+ 
+  _.each(this.effects, function(e) { e.destroy(); });
+  this.effects = [];
+}
+
 Ninja.prototype.addFollower = function(f) {
   this.followers.push(f);
 };
@@ -197,11 +205,7 @@ Ninja.prototype.tick = function() {
     this.effects.map(function(e) { e.tick(that); });
     this.followers.map(function(e) { e.tick(that); });
   } else if (this.state == 'dead') {
-    this.state = 'reviving';
-    this.body.SetActive(false);
- 
-    this.effects.map(function(e) { e.destroy(that); });
-    this.effects = [];
+    this.dead();
     game.reviveNinja(this, 1000.0);
   } else if (this.state == 'remove') {
     PubSub.publish('ninja.remove', {name: this.player.name, ninja: this });

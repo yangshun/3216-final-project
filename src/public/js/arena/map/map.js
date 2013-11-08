@@ -33,10 +33,7 @@ Map.prototype.clearMap = function() {
 
 Map.prototype.generateMap = function(id) {
   if (this.asciiMap.length == 0) this.decodeASCIIMap(id);
-  console.log(this.asciiMap);
   this.clearMap();
-  console.log('height',this.height,'width',this.width);
-  console.log('height',this.asciiMap.length,'width',this.asciiMap[0].length);
 
   for(var i=-1;i<=this.height;i++){
     var arr = [];
@@ -99,7 +96,6 @@ Map.prototype.decodeASCIIMap = function(id, opt) {
   var ascii_map = MapConfig.ascii[id];
   var scaleX = (ascii_map[0].length-1) / this.width;
   var scaleY = (ascii_map.length-1) / this.height;
-  console.log('scalex',scaleX,'scaley',scaleY);
 
   for (var i=0;i<this.height;i++) {
     var row = [];
@@ -108,8 +104,6 @@ Map.prototype.decodeASCIIMap = function(id, opt) {
     for (var j=0;j<this.width;j++) {
       if (opt == 'scale') {
         var x = Math.round(j * scaleX);
-        
-        console.log(x,y);
         var type = ascii_map[x][y];
       }
       row.push(type);

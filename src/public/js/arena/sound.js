@@ -19,8 +19,13 @@ PubSub.subscribe('shuriken.shuriken.shoot', function(data) {
   SoundManager.play(Math.random() > 0.5 ? 'shooting-sound-1' : 'shooting-sound-2');
 });
 
+var banana_count = 0;
+
 PubSub.subscribe('shuriken.banana.shoot', function(data) {
-  SoundManager.play('banana-sound');
+	if (banana_count % 3 == 0) {
+  		SoundManager.play('banana-sound');
+  	}
+  	banana_count++;
 });
 
 PubSub.subscribe('shuriken.hulk_fist.shoot', function(data) {

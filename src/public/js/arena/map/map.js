@@ -1,36 +1,15 @@
-CONFIG_MAX = {
-  healthtile : 5,
-  speedtile : 2,
-  guntile : 5
-};
-
-CONFIG_TILES = {
-  terrain: '/images/terrain/jungle/',
-  powerup: '/images/powerups/',
-  image: '/images/',
-  1: {image:'rock.png', w: 360, h: 180, tileW: 1, tileH: 1},
-  2: {image:'rock-3.png', w: 360, h: 360, tileW: 1, tileH: 1},
-  3: {image:'rock-4.png', w: 360, h: 360, tileW: 1, tileH: 1},
-  4: {image:'tree-2.png', w: 360, h: 345, tileW: 2, tileH: 2},
-  5: {image:'hut.png', w: 600, h: 600, tileW: 2, tileH: 2},
-  6: {image:'hut-2.png', w: 600, h: 600, tileW: 2, tileH: 2},
-  // 8: {image:'tree.png', w: 360, h: 360},
-  // 2: {image:'rock-2.png', w: 240, h: 240},
-  health: {image:'first-aid-kit.png', w: 300, h: 256},
-  speed: {image:'haste-boots.png', w: 300, h: 300}
-};
-
 function getPath(type, num) {
-  return CONFIG_TILES[type] + CONFIG_TILES[num].image;
+  return MapConfig.tiles[type] + MapConfig.tiles[num].image;
 }
 
 var Map = function() {
   this.height = Math.floor(game.canvas.height / TILE_HEIGHT); // # of tiles
   this.width = Math.floor(game.canvas.width / TILE_WIDTH); // # of tiles
 
-  this.tileMap = [];
+  this.tileMap = []; // keeps track of all tiles
   this.destructible = [];
   this.blankTiles = []; // Keeps track of blank tiles
+  this.asciiMap = []; 
 
   this.numTiles = {
     healthtile: 0,
@@ -52,18 +31,24 @@ Map.prototype.clearMap = function() {
   this.tileMap = [];
 }
 
-Map.prototype.generateMap = function() {
-  if (!this.tileMap) this.generateASCIIMap();
+Map.prototype.generateMap = function(id) {
+  if (this.asciiMap.length == 0) this.decodeASCIIMap(id);
+  this.clearMap();
 
   for(var i=-1;i<=this.height;i++){
+    var arr = [];
     for(var j=-1;j<=this.width;j++){
       if(i==-1 || j==-1 || i==this.height || j==this.width) {
         var t = new ObstacleTile(j,i,0,'#000000');
         t.initShape();
         t.initBody();
-      } else if (this.tileMap[i][j] != 0) {
-        var t = new TexturedObstacleTile(j,i,0,getPath('terrain', 2));
-        t.initShape();
+      } else if (this.asciiMap[i][j] == -1){
+        continue;
+      } else if (this.asciiMap[i][j] != 0) {
+        var type = this.asciiMap[i][j];
+        var r = Math.round(Math.random() * 4) * 90;
+        var t = new TexturedObstacleTile(j,i,r,getPath('terrain', type), MapConfig.tiles[type]);
+        t.initShape(MapConfig.tiles[type].w, MapConfig.tiles[type].h);
         t.initBody();
         this.destructible.push(t);
       } else {
@@ -89,8 +74,8 @@ Map.prototype.generateRandomMap = function() {
       } else if (Math.random() < 0.05) {
         var type = Math.round(Math.random() * 5) + 1;
         var r = Math.round(Math.random() * 4) * 90;
-        var t = new TexturedObstacleTile(j,i,r,getPath('terrain', type), CONFIG_TILES[type]);
-        t.initShape(CONFIG_TILES[type].w, CONFIG_TILES[type].h);
+        var t = new TexturedObstacleTile(j,i,r,getPath('terrain', type), MapConfig.tiles[type]);
+        t.initShape(MapConfig.tiles[type].w, MapConfig.tiles[type].h);
         t.initBody();
         this.destructible.push(t);
       } else {
@@ -104,16 +89,27 @@ Map.prototype.generateRandomMap = function() {
   }
 }
 
-Map.prototype.readASCIIMAP = function(opt) {
-  var opt = opt || 'stretch';
-  this.clearMap();
-  this.tileMap = [];
+Map.prototype.decodeASCIIMap = function(id, opt) {
+  this.asciiMap = [];
+
+  var opt = opt || 'scale';
+  var ascii_map = MapConfig.ascii[id];
+  var scaleX = (ascii_map[0].length-1) / this.width;
+  var scaleY = (ascii_map.length-1) / this.height;
+
   for (var i=0;i<this.height;i++) {
     var row = [];
+    var y = Math.round(i * scaleY);
+
     for (var j=0;j<this.width;j++) {
-      row.append();
+      if (opt == 'scale') {
+        var x = Math.round(j * scaleX);
+        var type = ascii_map[x][y];
+      }
+      row.push(type);
     }
-    this.tileMap.push(row);
+
+    this.asciiMap.push(row);
   }
 };
 
@@ -133,17 +129,17 @@ Map.prototype.tick = function() {
     t.tick();
   });
 
-  if (Math.random()< 0.01 && this.numTiles.healthtile < CONFIG_MAX.healthtile) {
+  if (Math.random()< 0.01 && this.numTiles.healthtile < MapConfig.limits.healthtile) {
     this.numTiles.healthtile += 1;
     this.generateRandomPowerup('healthtile');
   }
 
-  if (Math.random() < 0.01 && this.numTiles.speedtile < CONFIG_MAX.speedtile) {
+  if (Math.random() < 0.01 && this.numTiles.speedtile < MapConfig.limits.speedtile) {
     this.numTiles.speedtile += 1;
     this.generateRandomPowerup('speedtile');
   }
 
-  if (Math.random() < 0.01 && this.numTiles.guntile < CONFIG_MAX.guntile) {
+  if (Math.random() < 0.01 && this.numTiles.guntile < MapConfig.limits.guntile) {
     this.numTiles.guntile += 1;
     this.generateRandomPowerup('guntile');
   }
@@ -185,11 +181,11 @@ Map.prototype.generatePowerup = function(x, y, type) {
   switch (type) {
     case 'healthtile':
       p = new HealthTile(x, y, 0, getPath('powerup', 'health'));
-      p.initShape(CONFIG_TILES['health'].w, CONFIG_TILES['health'].h);
+      p.initShape(MapConfig.tiles['health'].w, MapConfig.tiles['health'].h);
       break;
     case 'speedtile':
       p = new SpeedTile(x, y, 0, getPath('powerup', 'speed'));
-      p.initShape(CONFIG_TILES['speed'].w, CONFIG_TILES['speed'].h);
+      p.initShape(MapConfig.tiles['speed'].w, MapConfig.tiles['speed'].h);
       break;
     case 'guntile':
       p = new GunTile(x, y, 0);

@@ -10,7 +10,8 @@ var Arena = (function() {
     game.canvas = gameCanvas;
     game.stage = stage;
     game.map = new Map();
-    game.map.generateRandomMap();
+    //game.map.generateRandomMap();
+    game.map.generateMap('iceworld');
 
     // Sample call to register collision
     CollisionManager.registerCallback(HealthTile, Ninja, function(objA, objB) {

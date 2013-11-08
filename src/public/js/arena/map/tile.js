@@ -156,6 +156,7 @@ var TexturedObstacleTile = function(x, y, r, img, data) {
   this.body = null;
 
   this.hitpoint = 30;
+  this.respawn_time = 5000 + Math.random() * 2000;
   this.dead = false;
 };
 
@@ -205,4 +206,30 @@ TexturedObstacleTile.prototype.initBody = function() {
 
   this.body = body;
   this.body.actor = this;
+};
+
+TexturedObstacleTile.prototype.destroy = function() {
+  // game.map.removeAndReplaceTile(this);
+  this.view.alpha = 0;
+  this.body.SetActive(false);
+  this.dead = false;
+  this.hitpoint = 30;
+
+  var that = this;
+
+  TimedEventManager.addEvent(this.respawn_time, function() {
+    that.view.alpha = 1;
+    that.body.SetActive(true);
+  });
+};
+
+TexturedObstacleTile.prototype.collide = function(other) {
+  if (other instanceof Shuriken) {
+    this.hitpoint -= other.damage;
+    this.view.alpha = this.hitpoint / 3 * 0.25 + 0.75;
+  }
+
+  if (this.hitpoint <= 0) {
+    this.dead = true;
+  }
 };

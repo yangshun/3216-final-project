@@ -11,6 +11,7 @@ var Arena = (function() {
     game.stage = stage;
     game.map = new Map();
     //game.map.generateRandomMap();
+    //game.map.generateMap('bomberman', 'tile');
     game.map.generateMap('iceworld');
 
     // Sample call to register collision

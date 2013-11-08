@@ -31,8 +31,8 @@ Map.prototype.clearMap = function() {
   this.tileMap = [];
 }
 
-Map.prototype.generateMap = function(id) {
-  if (this.asciiMap.length == 0) this.decodeASCIIMap(id);
+Map.prototype.generateMap = function(id, opts) {
+  if (this.asciiMap.length == 0) this.decodeASCIIMap(id, opts);
   this.clearMap();
 
   for(var i=-1;i<=this.height;i++){
@@ -104,8 +104,11 @@ Map.prototype.decodeASCIIMap = function(id, opt) {
     for (var j=0;j<this.width;j++) {
       if (opt == 'scale') {
         var x = Math.round(j * scaleX);
-        var type = ascii_map[x][y];
+      } else if (opt == 'tile') {
+        var y = i % ascii_map.length;
+        var x = j % ascii_map[0].length;
       }
+      var type = ascii_map[y][x];
       row.push(type);
     }
 

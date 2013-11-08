@@ -15,7 +15,6 @@ Effect.prototype.tick = function () {
 
 
 // Heal Effect
-
 var HealEffect = function(ninja) {
   Effect.call(this);
   this.ninja = ninja;
@@ -56,8 +55,41 @@ HealEffect.prototype.destroy = function() {
   delete this;
 };
 
-// Blink effect
 
+// GameEndEffect Effect
+// var GameEndEffect = function() {
+//   Effect.call(this);
+
+//   this.view = new createjs.Text("Game Over", "30px peachy-keen", "black");
+//   this.view.textAlign = "center";
+//   this.view.x = 500;
+//   this.view.y = 200;;
+//   game.stage.addChild(this.view);
+  
+//   this.numCalled = 0;
+//   this.numFrame = 120;
+
+//   var that = this;
+//   var GameEndEvent = function () {
+//     that.view.alpha -= 0.05;
+//     that.numCalled++;
+//     if (that.numCalled >= that.numFrame) {
+//       that.destroy();
+//       return;
+//     }
+//     setTimeout(GameEndEvent, 1.0 / 60);
+//   };
+//   GameEndEvent();
+// };
+
+// GameEndEffect.prototype = new Effect();
+// GameEndEffect.prototype.constructor = GameEndEffect;
+// GameEndEffect.prototype.destroy = function() {
+//   game.stage.removeChild(this.view);
+//   delete this;
+// };
+
+// Blink effect
 var BlinkEffect = function(ninja) {
   Effect.call(this);
   this.ninja = ninja;

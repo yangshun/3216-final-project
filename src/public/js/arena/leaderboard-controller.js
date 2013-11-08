@@ -32,8 +32,16 @@ function LeaderboardController($scope) {
     $scope.$apply();
   }
 
+  $scope.resetScore = function(msg, data) {
+    _.each($scope.player_list, function(p) {
+      p.kills = 0;
+      p.death = 0;
+    });
+  }
+
   // Subscribe to the PubSub bros!
   PubSub.subscribe('ninja.death', $scope.updatePlayer);
   PubSub.subscribe('ninja.create', $scope.addPlayer);
   PubSub.subscribe('ninja.remove', $scope.removePlayer);
+  PubSub.subscribe('game.restart', $scope.resetScore);
 };

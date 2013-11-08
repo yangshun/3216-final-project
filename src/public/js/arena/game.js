@@ -37,6 +37,7 @@ var Game = function() {
 }
 
 Game.prototype.restart = function() {
+  game.map.clearMap();
   game.map.generateMap('iceworld');
   
   _.each(this.shurikens, function(shuriken) { 
@@ -44,12 +45,13 @@ Game.prototype.restart = function() {
   });
   
   _.each(this.ninjas, function(ninja) {
-    ninja.dead();
-    this.revive(ninja);
+    ninja.die();
+    game.reviveNinja(ninja, 0);
   });
 
   createjs.Ticker.setFPS(60);
   this.start();
+  PubSub.publish('game.restart', {});
 }
 
 Game.prototype.start = function() {
@@ -65,6 +67,12 @@ Game.prototype.pause = function() {
     createjs.Ticker.setPaused(true);
     this.state = "PAUSED";
   }
+}
+
+Game.prototype.end = function() {
+  createjs.Ticker.setPaused(true);
+  this.state = "END";
+  // var endMsg = new GameEndEffect();
 }
 
 Game.prototype.handleTick = function(ticker_data) {

@@ -176,7 +176,7 @@ Ninja.prototype.reset = function(position) {
   this.equipGun('none');
 };
 
-Ninja.prototype.dead = function() {
+Ninja.prototype.die = function() {
   this.state = 'reviving';
   this.body.SetActive(false);
  
@@ -205,7 +205,7 @@ Ninja.prototype.tick = function() {
     this.effects.map(function(e) { e.tick(that); });
     this.followers.map(function(e) { e.tick(that); });
   } else if (this.state == 'dead') {
-    this.dead();
+    this.die();
     game.reviveNinja(this, 1000.0);
   } else if (this.state == 'remove') {
     PubSub.publish('ninja.remove', {name: this.player.name, ninja: this });

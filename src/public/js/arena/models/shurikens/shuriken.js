@@ -29,7 +29,7 @@ Shuriken.prototype.destroy = function() {
 };
 
 Shuriken.prototype.shoot = function() {
-  PubSub.publish('shuriken.'+this._type+'.shoot', {shuriken: this} );
+  PubSub.publish('shuriken.' + this._type + '.shoot', {shuriken: this} );
   this.changeLinearVelocity(new Vector2D(this.speed * Math.cos(this.angle),
                                          this.speed * Math.sin(this.angle)));
 };

@@ -20,7 +20,7 @@ function LeaderboardController($scope) {
     killer.kills += 1;
     var victim = _.findWhere($scope.player_list, {name : data.victim});
     victim.deaths += 1;
-    $scope.$parent.game_message = data.killer + ' just killed ' + data.victim + '!';
+    $scope.$parent.game_message = data.killer + ' just pwned ' + data.victim + '!';
     $scope.$apply();
   };
 

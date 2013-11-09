@@ -1,0 +1,33 @@
+html, body {
+	width: 100%;
+	height: 100%;
+}
+
+body { 
+	background-color: #000;
+	color: #fff;
+}
+
+.heading {
+	margin-top: 50px;
+	text-align: center;
+}
+
+.brands-section-half {
+	text-align: center;
+	margin-top: 100px;
+}
+
+.brands-section-half img {
+	height: 400px; 
+}
+
+.mobile-brand-selection {
+	text-align: center;
+	padding: 40px;
+}
+
+.mobile-shaker {
+	padding-top: 50px;
+	text-align: center;
+}

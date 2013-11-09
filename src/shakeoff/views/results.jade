@@ -1,0 +1,15 @@
+extends layout
+
+block content
+  script(type='text/javascript', src='/js/results-controller.js')
+  div(class="container desktop-container" ng-controller="ResultsController")
+    div(class="row heading")
+      div(class="col-md-12")
+        h1 The Great Shake Off
+    div(class="row brands-section")
+      div(class="col-md-6 brands-section-half")
+        img(ng-class="apple_image_class" src="/images/apple-logo.png" ng-click="update_count('apple')")
+        h2(class="brand-count") {{ apple_count }}
+      div(class="col-md-6 brands-section-half")
+        img(ng-class="android_image_class" src="/images/android-logo.png" ng-click="update_count('android')")
+        h2(class="brand-count") {{ android_count }}

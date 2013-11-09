@@ -34,6 +34,10 @@ body {
 	font-size: 72px;
 }
 
+.android-count {
+	color: #99cc00;
+}
+
 .mobile-brand-selection {
 	text-align: center;
 	padding: 40px;

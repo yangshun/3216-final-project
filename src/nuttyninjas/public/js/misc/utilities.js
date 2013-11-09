@@ -12,7 +12,7 @@ var   b2Vec2 = Box2D.b2Vec2
  , b2RevoluteJointDef = Box2D.b2RevoluteJointDef
  , b2WheelJoint = Box2D.b2WheelJoint;
 
-NINJA_RADIUS = 20.0
+NINJA_RADIUS = 14.0
 SCALE = 30.0
 GUN_WIDTH = 50
 GUN_HEIGHT = 15

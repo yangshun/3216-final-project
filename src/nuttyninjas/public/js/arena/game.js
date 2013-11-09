@@ -38,7 +38,7 @@ var Game = function() {
 
 Game.prototype.restart = function() {
   game.map.clearMap();
-  game.map.generateMap('spiral', 'tile');
+  game.map.generateMap('maze', 'scale');
   
   _.each(this.shurikens, function(shuriken) { 
     shuriken.destroy(); 

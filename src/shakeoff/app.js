@@ -58,7 +58,7 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 
 var randomString = function(len) {
   return Math.random().toString(36).slice(2,len+2);
-}
+};
 
 
 // Websockets stuff
@@ -66,82 +66,43 @@ var randomString = function(len) {
 var io = io.listen(server);
 io.set('log level', 2);
 
+var apple_count = 0;
+var android_count = 0;
+
 io.sockets.on('connection', function(socket) {
-  var room = 'lobby';
-  var type = 'unknown type';
-  var name = 'Anonymous';
-
-  // Helper functions
-
-  var serverMessage = function(msg) {
-    socket.emit('server-message', { message : msg });
-  }
-
-  var serverNumbers = function(roomname) {
-    io.sockets.in(roomname+'-screen').emit('server-num',{
-      room : roomname,
-      clients : (io.sockets.clients(roomname+'-controller').length || 0),
-      screens : (io.sockets.clients(roomname+'-screen').length || 0)
+  var sendResults = function(data) {
+    io.sockets.emit('results', {
+      apple_count: apple_count,
+      android_count: android_count,
+      shaker: data.type
     });
-  }
+  };
 
-  // Socket Events
+  socket.emit('Welcome', {
+    msg: 'Connected',
+    apple_count : apple_count,
+    android_count: android_count
+  });
 
-  socket.join('world');
-  serverMessage('MOTD: Welcome to Prototype-1');
-  serverNumbers('world');
-
-  socket.on('client-register', function(data) {
-    type = data.type;
-    room = data.room;
-    name = data.name;
-    console.log('A new '+data.type+' has joined Room : '+room);
-
-    socket.join('world-'+data.type);
-    socket.join(data.room+'-'+data.type); 
-
-    serverMessage('Joined as '+data.type+' in Room : '+data.room);
-    serverNumbers(data.room);
-    if (data.type == 'controller') {
-      io.sockets.in(data.room+'-screen').emit('server-controller-join', {
-        name: data.name,
-        id: socket.id
-      });
+  socket.on('reset', function(data) {
+    if (data.password === 'yoloyolo') {
+      apple_count = 0;
+      android_count = 0;
     }
+    sendResults({type: 'apple'});
   });
 
-  socket.on('disconnect', function() {
-    socket.leave('world-'+type)
-    socket.leave(room+'-'+type);
-
-    serverNumbers(room);
-    console.log('A '+type+' has left '+room);
-    io.sockets.in(room+'-screen').emit('server-controller-leave', {
-      id: socket.id
-    });
-  });
-
-  socket.on('client-name', function(data) {
-    name = data.name;
-    serverMessage('Set name to '+data.name);
-  });
-
-  socket.on('controller-input', function(data) {
-    serverMessage(data.action+' received for '+data.key);
-    data.id = socket.id;
-    socket.broadcast.to(room+'-screen').emit('controller-input', data);
-  });
-
-  socket.on('screen-echo', function(data) {
-    var client = io.sockets.sockets[data.id];
-    client.emit('screen-echo', data);
-    console.log(data);
-  });
-
-  // Servce RTT initiated from Client side every 2 secs
-  // in burst of 5 pings
-  socket.on('screen-rttHeartBeat', function(data) {
-    data.server_time = Date.now();
-    socket.emit('server-rttHeartBeat', data);
+  socket.on('shakeit', function(data) {
+    switch (data.type) {
+      case 'android':
+        android_count++;
+        break;
+      case 'apple':
+        apple_count++;
+        break;
+      default:
+        return;
+    }
+    sendResults(data);
   });
 });

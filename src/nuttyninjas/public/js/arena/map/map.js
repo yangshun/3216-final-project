@@ -25,7 +25,12 @@ var Map = function() {
 Map.prototype.clearMap = function() {
   for(var i=0;i<this.tileMap.length;i++){
     for(var j=0;j<this.tileMap.length;j++){
-      game.stage.removeChild(this.tileMap[i][j]);
+      if (this.tileMap[i][j].view) {
+        game.stage.removeChild(this.tileMap[i][j]);
+      }
+      if (this.tileMap[i][j].body) {
+        game.box.DestroyBody(this.tileMap[i][j].body);
+      }
     }
   }
   this.tileMap = [];

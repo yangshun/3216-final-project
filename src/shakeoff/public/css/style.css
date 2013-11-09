@@ -8,6 +8,13 @@ body {
 	color: #fff;
 }
 
+.desktop-container {
+	width: 100%;
+	height: 100%;
+	background-image: url('../images/background.jpg');
+	background-position: center bottom;	
+}
+
 .heading {
 	margin-top: 50px;
 	text-align: center;
@@ -15,11 +22,16 @@ body {
 
 .brands-section-half {
 	text-align: center;
-	margin-top: 100px;
+	margin-top: 50px;
 }
 
 .brands-section-half img {
-	height: 400px; 
+	margin-top: 50px;
+	height: 300px; 
+}
+
+.brand-count {
+	font-size: 72px;
 }
 
 .mobile-brand-selection {

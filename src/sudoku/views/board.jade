@@ -1,0 +1,20 @@
+extends layout
+
+block content
+  script(type='text/javascript', src='/js/board-controller.js')
+  div(class="container desktop-container" ng-controller="BoardController")
+    div(class="row heading")
+      div(class="col-md-12")
+        h1 Multiplayer Sudoku
+    div(class="row")
+      div(class="col-md-6")
+        div(class="sudoku-board")
+          div(class="sudoku-col-label" ng-repeat="c in ['','A','B','C','D','E','F','G','H','I']") {{ c }}
+          div(class="sudoku-row" ng-repeat="row in board") 
+            div(class="sudoku-row-label") {{ $index }}
+            div(class="sudoku-col" ng-repeat="col in row") {{ col }}
+      div(class="col-md-6")
+        h2 Blah has added 5 in row 3 col 2
+        h2 Blah has added 5 in row 3 col 2
+        h2 Blah has added 5 in row 3 col 2
+        h2 Blah has added 5 in row 3 col 2

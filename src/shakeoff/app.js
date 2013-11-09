@@ -74,11 +74,11 @@ io.sockets.on('connection', function(socket) {
     io.sockets.emit('results', {
       apple_count: apple_count,
       android_count: android_count,
-      shaker: data.type
+      type: data.type
     });
   };
 
-  socket.emit('Welcome', {
+  socket.emit('welcome', {
     msg: 'Connected',
     apple_count : apple_count,
     android_count: android_count

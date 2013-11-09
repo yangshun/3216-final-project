@@ -27,7 +27,7 @@ function ShakeController($scope, $timeout) {
   
   var handleShake = function(eventData) {
     var a = eventData.accelerationIncludingGravity;
-    if (Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z) > 30) {
+    if (Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z) > 60) {
       $scope.shake();
     }
   };

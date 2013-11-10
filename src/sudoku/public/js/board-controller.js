@@ -1,15 +1,6 @@
 function BoardController($scope, $timeout) {
 
-  var board = 
- [['', '', 1, '', '', 2, '', '', 4],
-  [4, '', '', '', 7, '', '', '', ''],
-  ['', '', '', '', 1, 4, '', '', ''],
-  [5, 8, '', 2, '', '', '', '', ''],
-  ['', '', '', 8, '', '', 3, '', ''],
-  [9, '', '', '', '', 5, '', 6, ''],
-  [1, '', 9, '', '', '', 2, '', ''],
-  ['', '', '', 9, '', '', 8, '', ''],
-  [2, 5, '', '', '', 7, '', '', 9]];
+  var board = [];
 
   // template
   // [['', '', '', '', '', '', '', '', ''],
@@ -21,14 +12,15 @@ function BoardController($scope, $timeout) {
   // ['', '', '', '', '', '', '', '', ''],
   // ['', '', '', '', '', '', '', '', ''],
   // ['', '', '', '', '', '', '', '', '']];
+  
   $scope.board = [];
 
-  function generateBoard() {
+  function generateBoard(data) {
     for (var i = 0; i < board.length; i++) {
       var row = [];
       for (var j = 0; j < board[i].length; j++) {
-        if (board[i][j] != '') {
-          row.push({ fixed: true, value: board[i][j], 'sudoku-col': true, 'blue-bg': false });
+        if (board[i][j] != '' && data.init[i][j] != '') { // This is part of the original numbers
+            row.push({ fixed: true, value: board[i][j], 'sudoku-col': true, 'blue-bg': false });
         } else {
           row.push({ fixed: false, value: board[i][j], 'sudoku-col': true, 'blue-bg': false });
         }
@@ -64,12 +56,12 @@ function BoardController($scope, $timeout) {
     alert('Puzzle solved!');
   }
 
-  generateBoard();
-  
   $scope.logs = [];
 
   socket.on('welcome', function(data) {
-
+    board = data.board
+    generateBoard(data);
+    $scope.$apply();
   });
 
   socket.on('update-board', function(data) {

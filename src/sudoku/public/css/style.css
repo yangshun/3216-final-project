@@ -3,11 +3,6 @@ html, body {
 	height: 100%;
 }
 
-body { 
-}
-
-
-
 .sudoku-board {
 	text-align: center;
 }
@@ -25,6 +20,9 @@ body {
 	font-size: 24px;
 	line-height: 50px;
 	color: #666;
+}
+
+.desktop-container .sudoku-board .sudoku-row .sudoku-col {
 	transition: background-color 1s;
 }
 
@@ -32,15 +30,15 @@ body {
 	color: #09c;
 }
 
-.sudoku-board .sudoku-row .sudoku-col.blue-bg {
-	background-color: #78ceeb;
+.blue-bg {
+	background-color: #78ceeb !important;
 }
 
 .sudoku-board .sudoku-row .sudoku-col:before,
 .sudoku-board .sudoku-row .sudoku-col:after {
     content: '\00a0';
 }
-.sudoku-board .sudoku-row .sudoku-col:nth-child(3n-1) {
+.desktop-container .sudoku-board .sudoku-row .sudoku-col:nth-child(3n-1) {
 	border-left: 2px solid #09c;
 }
 
@@ -48,14 +46,13 @@ body {
 	border-right: 2px solid #09c;
 }
 
-.sudoku-board .sudoku-row:nth-child(3n-1) .sudoku-col {
+.desktop-container .sudoku-board .sudoku-row:nth-child(3n-1) .sudoku-col {
 	border-top: 2px solid #09c;
 }
 
 .sudoku-board .sudoku-row:last-child .sudoku-col {
 	border-bottom: 2px solid #09c;
 }
-
 
 .sudoku-board .sudoku-row-label,
 .sudoku-board .sudoku-col-label {
@@ -64,4 +61,41 @@ body {
 	display: inline-block;
 	color: #09c;
 	vertical-align: middle;
+}
+
+.mobile-container .sudoku-board .sudoku-row .sudoku-col {
+	width: 30px;
+	height: 30px;
+	font-size: 24px;
+	line-height: 30px;
+}
+
+.mobile-container .sudoku-board .sudoku-row .sudoku-col:nth-child(3n+1) {
+	border-left: 2px solid #09c;
+}
+
+.mobile-container .sudoku-board .sudoku-row:nth-child(3n+1) .sudoku-col {
+	border-top: 2px solid #09c;
+}
+
+.mobile-container p {
+	font-weight: bold;
+}
+
+.mobile-container .select-values {
+	width: 100%;
+	text-align: center;
+	margin-bottom: 20px;
+}
+
+.mobile-container .select-values .btn {
+	float: none;
+	padding: 6px 11px;
+	font-weight: bold;
+	color: #09c;
+}
+
+.submit-button {
+	font-weight: bold;
+	margin-bottom: 30px;
 }

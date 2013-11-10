@@ -55,11 +55,6 @@ var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
 });
 
-var randomString = function(len) {
-  return Math.random().toString(36).slice(2,len+2);
-};
-
-
 // Websockets stuff
 
 var io = io.listen(server);
@@ -69,14 +64,7 @@ var apple_count = 0;
 var android_count = 0;
 
 io.sockets.on('connection', function(socket) {
-  var sendResults = function(data) {
-    io.sockets.emit('results', {
-      apple_count: apple_count,
-      android_count: android_count,
-      type: data.type
-    });
-  };
-
+  
   socket.emit('welcome', {
     msg: 'Connected',
     apple_count : apple_count,
@@ -85,23 +73,12 @@ io.sockets.on('connection', function(socket) {
 
   socket.on('reset', function(data) {
     if (data.password === 'yoloyolo') {
-      apple_count = 0;
-      android_count = 0;
+      // do the necessary reset  
     }
-    sendResults({type: 'apple'});
+    
   });
 
-  socket.on('shakeit', function(data) {
-    switch (data.type) {
-      case 'android':
-        android_count++;
-        break;
-      case 'apple':
-        apple_count++;
-        break;
-      default:
-        return;
-    }
-    sendResults(data);
+  socket.on('submit-response', function(data) {
+    io.sockets.emit('update-board', data);
   });
 });

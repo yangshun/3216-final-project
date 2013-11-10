@@ -11,10 +11,9 @@ block content
         div(class="sudoku-board")
           div(class="sudoku-col-label" ng-repeat="c in ['','A','B','C','D','E','F','G','H','I']") {{ c }}
           div(class="sudoku-row" ng-repeat="row in board") 
-            div(class="sudoku-row-label") {{ $index }}
-            div(class="sudoku-col" ng-repeat="col in row") {{ col }}
+            div(class="sudoku-row-label") {{ $index + 1 }}
+            div(ng-repeat="col in row track by $index" ng-class="col") {{ col.value }}
+            //- div(ng-repeat="col in row track by $index" ng-class="'sudoku-col ' + {true:'fixed', false:''}[col.fixed]") {{ col.value }}
       div(class="col-md-6")
-        h2 Blah has added 5 in row 3 col 2
-        h2 Blah has added 5 in row 3 col 2
-        h2 Blah has added 5 in row 3 col 2
-        h2 Blah has added 5 in row 3 col 2
+        h2(ng-repeat="log in logs") {{ log.name }} added {{ log.board_value }} to cell {{ get_square(log) }}
+        //- pre {{ board }}

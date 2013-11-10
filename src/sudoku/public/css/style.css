@@ -24,29 +24,44 @@ body {
 	border-top: 1px solid #ccc;
 	font-size: 24px;
 	line-height: 50px;
+	color: #666;
+	transition: background-color 1s;
 }
 
+.sudoku-board .sudoku-row .sudoku-col.fixed {
+	color: #09c;
+}
+
+.sudoku-board .sudoku-row .sudoku-col.blue-bg {
+	background-color: #78ceeb;
+}
+
+.sudoku-board .sudoku-row .sudoku-col:before,
+.sudoku-board .sudoku-row .sudoku-col:after {
+    content: '\00a0';
+}
 .sudoku-board .sudoku-row .sudoku-col:nth-child(3n-1) {
-	border-left: 2px solid red;
+	border-left: 2px solid #09c;
 }
 
 .sudoku-board .sudoku-row .sudoku-col:last-child {
-	border-right: 2px solid red;
+	border-right: 2px solid #09c;
 }
 
 .sudoku-board .sudoku-row:nth-child(3n-1) .sudoku-col {
-	border-top: 2px solid red;
+	border-top: 2px solid #09c;
 }
 
 .sudoku-board .sudoku-row:last-child .sudoku-col {
-	border-bottom: 2px solid red;
+	border-bottom: 2px solid #09c;
 }
+
 
 .sudoku-board .sudoku-row-label,
 .sudoku-board .sudoku-col-label {
 	width: 50px;
 	text-align: center;
 	display: inline-block;
-	color: red;
+	color: #09c;
 	vertical-align: middle;
 }

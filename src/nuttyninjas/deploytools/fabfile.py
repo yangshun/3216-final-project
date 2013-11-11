@@ -9,7 +9,7 @@ import time
 from fabric.api import *
 from fabric.colors import *
 
-PROJECT_PATH = '/home/ubuntu/2013-final-project-3/src'
+PROJECT_PATH = '/home/ubuntu/2013-final-project-3/src/nuttyninjas'
 AWS_IP = '54.251.188.20'
 SERVER = [AWS_IP]
 env.user = 'ubuntu'

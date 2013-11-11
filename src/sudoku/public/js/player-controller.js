@@ -1,6 +1,6 @@
 function PlayerController($scope, $timeout) {
   
-  $scope.name = ''
+  $scope.name = '';
   $scope.row_value = 0;
   $scope.col_value = 0;
   $scope.selected_value = 0;
@@ -50,7 +50,6 @@ function PlayerController($scope, $timeout) {
     }
     $scope.nums[index].class['blue-bg'] = true;
     $scope.selected_value = index + 1;
-    $scope.$apply();
   }
 
   $scope.submitResponse = function() {

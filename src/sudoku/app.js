@@ -60,25 +60,39 @@ var server = http.createServer(app).listen(app.get('port'), function(){
 var io = io.listen(server);
 io.set('log level', 2);
 
-var apple_count = 0;
-var android_count = 0;
+var initboard =  [['', '', 1, '', '', 2, '', '', 4],
+              [4, '', '', '', 7, '', '', '', ''],
+              ['', '', '', '', 1, 4, '', '', ''],
+              [5, 8, '', 2, '', '', '', '', ''],
+              ['', '', '', 8, '', '', 3, '', ''],
+              [9, '', '', '', '', 5, '', 6, ''],
+              [1, '', 9, '', '', '', 2, '', ''],
+              ['', '', '', 9, '', '', 8, '', ''],
+              [2, 5, '', '', '', 7, '', '', 9]];
 
+var board = initboard.map(function(a){return a.slice();});
 io.sockets.on('connection', function(socket) {
   
   socket.emit('welcome', {
     msg: 'Connected',
-    apple_count : apple_count,
-    android_count: android_count
+    board: board,
+    init: initboard // coz i'm too lazy
   });
 
   socket.on('reset', function(data) {
     if (data.password === 'yoloyolo') {
       // do the necessary reset  
     }
-    
   });
 
   socket.on('submit-response', function(data) {
+    var r = data.row - 1;
+    var c = data.col - 1;
+
+    // Check that it's not overwriting our original values
+    if(initboard[r][c] !== '') return;
+
+    board[data.row-1][data.col-1] = data.board_value;
     io.sockets.emit('update-board', data);
   });
 });

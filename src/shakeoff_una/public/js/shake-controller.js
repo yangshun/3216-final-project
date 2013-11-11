@@ -9,7 +9,7 @@ function ShakeController($scope, $timeout) {
   var choice = '';
 
   $scope.choose_brand = function(type) {
-    UnaController.register('', type, function(res) {
+    UnaController.register('-', type, function(res) {
       if (res.success) {
         $scope.chosen_image = '/images/' + type + '-logo.png';
         $scope.mobile_landing_container.hidden = true;
@@ -21,7 +21,7 @@ function ShakeController($scope, $timeout) {
 
   $scope.shake = function() {
     $scope.brand_image_class[effect] = true;
-    UnaController.sendToScreen({type: choice});
+    UnaController.sendToServer(choice);
 
     $timeout(function() {
       $scope.brand_image_class[effect] = false;

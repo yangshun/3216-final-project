@@ -5,10 +5,16 @@ function ResultsController($scope, $timeout) {
   $scope.android_image_class = {'brand-logo': true, 'animated': true, effect: false };
   $scope.android_count = 0;
 
-  UnaScreen.register('', 'screen');
+  UnaScreen.register('-', 'screen', function(res) {
+    if (res.success) {
+      $scope.apple_count = res.state.apple;
+      $scope.android_count = res.state.android;
+      $scope.$apply();
+    }
+  });
 
-  UnaScreen.onControllerInput(function(data) {
-    $scope.update_count(data.payload.type);
+  UnaScreen.onServerInput(function(data) {
+    $scope.update_count(data.payload);
   });
 
   $scope.update_count = function(type) {

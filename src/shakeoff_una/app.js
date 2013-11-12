@@ -44,10 +44,17 @@ una.screenless.registerInitState(function() {
   return {apple: 0, android: 0};
 });
 
-una.screenless.registerOnControllerInput(function(UnaServer, una_header, payload) {
+una.screenless.registerOnControllerInput('game', function(UnaServer, una_header, payload) {
   var state = UnaServer.getState();
   state[payload]++;
-  UnaServer.sendToScreens(payload);
+  UnaServer.sendToScreens('game', payload);
+});
+
+una.screenless.registerOnScreenInput('reset', function(UnaServer, una_header, payload) {
+  if (payload == 'yoloyolo') {
+    UnaServer.setState({apple: 0, android: 0});
+    UnaServer.sendToScreens('reset');
+  }
 });
 
 var server = http.createServer(app).listen(app.get('port'), function(){

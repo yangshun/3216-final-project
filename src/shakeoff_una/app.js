@@ -40,14 +40,15 @@ app.configure(function() {
 
 // Enable screenless
 una.enableScreenless();
-una.screenless.initState = function() {
+una.screenless.registerInitState(function() {
   return {apple: 0, android: 0};
-}
-una.screenless.onControllerInput = function(UnaServer, una_header, payload) {
+});
+
+una.screenless.registerOnControllerInput(function(UnaServer, una_header, payload) {
   var state = UnaServer.getState();
   state[payload]++;
   UnaServer.sendToScreens(payload);
-}
+});
 
 var server = http.createServer(app).listen(app.get('port'), function(){
   console.log('Una server listening on port ' + app.get('port'));

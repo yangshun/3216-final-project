@@ -5,7 +5,7 @@
   "main": "node app.js",
   "dependencies": {
     "jade": "~0.35.0",
-    "una": "~0.2.2"
+    "una": "~0.2.3"
   },
   "devDependencies": {},
   "author": "",

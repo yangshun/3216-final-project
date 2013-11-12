@@ -40,6 +40,7 @@ app.configure(function() {
 
 // Enable screenless
 una.enableScreenless();
+una.setConfig('floodControlDelay', 300);
 una.screenless.registerInitState(function() {
   return {apple: 0, android: 0};
 });

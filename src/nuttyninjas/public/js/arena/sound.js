@@ -11,9 +11,29 @@ SoundManager = {
   play: function(id, opts) {
     opts = opts || {};
     createjs.Sound.play(id, opts);
+  },
+  playBgm: function() {
+    if (!this.bgm) {
+      this.bgm = createjs.Sound.createInstance("bgm");
+      this.bgm.play({loop: -1});
+    } else {
+      this.bgm.resume();
+    }
+  },
+  pauseBgm: function() {
+    if (this.bgm) {
+      this.bgm.pause();
+    }
   }
 };
 
+PubSub.subscribe('game.start', function() {
+  SoundManager.playBgm();
+});
+
+PubSub.subscribe('game.pause', function() {
+  SoundManager.pauseBgm();
+});
 
 PubSub.subscribe('shuriken.shuriken.shoot', function(data) {
   SoundManager.play(Math.random() > 0.5 ? 'shooting-sound-1' : 'shooting-sound-2');

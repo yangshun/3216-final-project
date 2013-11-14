@@ -59,9 +59,9 @@ Game.prototype.restart = function() {
 }
 
 Game.prototype.start = function() {
-  createjs.Sound.play('bgm', {loop: -1});
   createjs.Ticker.setPaused(false);
   this.state = "PLAYING";
+  PubSub.publish('game.start', {});
 }
 
 Game.prototype.pause = function() {
@@ -70,6 +70,7 @@ Game.prototype.pause = function() {
   } else if (this.state === 'PLAYING') {
     createjs.Ticker.setPaused(true);
     this.state = "PAUSED";
+    PubSub.publish('game.pause', {});
   }
 }
 

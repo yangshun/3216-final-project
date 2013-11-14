@@ -4,6 +4,9 @@ var Game = function() {
   this.shurikens = [];
   this.stage = null;
   this.state = "LOADING";
+  this.timePassed = 0;
+  // 10 seconds
+  this.roundTime = 300;
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -49,6 +52,7 @@ Game.prototype.restart = function() {
     game.reviveNinja(ninja, 0);
   });
 
+  this.timePassed = 0;
   createjs.Ticker.setFPS(60);
   this.start();
   PubSub.publish('game.restart', {});
@@ -87,6 +91,9 @@ Game.prototype.handleTick = function(ticker_data) {
 
     this.stage.update();
     TimedEventManager.tick();
+
+    this.timePassed += timestep;
+    if (this.timePassed >= this.roundTime) { this.end(); }
   }
 }
 

@@ -7,6 +7,7 @@ var Game = function() {
   this.timePassed = 0;
   // In seconds
   this.roundTime = 10000;
+  this.score = {};
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -29,12 +30,13 @@ var Game = function() {
     data.ninja.addEffect(new BlinkEffect(data.ninja));
   };
 
-  var deathOn = function(msg, data) {
-    var deathEffect = new DeathEffect(data.ninja_victim);
-  }
   PubSub.subscribe('ninja.create', blinkOn);
   PubSub.subscribe('ninja.revive', blinkOn);
-  PubSub.subscribe('ninja.death', deathOn);
+
+  var that = this;
+  PubSub.subscribe('ninja.death', function(msg, data) {
+    that.onNinjaDeath(msg, data);
+  });
 
   createjs.Ticker.addEventListener('tick', _.bind(this.handleTick, this));
 }
@@ -52,6 +54,7 @@ Game.prototype.restart = function() {
     game.reviveNinja(ninja, 0);
   });
 
+  this.score = {};
   this.timePassed = 0;
   createjs.Ticker.setFPS(60);
   this.start();
@@ -114,6 +117,8 @@ Game.prototype.addNinja = function(data) {
   this.stage.addChild(ninja.view);
   PubSub.publish('ninja.create', { name: ninja.player.name, ninja: ninja });
 
+  this.score[ninja.team] = this.score[ninja.team] || 0;
+
   return true;
 }
 
@@ -129,6 +134,17 @@ Game.prototype.reviveNinja = function(ninja, time) {
     game.stage.addChild(ninja.view);
     PubSub.publish('ninja.revive', {name: ninja.player.name, ninja: ninja});
   }, time);
+}
+
+Game.prototype.onNinjaDeath = function(msg, data) {
+  var deathEffect = new DeathEffect(data.victim);
+
+  var team = data.killer.team;
+  if (this.score[team]) {
+    this.score[team] += 1;
+  } else {
+    this.score[team] = 1;
+  }
 }
 
 Game.prototype.removeNinja = function(s) {

@@ -15,12 +15,11 @@ function LeaderboardController($scope) {
   };
   
   $scope.updatePlayer = function(msg, data) {
-    console.log(data);
-    var killer =_.findWhere($scope.player_list, {name : data.killer});
+    var killer =_.findWhere($scope.player_list, {name : data.killer.player.name});
     killer.kills += 1;
-    var victim = _.findWhere($scope.player_list, {name : data.victim});
+    var victim = _.findWhere($scope.player_list, {name : data.victim.player.name});
     victim.deaths += 1;
-    $scope.$parent.game_message = data.killer + ' just pwned ' + data.victim + '!';
+    $scope.$parent.game_message = data.killer.player.name + ' just pwned ' + data.victim.player.name + '!';
     $scope.$apply();
   };
 

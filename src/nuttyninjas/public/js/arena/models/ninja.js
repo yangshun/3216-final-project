@@ -4,6 +4,7 @@ var Ninja = function(player, color) {
   this.hitPoint = 100;
   this.maxHitPoint = 100;
   this.color = color;
+  this.team = this.color;
   this.size = NINJA_RADIUS;
   this.speed = 250.0;
   this.angle = Math.PI / 2;
@@ -89,12 +90,10 @@ Ninja.prototype.collide = function(anotherObject) {
   }
   if (anotherObject.damageable) {
     if (this.hitPoint <= 0) { 
-      console.log(anotherObject);
       this.state = 'dead'; 
       PubSub.publish('ninja.death', {
-        killer : anotherObject.ninja.player.name,
-        victim: this.player.name,
-        ninja_victim: this
+        killer : anotherObject.ninja,
+        victim: this
       });
     }
   }

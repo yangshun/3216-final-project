@@ -5,8 +5,8 @@ var Game = function() {
   this.stage = null;
   this.state = "LOADING";
   this.timePassed = 0;
-  // 10 seconds
-  this.roundTime = 300;
+  // In seconds
+  this.roundTime = 10000;
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -42,7 +42,7 @@ var Game = function() {
 Game.prototype.restart = function() {
   game.map.clearMap();
   game.map.generateMap('maze', 'scale');
-  
+
   _.each(this.shurikens, function(shuriken) { 
     shuriken.destroy(); 
   });
@@ -75,9 +75,9 @@ Game.prototype.pause = function() {
 }
 
 Game.prototype.end = function() {
-  createjs.Ticker.setPaused(true);
   this.state = "END";
-  // var endMsg = new GameEndEffect();
+  createjs.Ticker.setPaused(true);
+  PubSub.publish('game.end', {});
 }
 
 Game.prototype.handleTick = function(ticker_data) {

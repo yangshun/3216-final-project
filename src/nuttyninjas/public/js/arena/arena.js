@@ -17,6 +17,11 @@ var Arena = (function() {
     queue.addEventListener("complete", function() {
       game.restart();
     });
+
+    PubSub.subscribe('game.end', function() {
+      alert("Game Over. Click to restart");
+      game.restart();
+    });
   };
 
   var controller_input = function(data) {

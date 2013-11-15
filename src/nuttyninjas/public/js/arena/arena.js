@@ -16,7 +16,7 @@ var Arena = (function() {
     queue.loadManifest(SoundManager.sounds);
     queue.addEventListener("complete", function() {
       game.map.clearMap();
-      game.map.generateMap('iceworld', 'scale');
+      game.map.generateMap('islands', 'scale');
       game.restart();
     });
 

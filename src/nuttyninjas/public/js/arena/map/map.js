@@ -68,7 +68,8 @@ Map.prototype.generateMap = function(id, opts) {
       } else if (this.asciiMap[i][j] == -1){
         continue;
       } else if (this.asciiMap[i][j] != 0) {
-        var type = this.asciiMap[i][j];
+        var type = 4;
+        //var type = Math.floor(Math.random()*6)+1;
         var r = Math.round(Math.random() * 4) * 90;
         var t = new TexturedObstacleTile(j,i,r,getPath('terrain', type), MapConfig.tiles[type]);
         t.initShape(MapConfig.tiles[type].w, MapConfig.tiles[type].h);

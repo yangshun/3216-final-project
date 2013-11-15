@@ -21,7 +21,17 @@ var Arena = (function() {
     });
 
     PubSub.subscribe('game.end', function() {
-      alert("Game Over. Click to restart");
+      var msg = "Game Over";
+      if (game.score.red && game.score.yellow) {
+        if (game.score.red > game.score.yellow) {
+          msg = "Aka wins";
+        } else if (game.score.red < game.score.yellow) {
+          msg = "Kiiro wins";
+        } else {
+          msg = "Draw !!"
+        }
+      }
+      alert(msg);
       game.restart();
     });
   };

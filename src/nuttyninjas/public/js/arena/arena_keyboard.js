@@ -27,9 +27,9 @@ $(window).keyup(function(e) {
 
     if (key == 'J' && !playerJoined) {
         playerJoined = true;
-        Arena.controller_join({id: "kb1", name:"KB1", ninja:"orange"});
+        Arena.controller_join({id: "kb1", name:"KB1", ninja:"yellow"});
     } else if (key == 'M') {
-        Arena.controller_leave({id: "kb1", name:"KB1", ninja:"orange"});
+        Arena.controller_leave({id: "kb1", name:"KB1", ninja:"yellow"});
         playerJoined = false;
     } else if (key == 'K') {
         Arena.controller_input({id: "kb1", name:"KB1", key:"shoot", shoot: 1});

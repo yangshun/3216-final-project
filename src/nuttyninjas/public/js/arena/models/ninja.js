@@ -64,7 +64,9 @@ Ninja.prototype.collide = function(anotherObject) {
     if (anotherObject.ninja == this) {
       // Anything we want to happen here?
     } else {
-      this.hitPoint -= anotherObject.damage;
+      if (anotherObject.ninja.team !== this.team || game.friendlyFire) {
+        this.hitPoint -= anotherObject.damage;
+      }
     }
 
   }
@@ -86,8 +88,11 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof Shield) {
-    this.hitPoint -= 0.5;
+    if (anotherObject.ninja.team !== this.team || game.friendlyFire) {
+      this.hitPoint -= 0.5;
+    }
   }
+  
   if (anotherObject.damageable) {
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 

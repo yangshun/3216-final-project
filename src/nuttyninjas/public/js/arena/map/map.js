@@ -9,7 +9,7 @@ var Map = function() {
   this.tileMap = []; // keeps track of map tiles
   this.destructible = []; // keeps track of power ups
   this.blankTiles = []; // Keeps track of blank tiles
-  this.asciiMap = []; 
+  this.asciiMap = [];
 
   this.numTiles = {
     healthtile: 0,
@@ -28,27 +28,34 @@ Map.prototype.clearMap = function() {
     for(var j=0;j<this.tileMap.length;j++){
       if (this.tileMap[i][j].view) {
         game.stage.removeChild(this.tileMap[i][j].view);
-        this.tileMap[i][j].view = null;
       }
       if (this.tileMap[i][j].body) {
+        console.log(this.tileMap[i][j].body);
         game.box.DestroyBody(this.tileMap[i][j].body);
-        this.tileMap[i][j].body = null;
       }
-      this.tileMap[i][j] = null;
     }
+
+    this.tileMap[i][j] = null;
     this.tileMap[i] = null;
     delete this.tileMap[i];
   }
   delete this.tileMap;
   this.tileMap = [];
 
+  console.log('tileMap destroyed');
   // Clear the destructibles
-  _.map(this.removeTile, this.destructible);
+  var that = this;
+  _.map(this.destructible, function(t) { that.removeTile(t); });
+  this.destructible = [];
+  console.log('destructible destroyed');
+  this.asciiMap = [];
+  this.blankTiles = [];
+  console.log('totally destroyed');
 }
 
 Map.prototype.generateMap = function(id, opts) {
-  if (this.asciiMap.length == 0) this.decodeASCIIMap(id, opts);
   this.clearMap();
+  if (this.asciiMap.length == 0) this.decodeASCIIMap(id, opts);
 
   for(var i=-1;i<=this.height;i++){
     var arr = [];
@@ -70,11 +77,11 @@ Map.prototype.generateMap = function(id, opts) {
         var t = new Tile(j,i,0);
         this.blankTiles.push(t);
       }
-
       arr.push(t);
     }
     this.tileMap.push(arr);
   }
+  console.log('Generate Map, width: '+this.tileMap[0].length+' , height: '+this.tileMap.length);
 }
 
 Map.prototype.generateRandomMap = function() {
@@ -174,19 +181,27 @@ Map.prototype.removeAndReplaceTile = function(t) {
 }
 
 Map.prototype.removeTile = function(t) {
-  if (t instanceof HealthTile) {
-    this.numTiles.healthtile -= 1;
-  }
-  if (t instanceof SpeedTile) {
-    this.numTiles.speedtile -= 1;
-  }
-  if (t instanceof GunTile) {
-    this.numTiles.guntile -= 1;
+  if (this.numTiles) {
+    if (t instanceof HealthTile) {
+      this.numTiles.healthtile -= 1;
+    }
+    if (t instanceof SpeedTile) {
+      this.numTiles.speedtile -= 1;
+    }
+    if (t instanceof GunTile) {
+      this.numTiles.guntile -= 1;
+    }
   }
 
   this.destructible = _.without(this.destructible, t);
-  game.box.DestroyBody(t.body);
-  game.stage.removeChild(t.view);
+
+  if (t.body !== null) {
+    game.box.DestroyBody(t.body);
+  }
+
+  if (t.view !== null) {
+    game.stage.removeChild(t.view);
+  }
 }
 
 Map.prototype.generateRandomPowerup = function(type) {

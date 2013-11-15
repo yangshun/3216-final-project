@@ -43,7 +43,7 @@ var Game = function() {
 
 Game.prototype.restart = function() {
   game.map.clearMap();
-  game.map.generateMap('maze', 'scale');
+  game.map.generateMap('iceworld', 'scale');
 
   _.each(this.shurikens, function(shuriken) { 
     shuriken.destroy(); 

@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 10;
+  this.roundTime = 5;
   this.score = {};
 
   this.box = new b2World(new b2Vec2(0, 0), true);
@@ -42,22 +42,25 @@ var Game = function() {
 }
 
 Game.prototype.restart = function() {
-  game.map.clearMap();
-  game.map.generateMap('iceworld', 'scale');
+  console.log('start the crash');
+  console.log('finish clearing');
+  //game.map.generateMap('iceworld', 'scale');
+  console.log('generate complete');
 
   _.each(this.shurikens, function(shuriken) { 
     shuriken.destroy(); 
   });
-  
+  console.log('shuriken destroy');
   _.each(this.ninjas, function(ninja) {
     ninja.die();
     game.reviveNinja(ninja, 0);
   });
-
+  console.log('ninja destroy');
   this.score = {};
   this.timePassed = 0;
   createjs.Ticker.setFPS(60);
   this.start();
+  console.log('hoooooray');
   PubSub.publish('game.restart', {});
 }
 

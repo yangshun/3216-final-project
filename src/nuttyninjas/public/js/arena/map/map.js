@@ -33,6 +33,8 @@ Map.prototype.clearMap = function() {
         console.log(this.tileMap[i][j].body);
         game.box.DestroyBody(this.tileMap[i][j].body);
       }
+
+      delete this.tileMap[i][j];
     }
 
     this.tileMap[i][j] = null;
@@ -45,7 +47,8 @@ Map.prototype.clearMap = function() {
   console.log('tileMap destroyed');
   // Clear the destructibles
   var that = this;
-  _.map(this.destructible, function(t) { that.removeTile(t); });
+  _.each(this.destructible, function(t) { that.removeTile(t); });
+
   this.destructible = [];
   console.log('destructible destroyed');
   this.asciiMap = [];
@@ -54,8 +57,10 @@ Map.prototype.clearMap = function() {
 }
 
 Map.prototype.generateMap = function(id, opts) {
-  this.clearMap();
-  if (this.asciiMap.length == 0) this.decodeASCIIMap(id, opts);
+  // this.clearMap();
+  if (this.asciiMap.length == 0) {
+    this.decodeASCIIMap(id, opts);
+  }
 
   for(var i=-1;i<=this.height;i++){
     var arr = [];
@@ -139,6 +144,9 @@ Map.prototype.decodeASCIIMap = function(id, opt) {
 };
 
 Map.prototype.getRandomBlankTile = function() {
+  if (this.blankTiles.length == 0) {
+    return false
+  }
   // Get a tile that has no obstacle
   var emptyTile = this.blankTiles[(Math.round(Math.random()*this.blankTiles.length))];
   return emptyTile;
@@ -193,20 +201,24 @@ Map.prototype.removeTile = function(t) {
     }
   }
 
-  this.destructible = _.without(this.destructible, t);
+  if (t) {
+    this.destructible = _.without(this.destructible, t);
 
-  if (t.body !== null) {
-    game.box.DestroyBody(t.body);
-  }
+    if (t.body) {
+      game.box.DestroyBody(t.body);
+    }
 
-  if (t.view !== null) {
-    game.stage.removeChild(t.view);
+    if (t.view) {
+      game.stage.removeChild(t.view);
+    }
   }
 }
 
 Map.prototype.generateRandomPowerup = function(type) {
-  var t = this.getRandomBlankTile();  
-  this.generatePowerup(t.tileX, t.tileY, type);
+  var t = this.getRandomBlankTile();
+  if (t) {
+    this.generatePowerup(t.tileX, t.tileY, type);
+  }
 };
 
 Map.prototype.generatePowerup = function(x, y, type) {

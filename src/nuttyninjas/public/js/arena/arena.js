@@ -15,11 +15,15 @@ var Arena = (function() {
     queue.installPlugin(createjs.Sound);
     queue.loadManifest(SoundManager.sounds);
     queue.addEventListener("complete", function() {
+      game.map.clearMap();
+      game.map.generateMap('iceworld', 'scale');
       game.restart();
     });
 
     PubSub.subscribe('game.end', function() {
       alert("Game Over. Click to restart");
+      game.map.clearMap();
+      game.map.generateMap('iceworld', 'scale');
       game.restart();
     });
   };

@@ -42,25 +42,17 @@ var Game = function() {
 }
 
 Game.prototype.restart = function() {
-  console.log('start the crash');
-  console.log('finish clearing');
-  //game.map.generateMap('iceworld', 'scale');
-  console.log('generate complete');
-
   _.each(this.shurikens, function(shuriken) { 
     shuriken.destroy(); 
   });
-  console.log('shuriken destroy');
   _.each(this.ninjas, function(ninja) {
     ninja.die();
     game.reviveNinja(ninja, 0);
   });
-  console.log('ninja destroy');
   this.score = {};
   this.timePassed = 0;
   createjs.Ticker.setFPS(60);
   this.start();
-  console.log('hoooooray');
   PubSub.publish('game.restart', {});
 }
 

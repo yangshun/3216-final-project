@@ -30,7 +30,6 @@ Map.prototype.clearMap = function() {
         game.stage.removeChild(this.tileMap[i][j].view);
       }
       if (this.tileMap[i][j].body) {
-        console.log(this.tileMap[i][j].body);
         game.box.DestroyBody(this.tileMap[i][j].body);
       }
 
@@ -44,16 +43,13 @@ Map.prototype.clearMap = function() {
   delete this.tileMap;
   this.tileMap = [];
 
-  console.log('tileMap destroyed');
   // Clear the destructibles
   var that = this;
   _.each(this.destructible, function(t) { that.removeTile(t); });
 
   this.destructible = [];
-  console.log('destructible destroyed');
   this.asciiMap = [];
   this.blankTiles = [];
-  console.log('totally destroyed');
 }
 
 Map.prototype.generateMap = function(id, opts) {
@@ -86,7 +82,6 @@ Map.prototype.generateMap = function(id, opts) {
     }
     this.tileMap.push(arr);
   }
-  console.log('Generate Map, width: '+this.tileMap[0].length+' , height: '+this.tileMap.length);
 }
 
 Map.prototype.generateRandomMap = function() {

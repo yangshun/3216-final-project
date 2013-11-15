@@ -22,8 +22,6 @@ var Arena = (function() {
 
     PubSub.subscribe('game.end', function() {
       alert("Game Over. Click to restart");
-      game.map.clearMap();
-      game.map.generateMap('iceworld', 'scale');
       game.restart();
     });
   };

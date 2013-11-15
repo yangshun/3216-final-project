@@ -39,19 +39,17 @@ app.configure(function() {
 });
 
 // Enable screenless
-una.enableScreenless();
-una.setConfig('floodControlDelay', 300);
-una.screenless.registerInitState(function() {
-  return {apple: 0, android: 0};
-});
+una.enableServerMode();
+una.set('floodControlDelay', 300);
+una.server_mode.registerInitState({apple: 0, android: 0});
 
-una.screenless.registerOnControllerInput('game', function(UnaServer, una_header, payload) {
+una.server_mode.registerOnControllerInput('game', function(UnaServer, una_header, payload) {
   var state = UnaServer.getState();
   state[payload]++;
   UnaServer.sendToScreens('game', payload);
 });
 
-una.screenless.registerOnScreenInput('reset', function(UnaServer, una_header, payload) {
+una.server_mode.registerOnScreenInput('reset', function(UnaServer, una_header, payload) {
   if (payload == 'yoloyolo') {
     UnaServer.setState({apple: 0, android: 0});
     UnaServer.sendToScreens('reset');

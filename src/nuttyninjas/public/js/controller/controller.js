@@ -3,6 +3,14 @@ window.addEventListener('load', function() {
   FastClick.attach(document.body);
 }, false);
 
+var handleOrientationChange = function(e) {
+
+};
+
+// Orientation check
+window.addEventListener('orientationchange', handleOrientationChange);
+window.addEventListener('resize', handleOrientationChange);
+
 // Socket Registration code
 
 var path = window.location.pathname.slice(1).split('/');

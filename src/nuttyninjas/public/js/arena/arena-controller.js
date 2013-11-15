@@ -3,7 +3,9 @@ function ArenaController($scope, $timeout, $location) {
 	$scope.time_left = '';
 	$scope.total_seconds_left = 300;
 	$scope.current_url = window.location.origin;
-	
+	$scope.radiant_score = 0;
+	$scope.dire_score = 0;
+
 	function seconds_to_string(sec) {
 		function less_than_ten(value) {
 			return value < 10 ? '0' + value.toString() : value.toString();
@@ -19,5 +21,15 @@ function ArenaController($scope, $timeout, $location) {
 		}
 	}
 
+  PubSub.subscribe('game.restart', function () {
+    $scope.total_seconds_left = 300;
+  });
+
+  PubSub.subscribe('game.score.changed', function (msg, score) {
+    $scope.radiant_score = score.radiant || 0;
+    $scope.dire_score = score.dire || 0;
+  });
+
 	decrement();
 }
+

@@ -141,6 +141,8 @@ Game.prototype.onNinjaDeath = function(msg, data) {
   } else {
     this.score[team] = 1;
   }
+
+  PubSub.publish("game.score.changed", this.score);
 }
 
 Game.prototype.removeNinja = function(s) {

@@ -19,5 +19,9 @@ function ArenaController($scope, $timeout, $location) {
 		}
 	}
 
+  PubSub.subscribe('game.restart', function () {
+    $scope.total_seconds_left = 300;
+  });
+
 	decrement();
 }

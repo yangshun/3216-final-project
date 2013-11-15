@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 10000;
+  this.roundTime = 10;
   this.score = {};
 
   this.box = new b2World(new b2Vec2(0, 0), true);

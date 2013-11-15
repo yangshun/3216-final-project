@@ -171,6 +171,47 @@ DeathEffect.prototype.destroy = function() {
   delete this;
 };
 
+// Killer effect
+var KillerEffect = function(ninja) {
+  Effect.call(this);
+  this.view = new createjs.Text('Killing Spree','15px peachy-keen','red');
+  this.view.textAlign = 'center';
+  this.deltaY = -40;
+
+  this.view.x = ninja.view.x;
+  this.view.y = ninja.view.y + this.deltaY;
+  game.stage.addChild(this.view);
+  
+  this.interval = 100; 
+  this.numCalled = 0;
+  this.numFrame = 60 * 2;
+
+
+  var that = this;
+  var KillerEvent = function () {
+    that.view.scaleX *= 1.01;
+    that.view.scaleY *= 1.01;
+
+    that.view.y = ninja.view.y + that.deltaY;
+    that.view.x = ninja.view.x;
+
+    TimedEventManager.addEvent(1.0/that.numFrame, KillerEvent);
+    that.numCalled++;
+    if (that.numCalled >= that.numFrame) {
+      that.destroy();
+    }
+  };
+  KillerEvent();
+};
+
+KillerEffect.prototype = new Effect();
+KillerEffect.prototype.constructor = KillerEffect;
+
+KillerEffect.prototype.destroy = function() {
+  game.stage.removeChild(this.view);
+  delete this;
+};
+
 // Speed Effect
 var SpeedEffect = function(ninja, change, minimum, duration) {
   Effect.call(this);

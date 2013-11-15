@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 5;
+  this.roundTime = 10000;
   this.score = {};
 
   this.box = new b2World(new b2Vec2(0, 0), true);
@@ -133,6 +133,7 @@ Game.prototype.reviveNinja = function(ninja, time) {
 
 Game.prototype.onNinjaDeath = function(msg, data) {
   var deathEffect = new DeathEffect(data.victim);
+  var killerEffect = new KillerEffect(data.killer);
 
   var team = data.killer.team;
   if (this.score[team]) {

@@ -3,7 +3,7 @@ var Shuriken = function(data) {
   CollidableObject.call(this);
   this.color = null;
   this.ninja = null;
-  this.speed = 300;
+  this.speed = 350;
   this.width = 20;
   this.height = 20;
   this.damage = 10;
@@ -52,6 +52,7 @@ Shuriken.prototype.collide = function(anotherObject) {
   // TimedEventManager.addEvent(100, function() {
   //   that.dead = true;
   // });
+  if ((anotherObject instanceof Shuriken) && (this.ninja === anotherObject.ninja)) return;
   this.view.alpha = 0.5;
   this.dead = true;
   PubSub.publish('shuriken.'+this._type+'.death', {shuriken: this});

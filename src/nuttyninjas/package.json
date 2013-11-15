@@ -7,6 +7,6 @@
   },
   "dependencies": {
     "jade": "*",
-    "una": "*"
+    "una": "~0.3.0"
   }
 }

@@ -156,7 +156,7 @@ var TexturedObstacleTile = function(x, y, r, img, data) {
   this.body = null;
 
   this.hitpoint = 30;
-  this.respawn_time = 10000 + Math.random() * 2000;
+  this.respawn_time = 15000 + Math.random() * 10000;
   this.dead = false;
 };
 

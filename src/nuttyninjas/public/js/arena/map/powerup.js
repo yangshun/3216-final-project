@@ -98,9 +98,10 @@ GunTile.prototype.initShape = function(c) {
   game.stage.addChild(this.view);
 };
 GunTile.prototype.collide = function(anotherObject) {
-  if(anotherObject instanceof Ninja) {
-    this.dead  = true;
+  if (anotherObject instanceof Shield) {
+    return
   }
+  this.dead  = true;
 };
 GunTile.prototype.tick = function() {
   if (this.dead) {
@@ -155,9 +156,7 @@ var SpeedTile = function(x, y, r, img) {
 SpeedTile.prototype = new Powerup();
 SpeedTile.prototype.constructor = SpeedTile;
 SpeedTile.prototype.collide = function(anotherObject) {
-  if (anotherObject instanceof Ninja) {
-    this.dead = true;
-  }
+  this.dead = true;
 };
 
 

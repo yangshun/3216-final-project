@@ -4,7 +4,8 @@ var GunFactory = {
             'hulk': '/images/cannons/hulk.png',
             'juggernaut': '/images/cannons/juggernaut.png',
             'laser': '/images/cannons/laser.png',
-            'plasma': '/images/cannons/plasma.png'},
+            'plasma': '/images/cannons/plasma.png',
+            'meme': '/images/cannons/meme.png'},
 
   // data: {position: Vector2D, player: Player, color: String}
   makeGun: function(data) {
@@ -16,10 +17,17 @@ var GunFactory = {
       var gun_url = this.images[data.type] || this.images['frost'];
       gun_view = new createjs.Bitmap(gun_url);
       gun_view.name = "gun";
-      gun_view.scaleX = GUN_WIDTH  / 623.0;
-      gun_view.scaleY = GUN_HEIGHT  / 200.0;
-      gun_view.regX = 623 / 2.0;
-      gun_view.regY = -(data.ninja.size - GUN_HEIGHT) / gun_view.scaleY;
+      if (data.type === 'meme') {
+        gun_view.scaleX = GUN_WIDTH  / 416.0;
+        gun_view.scaleY = GUN_HEIGHT  / 200.0;
+        gun_view.regX = 416 / 2.0;
+        gun_view.regY = -(data.ninja.size - GUN_HEIGHT) / gun_view.scaleY;
+      } else {
+        gun_view.scaleX = GUN_WIDTH  / 623.0;
+        gun_view.scaleY = GUN_HEIGHT  / 200.0;
+        gun_view.regX = 623 / 2.0;
+        gun_view.regY = -(data.ninja.size - GUN_HEIGHT) / gun_view.scaleY;
+      }
     }
 
     var gun; 
@@ -41,6 +49,9 @@ var GunFactory = {
         break;
       case 'plasma':
         gun = new PlasmaGun(data.ninja, gun_view);
+        break;
+      case 'meme':
+        gun = new MemeGun(data.ninja, gun_view);
         break;
       default:
         gun = new ShurikenGun(data.ninja, gun_view);

@@ -11,7 +11,7 @@ Meme.prototype = new Shuriken();
 Meme.prototype.constructor = Meme;
 
 Meme.offsetX = function() {
-  return 50.0;
+  return 40.0;
 }
 
 Meme.randomImage = function() {

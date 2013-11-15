@@ -6,8 +6,8 @@ var Map = function() {
   this.height = Math.floor(game.canvas.height / TILE_HEIGHT); // # of tiles
   this.width = Math.floor(game.canvas.width / TILE_WIDTH); // # of tiles
 
-  this.tileMap = []; // keeps track of all tiles
-  this.destructible = [];
+  this.tileMap = []; // keeps track of map tiles
+  this.destructible = []; // keeps track of power ups
   this.blankTiles = []; // Keeps track of blank tiles
   this.asciiMap = []; 
 
@@ -23,17 +23,27 @@ var Map = function() {
 };
 
 Map.prototype.clearMap = function() {
+  // Clear the tile map
   for(var i=0;i<this.tileMap.length;i++){
     for(var j=0;j<this.tileMap.length;j++){
       if (this.tileMap[i][j].view) {
         game.stage.removeChild(this.tileMap[i][j].view);
+        this.tileMap[i][j].view = null;
       }
       if (this.tileMap[i][j].body) {
         game.box.DestroyBody(this.tileMap[i][j].body);
+        this.tileMap[i][j].body = null;
       }
+      this.tileMap[i][j] = null;
     }
+    this.tileMap[i] = null;
+    delete this.tileMap[i];
   }
+  delete this.tileMap;
   this.tileMap = [];
+
+  // Clear the destructibles
+  _.map(this.removeTile, this.destructible);
 }
 
 Map.prototype.generateMap = function(id, opts) {

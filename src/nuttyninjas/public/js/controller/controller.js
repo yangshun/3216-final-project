@@ -12,8 +12,27 @@ if (path.length === 2 && path[1] !== '') {
 	myroom = path[1];
 }
 
+
+var loadNinja = function() {
+  // Figure out what is checked and his name
+ 
+  $('.join-button').on('click', function() {
+    var myname = $('#playername').val();
+    if (myname) {
+      var myninja = $('input:radio[name="ninjaChoose"]:checked')[0].value;
+      $('html').addClass('game-mode');
+      UnaController.register(myroom, {name: myname, ninja: myninja}, function(res) {
+        if (res.success) {
+          loadJoysticks();
+        }
+      });
+    } else {
+      alert('Please enter a name!');
+    }
+  });
+};
+
 var loadJoysticks = function() {
-  console.log(myname);
   // Re-display the joystick divs
   // $('.joystick').css('display', 'block');
   leftJoystick  = new VirtualJoystick({
@@ -24,16 +43,18 @@ var loadJoysticks = function() {
   $('#shoot-button').on('touchstart', function() {
     if ("vibrate" in window.navigator) {
       window.navigator.vibrate(200); 
-    } 
-    socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
+    }
+    UnaController.sendToScreen('input', { key: 'shoot', shoot: 1});
   });
 
   $('#block-button').on('touchstart', function() {
-    socket.emit('controller-input', { key: 'shield', name: myname });
+    UnaController.sendToScreen('input', { key: 'shield'});
   });
 
   $('#block-button').on('touchend', function() {
-    socket.emit('controller-input', { key: 'unshield', name: myname });
+
+    console.log("sending something");
+    UnaController.sendToScreen('input', { key: 'unshield'});
   });
   // rightJoystick  = new VirtualJoystick({
   //   container : document.getElementById('rightContainer'),
@@ -51,34 +72,18 @@ var loadJoysticks = function() {
     if (x === 0 && y === 0) {
       if (isMoving) {
         isMoving = false;
-        socket.emit('controller-input', { name: myname, key: 'stopmove'});
+        UnaController.sendToScreen('input', { key: 'stopmove'});
       }
     }
     else {
       var l = Math.min(Math.sqrt(x * x + y * y) / 50.0, 1.0);
       isMoving = true;
-      socket.emit('controller-input', { name: myname, key: 'move', angle: delta, length: l });
+      UnaController.sendToScreen('input', {key: 'move', angle: delta, length: l});
     }
 
   }, 1000 / 30);
 };
 
-var loadNinja = function() {
-  // Figure out what is checked and his name
- 
-  $('.join-button').on('click', function() {
-    var myname = $('#playername').val();
-    if (myname) {
-      var myninja = $('input:radio[name="ninjaChoose"]:checked')[0].value;
-      $('html').addClass('game-mode');
-      loadJoysticks();
-      var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
-      socket.emit('client-register', data);
-    } else {
-      alert('Please enter a name!');
-    }
-  });
-};
 
 // Socket Events
 // 1. Choose your ninja
@@ -88,10 +93,3 @@ var loadNinja = function() {
 $(function() { 
   loadNinja();
 });
-
-socket.on('arena-controller-join', function(data) {
-  if (data.success) {
-    loadJoysticks();
-  }
-});
-

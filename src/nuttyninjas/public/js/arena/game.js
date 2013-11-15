@@ -96,10 +96,10 @@ Game.prototype.handleTick = function(ticker_data) {
   }
 }
 
-Game.prototype.addNinja = function(data) {
+Game.prototype.addNinja = function(id, data) {
   if (!NinjaSchool.canTrainNinja(data.ninja)) return false;
 
-  var player = new Player(data);
+  var player = new Player(id, data);
   var position = this.map.getRandomBlankPosition();
 
   var ninja = NinjaSchool.trainNinja({

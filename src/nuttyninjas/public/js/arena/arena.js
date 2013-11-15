@@ -26,9 +26,9 @@ var Arena = (function() {
     });
   };
 
-  var controller_input = function(data) {
+  var controller_input = function(id, data) {
     var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-      return ninja.identifier === data.id;
+      return ninja.identifier === id;
     });
 
     if (ninjaToHandle != null) {
@@ -36,20 +36,20 @@ var Arena = (function() {
     }
   };
 
-  var controller_join = function(data) {
-    if (game.addNinja(data)) {
+  var controller_join = function(id, data) {
+    if (game.addNinja(id, data)) {
       console.log("New ninja added " + data.name);
-      return {success: true, name: data.name, id: data.id};
+      return true
     }
     else {
       console.log("Cannot add more ninja");
-      return {success: false};
+      return false
     }
   };
 
-  var controller_leave = function(data) {
+  var controller_leave = function(id, data) {
     var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-      return ninja.identifier === data.id;
+      return ninja.identifier === id;
     });
 
     if (ninjaToHandle != null) {

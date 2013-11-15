@@ -26,8 +26,8 @@ function ArenaController($scope, $timeout, $location) {
   });
 
   PubSub.subscribe('game.score.changed', function (msg, score) {
-    $scope.radiant_score = score.radiant || 0;
-    $scope.dire_score = score.dire || 0;
+    $scope.radiant_score = score["red"] || 0;
+    $scope.dire_score = score["yellow"] || 0;
   });
 
 	decrement();

@@ -177,7 +177,7 @@ var KillerEffect = function(ninja) {
   Effect.call(this);
   this.view = new createjs.Text('Killing Spree','15px peachy-keen','red');
   this.view.textAlign = 'center';
-  this.deltaY = -40;
+  this.deltaY = -2;
 
   this.view.x = ninja.view.x;
   this.view.y = ninja.view.y + this.deltaY;
@@ -185,7 +185,7 @@ var KillerEffect = function(ninja) {
   
   this.interval = 100; 
   this.numCalled = 0;
-  this.numFrame = 60 * 2;
+  this.numFrame = 60 * 1.5;
 
 
   var that = this;
@@ -195,7 +195,7 @@ var KillerEffect = function(ninja) {
 
     that.view.y = that.view.y + that.deltaY;
 
-    TimedEventManager.addEvent(2.0/that.numFrame, KillerEvent);
+    TimedEventManager.addEvent(1.5/that.numFrame, KillerEvent);
     that.numCalled++;
     if (that.numCalled >= that.numFrame) {
       that.destroy();

@@ -214,14 +214,7 @@ Ninja.prototype.removeFollower = function(f) {
 };
 
 Ninja.prototype.nova = function(number) {
-  if (this.ShurikenGun instanceof BananaGun) {
-    this.ShurikenGun.makeShuriken(this.angle, 3);
-  } else {
-    for (var i = 0; i < number; i++) {
-      var angle = toRadian(360.0 / number * i);
-      this.ShurikenGun.makeShurikenNoDelay(angle);
-    }
-  }
+  this.ShurikenGun.nova(number);
 }
 
 // Override tick function

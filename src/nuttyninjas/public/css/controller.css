@@ -35,7 +35,7 @@ html.game-mode .pre-game-container {
 	display: none;
 }
 
-.pre-game-container div {
+.pre-game-container > div {
 	margin: 10px auto;
 	width: 240px;
 	background-color: rgba(0, 0, 0, 0.7);
@@ -50,6 +50,22 @@ html.game-mode .pre-game-container {
 .pre-game-container .choose-name-container input {
 	width: auto;
 }
+
+.pre-game-container .scroll-left-arrow,
+.pre-game-container .scroll-right-arrow {
+	position: absolute;
+	top: 80px;
+	color: yellow;
+	z-index: 10;
+}
+
+.pre-game-container .scroll-left-arrow { left: 20px; }
+.pre-game-container .scroll-right-arrow { right: 20px; }
+
+.red-ninja-text { color: #fe1b1b; }
+.green-ninja-text { color: #5bfe1b; }
+.blue-ninja-text { color: #1bd6fe; }
+.yellow-ninja-text { color: #fed61b; }
 
 .pre-game-container .join-button a {
 	display: block;

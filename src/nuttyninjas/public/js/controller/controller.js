@@ -20,9 +20,25 @@ var loadNinja = function() {
   $('.join-button').on('click', function() {
     var myname = $('#playername').val();
     if (myname) {
-      var myninja = $('input:radio[name="ninjaChoose"]:checked')[0].value;
+      var ninja_color;
+      switch(mySwiper.activeIndex) {
+        case 1:
+        default:
+          ninja_color = 'red';
+          break;
+        case 2:
+          ninja_color = 'green';
+          break;
+        case 3:
+          ninja_color = 'blue';
+          break;
+        case 4:
+        case 0:
+          ninja_color = 'yellow';
+          break;
+      }
       $('html').addClass('game-mode');
-      UnaController.register(myroom, {name: myname, ninja: myninja}, function(res) {
+      UnaController.register(myroom, {name: myname, ninja: ninja_color}, function(res) {
         if (res.success) {
           loadJoysticks();
         }

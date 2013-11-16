@@ -57,9 +57,7 @@ Game.prototype.restart = function() {
   this.start();
   PubSub.publish('game.restart', {});
 
-  if (this.gameEndEffect) {
-    this.gameEndEffect.destroy();
-  }
+  if (this.gameEndEffect) { this.gameEndEffect.destroy(); }
 }
 
 Game.prototype.start = function() {

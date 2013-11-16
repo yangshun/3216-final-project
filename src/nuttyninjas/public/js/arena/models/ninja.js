@@ -107,7 +107,8 @@ Ninja.prototype.collide = function(anotherObject) {
       this.state = 'dead'; 
       PubSub.publish('ninja.death', {
         killer : anotherObject.ninja,
-        victim: this
+        victim: this,
+        weapon: anotherObject
       });
     }
   }
@@ -205,6 +206,17 @@ Ninja.prototype.addFollower = function(f) {
 Ninja.prototype.removeFollower = function(f) {
   this.followers = _.without(this.followers, f);
 };
+
+Ninja.prototype.nova = function(number) {
+  if (this.ShurikenGun instanceof BananaGun) {
+    this.ShurikenGun.makeShuriken(this.angle, 3);
+  } else {
+    for (var i = 0; i < number; i++) {
+      var angle = toRadian(360.0 / number * i);
+      this.ShurikenGun.makeShurikenNoDelay(angle);
+    }
+  }
+}
 
 // Override tick function
 Ninja.prototype.tick = function() {

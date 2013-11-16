@@ -46,13 +46,18 @@ Banana.offsetX = function() {
   return 70.0;
 }
 
-Banana.make = function(ninja, centerVector, angle, turn) {
-  var s = new Banana();  
+Banana.make = function(ninja, centerVector, angle, turn, scale) {
+  if (!scale) scale = 1;
+
+  var s = new Banana(); 
+  s.width *= scale; 
+  s.height *= scale;
+  
   s.ninja = ninja;
   s.angle = angle;
 
   var sView = new createjs.Bitmap("/images/projectiles/banana.png");
-  sView.scaleX = s.width / 300.0;
+  sView.scaleX = s.width  / 300.0;
   sView.scaleY = s.height / 218.0;
   sView.regX = 300.0 / 2;
   sView.regY = 218.0 / 2;

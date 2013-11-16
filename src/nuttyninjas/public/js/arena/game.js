@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 300;
+  this.roundTime = 30;
   this.score = {};
   this.friendlyFire = false;
 
@@ -55,6 +55,10 @@ Game.prototype.restart = function() {
   createjs.Ticker.setFPS(60);
   this.start();
   PubSub.publish('game.restart', {});
+
+  if (this.gameEndEffect) {
+    this.gameEndEffect.destroy();
+  }
 }
 
 Game.prototype.start = function() {
@@ -67,7 +71,6 @@ Game.prototype.pause = function() {
   if (this.state === 'PAUSED') {
     this.start();
   } else if (this.state === 'PLAYING') {
-    createjs.Ticker.setPaused(true);
     this.state = "PAUSED";
     PubSub.publish('game.pause', {});
   }
@@ -75,26 +78,31 @@ Game.prototype.pause = function() {
 
 Game.prototype.end = function() {
   this.state = "END";
-  createjs.Ticker.setPaused(true);
+  this.gameEndEffect = new GameEndEffect(10);
   PubSub.publish('game.end', {});
 }
 
 Game.prototype.handleTick = function(ticker_data) {
+  var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
   if (this.state === "PLAYING") {
-    var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
     this.box.Step(timestep, 8.0, 3.0);
     this.box.ClearForces();
 
     this.ninjas.map(function(s){s.tick();});
     this.shurikens.map(function(s){s.tick();});
     this.map.tick();
-
-    this.stage.update();
     TimedEventManager.tick();
 
     this.timePassed += timestep;
     if (this.timePassed >= this.roundTime) { this.end(); }
   }
+
+  if (this.state == "END") {
+    if (this.gameEndEffect) {
+      this.gameEndEffect.tick(timestep);
+    }
+  }
+  this.stage.update();
 }
 
 Game.prototype.addNinja = function(id, data) {

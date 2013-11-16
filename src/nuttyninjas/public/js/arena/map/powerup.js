@@ -122,7 +122,7 @@ var HealthTile = function(x, y, r, img) {
   this.rotation = r || 0; // Rotation in degrees
   this.img = img;
 
-  this.heal = 10;
+  this.heal = 30;
 
   this.view = null;
   this.body = null;

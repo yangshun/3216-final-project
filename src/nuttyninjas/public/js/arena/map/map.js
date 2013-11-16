@@ -52,10 +52,10 @@ Map.prototype.clearMap = function() {
   this.blankTiles = [];
 }
 
-Map.prototype.generateMap = function(id, opts) {
+Map.prototype.generateMap = function(id, opts, dist, tol) {
   // this.clearMap();
   if (this.asciiMap.length == 0) {
-    this.decodeASCIIMap(id, opts);
+    this.decodeASCIIMap(id, opts, dist, tol);
   }
 
   for(var i=-1;i<=this.height;i++){
@@ -112,30 +112,75 @@ Map.prototype.generateRandomMap = function() {
   }
 }
 
-Map.prototype.decodeASCIIMap = function(id, opt) {
+Map.prototype.decodeASCIIMap = function(id, opt, dist, tol) {
   this.asciiMap = [];
 
   var opt = opt || 'scale';
+
   var ascii_map = MapConfig.ascii[id];
+
   var scaleX = (ascii_map[0].length-1) / this.width;
   var scaleY = (ascii_map.length-1) / this.height;
 
   for (var i=0;i<this.height;i++) {
     var row = [];
-    var y = Math.round(i * scaleY);
 
     for (var j=0;j<this.width;j++) {
       if (opt == 'scale') {
         var x = Math.round(j * scaleX);
+        var y = Math.round(i * scaleY);
+        var type = ascii_map[y][x];
       } else if (opt == 'tile') {
         var y = i % ascii_map.length;
         var x = j % ascii_map[0].length;
+        var type = ascii_map[y][x];
+      } else if (opt == 'round') {
+        var type = '0';
       }
-      var type = ascii_map[y][x];
       row.push(type);
     }
 
     this.asciiMap.push(row);
+  }
+
+  var that = this;
+  if (opt == 'round') {
+    var distance = dist || 1.25;
+    var tolerance = tol || 0.9; // 1 means follow strictly, 0 mean totally random
+
+    console.log(distance);
+    var isValid = function(x, y) {
+      return x>=0 && x < that.asciiMap[0].length && y>=0 && y < that.asciiMap.length;
+    }
+
+    var populate = function(x, y, type) {
+      for (var dx=-distance;dx<distance;dx++) {
+        for (var dy=-distance;dy<distance;dy++) {
+
+          if (Math.round(Math.sqrt(dx*dx + dy*dy)) > distance * Math.max(Math.random(), tolerance)) {
+            continue;
+          }
+
+          dx = Math.round(dx);
+          dy = Math.round(dy);
+
+          if (isValid(x+dx, y+dy)) {
+            that.asciiMap[y+dy][x+dx] = type;
+          }
+
+        }
+      }
+    }
+
+    for (var i=0;i<ascii_map.length;i++) {
+      for (var j=0;j<ascii_map[0].length;j++) {
+        if (ascii_map[i][j] !== '0') {
+          var y = Math.round(i / scaleY);
+          var x = Math.round(j / scaleX);
+          populate(x, y, ascii_map[i][j]);
+        }
+      }
+    }
   }
 };
 

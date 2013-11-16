@@ -16,33 +16,26 @@ var Arena = (function() {
     queue.loadManifest(SoundManager.sounds);
     queue.addEventListener("complete", function() {
       game.map.clearMap();
-      game.map.generateMap('islands', 'scale');
+      game.map.generateMap('altMap','round', 2.25, 0.9);
       game.restart();
     });
 
     PubSub.subscribe('game.end', function() {
-      var msg = "Game Over";
-      if (game.score.red && game.score.yellow) {
-        if (game.score.red > game.score.yellow) {
-          msg = "Aka wins";
-        } else if (game.score.red < game.score.yellow) {
-          msg = "Kiiro wins";
-        } else {
-          msg = "Draw !!"
-        }
-      }
-      alert(msg);
-      game.restart();
+      setTimeout(function() {
+        game.restart();
+      }, 10000);
     });
   };
 
   var controller_input = function(id, data) {
-    var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-      return ninja.identifier === id;
-    });
+    if (game.state === "PLAYING") {
+      var ninjaToHandle = _.find(game.ninjas, function(ninja) {
+        return ninja.identifier === id;
+      });
 
-    if (ninjaToHandle != null) {
-      ninjaToHandle.handleInput(data);
+      if (ninjaToHandle != null) {
+        ninjaToHandle.handleInput(data);
+      }
     }
   };
 

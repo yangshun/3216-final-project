@@ -25,9 +25,12 @@ ShurikenGun.prototype.checkDelay = function() {
 
 ShurikenGun.prototype.makeShuriken = function(angle) {
   if (!this.checkDelay()) return false;
+  this.makeShurikenNoDelay(angle);
+}
 
-	var sign = Math.random() > 0.5 ? 1.0 : -1.0;
-	angle = angle + sign * Math.random() * this.angleRange;
+ShurikenGun.prototype.makeShurikenNoDelay = function(angle) {
+  var sign = Math.random() > 0.5 ? 1.0 : -1.0;
+  angle = angle + sign * Math.random() * this.angleRange;
   
   var cX = this.shuriken.offsetX() * Math.cos(-angle) + this.ninja.size * Math.sin(-angle);
   var cY = this.shuriken.offsetX() * -Math.sin(-angle) + this.ninja.size * Math.cos(-angle);

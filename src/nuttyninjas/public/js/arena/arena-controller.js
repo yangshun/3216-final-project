@@ -14,7 +14,7 @@ function ArenaController($scope, $timeout, $location) {
 
 	function decrement() {
     if (typeof game !== 'undefined') {
-		  $scope.time_left = seconds_to_string(Math.floor(game.roundTime - game.timePassed));
+		  $scope.time_left = seconds_to_string(Math.max(0, Math.floor(game.roundTime - game.timePassed)));
     }
     $timeout(decrement, 1000);
 	}

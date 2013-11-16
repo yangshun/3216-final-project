@@ -57,37 +57,33 @@ HealEffect.prototype.destroy = function() {
 
 
 // GameEndEffect Effect
-// var GameEndEffect = function() {
-//   Effect.call(this);
+var GameEndEffect = function(cooldown_time) {
+  Effect.call(this);
+  this.view = new createjs.Text("Game Over", "30px peachy-keen", "#2DA1BA");
+  this.view.textAlign = "center";
+  this.view.x = game.canvas.width/2.0;
+  this.view.y = 200;;
+  game.stage.addChild(this.view);
 
-//   this.view = new createjs.Text("Game Over", "30px peachy-keen", "black");
-//   this.view.textAlign = "center";
-//   this.view.x = 500;
-//   this.view.y = 200;;
-//   game.stage.addChild(this.view);
-  
-//   this.numCalled = 0;
-//   this.numFrame = 120;
+  this.timeleft = cooldown_time;
+};
 
-//   var that = this;
-//   var GameEndEvent = function () {
-//     that.view.alpha -= 0.05;
-//     that.numCalled++;
-//     if (that.numCalled >= that.numFrame) {
-//       that.destroy();
-//       return;
-//     }
-//     setTimeout(GameEndEvent, 1.0 / 60);
-//   };
-//   GameEndEvent();
-// };
+GameEndEffect.prototype = new Effect();
+GameEndEffect.prototype.constructor = GameEndEffect;
+GameEndEffect.prototype.destroy = function() {
+  game.stage.removeChild(this.view);
+  delete this;
+};
+GameEndEffect.prototype.tick = function(delta_time) {
+  this.timeleft -= delta_time;
 
-// GameEndEffect.prototype = new Effect();
-// GameEndEffect.prototype.constructor = GameEndEffect;
-// GameEndEffect.prototype.destroy = function() {
-//   game.stage.removeChild(this.view);
-//   delete this;
-// };
+  if (this.timeleft < 0) {
+    this.view.text = "";
+  }
+  else {
+    this.view.text = "Restarting in " + Math.floor(this.timeleft) + " seconds...";
+  }
+}
 
 // Blink effect
 var BlinkEffect = function(ninja) {
@@ -177,7 +173,7 @@ var KillerEffect = function(ninja) {
   Effect.call(this);
   this.view = new createjs.Text('Killing Spree','15px peachy-keen','red');
   this.view.textAlign = 'center';
-  this.deltaY = -40;
+  this.deltaY = -2;
 
   this.view.x = ninja.view.x;
   this.view.y = ninja.view.y + this.deltaY;
@@ -185,7 +181,7 @@ var KillerEffect = function(ninja) {
   
   this.interval = 100; 
   this.numCalled = 0;
-  this.numFrame = 60 * 2;
+  this.numFrame = 60 * 1.5;
 
 
   var that = this;
@@ -195,7 +191,7 @@ var KillerEffect = function(ninja) {
 
     that.view.y = that.view.y + that.deltaY;
 
-    TimedEventManager.addEvent(2.0/that.numFrame, KillerEvent);
+    TimedEventManager.addEvent(1.5/that.numFrame, KillerEvent);
     that.numCalled++;
     if (that.numCalled >= that.numFrame) {
       that.destroy();

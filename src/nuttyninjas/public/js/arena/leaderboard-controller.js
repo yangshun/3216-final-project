@@ -34,8 +34,9 @@ function LeaderboardController($scope) {
   $scope.resetScore = function(msg, data) {
     _.each($scope.player_list, function(p) {
       p.kills = 0;
-      p.death = 0;
+      p.deaths = 0;
     });
+    $scope.$apply();
   }
 
   // Subscribe to the PubSub bros!

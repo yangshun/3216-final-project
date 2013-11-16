@@ -8,6 +8,7 @@ var Game = function() {
   // In seconds
   this.roundTime = 300;
   this.score = {};
+  this.friendlyFire = false;
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();
@@ -96,10 +97,10 @@ Game.prototype.handleTick = function(ticker_data) {
   }
 }
 
-Game.prototype.addNinja = function(data) {
+Game.prototype.addNinja = function(id, data) {
   if (!NinjaSchool.canTrainNinja(data.ninja)) return false;
 
-  var player = new Player(data);
+  var player = new Player(id, data);
   var position = this.map.getRandomBlankPosition();
 
   var ninja = NinjaSchool.trainNinja({
@@ -125,9 +126,11 @@ Game.prototype.reviveNinja = function(ninja, time) {
   this.stage.removeChild(ninja.view);
   setTimeout(function() {
     var position = game.map.getRandomBlankPosition();
-    ninja.reset(position);
-    game.stage.addChild(ninja.view);
-    PubSub.publish('ninja.revive', {name: ninja.player.name, ninja: ninja});
+    if (ninja && ninja.state !== 'remove') {
+      ninja.reset(position);
+      game.stage.addChild(ninja.view);
+      PubSub.publish('ninja.revive', {name: ninja.player.name, ninja: ninja});
+    }
   }, time);
 }
 
@@ -148,6 +151,11 @@ Game.prototype.onNinjaDeath = function(msg, data) {
 Game.prototype.removeNinja = function(s) {
   this.stage.removeChild(s.view);
   this.ninjas = _.without(this.ninjas, s);
+  this.box.DestroyBody(s.body);
+}
+
+Game.prototype.removeShield = function(s) {
+  this.stage.removeChild(s.view);
   this.box.DestroyBody(s.body);
 }
 

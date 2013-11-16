@@ -239,12 +239,12 @@ Map.prototype.removeTile = function(t) {
   if (this.numTiles) {
     if (t instanceof HealthTile) {
       this.numTiles.healthtile -= 1;
-    }
-    if (t instanceof SpeedTile) {
+    } else if (t instanceof SpeedTile) {
       this.numTiles.speedtile -= 1;
-    }
-    if (t instanceof GunTile) {
+    } else if (t instanceof GunTile) {
       this.numTiles.guntile -= 1;
+    } else if (t instanceof NovaTile) {
+      this.numTiles.novatile -= 1;
     }
   }
 

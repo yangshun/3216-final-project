@@ -85,7 +85,6 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof SpeedTile) {
-    console.log('trigger speed');
     this.addEffect(new SpeedEffect(this, 100, 50, 3000));
   }
 
@@ -104,8 +103,7 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof NovaTile) {
-    console.log('trigger nova');
-    this.nova(4);
+    this.addEffect(new NovaEffect(this));
   }
   
   if (anotherObject.damageable) {

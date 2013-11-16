@@ -237,3 +237,13 @@ SpeedEffect.prototype.destroy = function() {
   this.ninja.removeEffect(this);
   delete this;
 };
+
+var NovaEffect = function(ninja) {
+  this.ninja = ninja;
+}
+
+NovaEffect.prototype.tick = function (ninja) {
+  this.ninja.nova(8);
+  this.ninja.removeEffect(this);
+  delete this;
+}

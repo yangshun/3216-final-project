@@ -149,7 +149,6 @@ Map.prototype.decodeASCIIMap = function(id, opt, dist, tol) {
     var distance = dist || 1.25;
     var tolerance = tol || 0.9; // 1 means follow strictly, 0 mean totally random
 
-    console.log(distance);
     var isValid = function(x, y) {
       return x>=0 && x < that.asciiMap[0].length && y>=0 && y < that.asciiMap.length;
     }

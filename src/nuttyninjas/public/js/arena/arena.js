@@ -37,12 +37,14 @@ var Arena = (function() {
   };
 
   var controller_input = function(id, data) {
-    var ninjaToHandle = _.find(game.ninjas, function(ninja) {
-      return ninja.identifier === id;
-    });
+    if (game.state != "PAUSED") {
+      var ninjaToHandle = _.find(game.ninjas, function(ninja) {
+        return ninja.identifier === id;
+      });
 
-    if (ninjaToHandle != null) {
-      ninjaToHandle.handleInput(data);
+      if (ninjaToHandle != null) {
+        ninjaToHandle.handleInput(data);
+      }
     }
   };
 

@@ -14,7 +14,8 @@ var Map = function() {
   this.numTiles = {
     healthtile: 0,
     speedtile: 0,
-    guntile: 0
+    guntile: 0,
+    novatile: 0
   };
 
   this.bgpath = '/images/terrain/jungle/jungle2.jpg';
@@ -217,6 +218,11 @@ Map.prototype.tick = function() {
     this.numTiles.guntile += 1;
     this.generateRandomPowerup('guntile');
   }
+
+  if (Math.random() < 1 && this.numTiles.novatile < MapConfig.limits.novatile) {
+    this.numTiles.novatile += 1;
+    this.generateRandomPowerup('novatile');
+  }
 }
 
 Map.prototype.removeAndReplaceTile = function(t) {
@@ -233,12 +239,12 @@ Map.prototype.removeTile = function(t) {
   if (this.numTiles) {
     if (t instanceof HealthTile) {
       this.numTiles.healthtile -= 1;
-    }
-    if (t instanceof SpeedTile) {
+    } else if (t instanceof SpeedTile) {
       this.numTiles.speedtile -= 1;
-    }
-    if (t instanceof GunTile) {
+    } else if (t instanceof GunTile) {
       this.numTiles.guntile -= 1;
+    } else if (t instanceof NovaTile) {
+      this.numTiles.novatile -= 1;
     }
   }
 
@@ -276,6 +282,10 @@ Map.prototype.generatePowerup = function(x, y, type) {
     case 'guntile':
       p = new GunTile(x, y, 0);
       p.initShape();
+      break;
+    case 'novatile':
+      p = new NovaTile(x, y, 0, getPath('powerup', 'nova'));
+      p.initShape(MapConfig.tiles['nova'].w, MapConfig.tiles['nova'].h);
       break;
   }
   p.initBody();

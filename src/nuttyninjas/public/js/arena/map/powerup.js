@@ -145,8 +145,6 @@ var SpeedTile = function(x, y, r, img) {
   this.rotation = r || 0; // Rotation in degrees
   this.img = img;
 
-  this.heal = 10;
-
   this.view = null;
   this.body = null;
   this.dead = false;
@@ -159,4 +157,24 @@ SpeedTile.prototype.collide = function(anotherObject) {
   this.dead = true;
 };
 
+// NovaTile
+var NovaTile = function(x, y, r, img) {
+  Powerup.call(this);
+  this.x = x * TILE_WIDTH;
+  this.y = y * TILE_HEIGHT;
+  this.tileX = x;
+  this.tileY = y;
+  this.rotation = r || 0; // Rotation in degrees
+  this.img = img;
 
+  this.view = null;
+  this.body = null;
+  this.dead = false;
+  this._type = 'tile_nova';
+};
+
+NovaTile.prototype = new Powerup();
+NovaTile.prototype.constructor = NovaTile;
+NovaTile.prototype.collide = function(anotherObject) {
+  this.dead = true;
+};

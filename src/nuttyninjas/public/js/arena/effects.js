@@ -72,6 +72,7 @@ GameEndEffect.prototype = new Effect();
 GameEndEffect.prototype.constructor = GameEndEffect;
 GameEndEffect.prototype.destroy = function() {
   game.stage.removeChild(this.view);
+  this.view = null;
   delete this;
 };
 GameEndEffect.prototype.tick = function(delta_time) {
@@ -240,10 +241,17 @@ SpeedEffect.prototype.destroy = function() {
 
 var NovaEffect = function(ninja) {
   this.ninja = ninja;
+  this.tickedCount = 0;
 }
-
-NovaEffect.prototype.tick = function (ninja) {
-  this.ninja.nova(8);
+NovaEffect.prototype.tick = function () {
+  this.tickedCount++;
+  if (this.tickedCount == 2) { 
+    this.ninja.nova(8); 
+    this.destroy();
+  }
+}
+NovaEffect.prototype.destroy = function() {
   this.ninja.removeEffect(this);
+  this.ninja = null;
   delete this;
 }

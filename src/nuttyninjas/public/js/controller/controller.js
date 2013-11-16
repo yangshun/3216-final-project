@@ -96,6 +96,7 @@ var loadJoysticks = function() {
 $(function() { 
   loadNinja();
   var handleOrientationChange = function(e) {
+    console.log($(window).width(), $(window).height())
     if ($(window).width() > $(window).height()) {
       console.log('landscape');
       $('.controller-inner-container').removeClass('controller-inner-container-portrait');

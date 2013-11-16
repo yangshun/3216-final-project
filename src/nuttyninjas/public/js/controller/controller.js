@@ -3,14 +3,7 @@ window.addEventListener('load', function() {
   FastClick.attach(document.body);
 }, false);
 
-var handleOrientationChange = function(e) {
-
-};
-
-// Orientation check
-window.addEventListener('orientationchange', handleOrientationChange);
-window.addEventListener('resize', handleOrientationChange);
-
+var controller_is_portrait = true;
 // Socket Registration code
 
 var path = window.location.pathname.slice(1).split('/');
@@ -75,7 +68,9 @@ var loadJoysticks = function() {
     var x = leftJoystick.deltaX();
     var y = leftJoystick.deltaY();
     var delta = Math.atan2(y, x);
-    delta -= Math.PI/2;
+    if (controller_is_portrait) {
+      delta -= Math.PI/2;
+    }
     // console.log(delta)
     if (x === 0 && y === 0) {
       if (isMoving) {
@@ -100,4 +95,22 @@ var loadJoysticks = function() {
 // socket.emit('client-register', { type: 'controller', room: myroom, name: myname, ninja: 'fat ninja'});
 $(function() { 
   loadNinja();
+  var handleOrientationChange = function(e) {
+    console.log($(window).width(), $(window).height())
+    if ($(window).width() > $(window).height()) {
+      console.log('landscape');
+      $('.controller-inner-container').removeClass('controller-inner-container-portrait');
+      $('.controller-inner-container').addClass('controller-inner-container-landscape');
+      controller_is_portrait = false;
+    } else {
+      console.log('portrait');
+      $('.controller-inner-container').removeClass('controller-inner-container-landscape');
+      $('.controller-inner-container').addClass('controller-inner-container-portrait');
+      controller_is_portrait = true;
+    }
+  };
+  handleOrientationChange();
+  // Orientation check
+  // window.addEventListener('orientationchange', handleOrientationChange);
+  window.addEventListener('resize', handleOrientationChange);
 });

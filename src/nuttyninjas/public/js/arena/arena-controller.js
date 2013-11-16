@@ -19,6 +19,15 @@ function ArenaController($scope, $timeout, $location) {
     $timeout(decrement, 1000);
 	}
 
+  $scope.toggleSound = function() {
+    $scope.sound_on = !$scope.sound_on;
+    // TODO: toggle sound
+  }
+
+  $scope.pauseGame = function() {
+    $scope.game_paused = !$scope.game_paused;
+    game.pause();
+  }
 
   PubSub.subscribe('game.score.changed', function (msg, score) {
     $scope.radiant_score = score["red"] || 0;

@@ -68,8 +68,14 @@ block content
   div(class="status-bar")
     div(class="status-left-section" id="pause-button")
       p
-        a
-          <i class="fa fa-pause fa pause-button"></i> Pause Game
+        a(ng-show="!game_paused" ng-click="pauseGame()")
+          <i class="fa fa-pause"></i> Pause &nbsp;
+        a(ng-show="game_paused" ng-click="pauseGame()")
+          <i class="fa fa-play"></i> Play &nbsp;
+        a(ng-show="sound_on" ng-click="toggleSound()")
+          <i class="fa fa-volume-off"></i> Off Music
+        a(ng-show="!sound_on" ng-click="toggleSound()")
+          <i class="fa fa-volume-up"></i> On Music
       //- p &nbsp;To join the game, log on to 
         span(class="green") {{ current_url }} 
         on on your mobile device!

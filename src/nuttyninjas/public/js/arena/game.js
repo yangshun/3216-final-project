@@ -78,7 +78,7 @@ Game.prototype.pause = function() {
 
 Game.prototype.end = function() {
   this.state = "END";
-  this.gameEndEffect = new GameEndEffect(10);
+  this.gameEndEffect = new GameEndEffect(5);
   PubSub.publish('game.end', {});
 }
 

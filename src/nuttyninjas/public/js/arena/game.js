@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 10;
+  this.roundTime = 30;
   this.score = {};
   this.friendlyFire = false;
 
@@ -55,6 +55,10 @@ Game.prototype.restart = function() {
   createjs.Ticker.setFPS(60);
   this.start();
   PubSub.publish('game.restart', {});
+
+  if (this.gameEndEffect) {
+    this.gameEndEffect.destroy();
+  }
 }
 
 Game.prototype.start = function() {
@@ -74,13 +78,13 @@ Game.prototype.pause = function() {
 
 Game.prototype.end = function() {
   this.state = "END";
-  new GameEndEffect();
+  this.gameEndEffect = new GameEndEffect(10);
   PubSub.publish('game.end', {});
 }
 
 Game.prototype.handleTick = function(ticker_data) {
+  var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
   if (this.state === "PLAYING") {
-    var timestep = Math.min(ticker_data.delta, 34) / 1000.0;
     this.box.Step(timestep, 8.0, 3.0);
     this.box.ClearForces();
 
@@ -94,6 +98,9 @@ Game.prototype.handleTick = function(ticker_data) {
   }
 
   if (this.state == "END") {
+    if (this.gameEndEffect) {
+      this.gameEndEffect.tick(timestep);
+    }
   }
   this.stage.update();
 }

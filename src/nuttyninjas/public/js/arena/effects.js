@@ -57,28 +57,15 @@ HealEffect.prototype.destroy = function() {
 
 
 // GameEndEffect Effect
-var GameEndEffect = function() {
+var GameEndEffect = function(cooldown_time) {
   Effect.call(this);
-
-  this.view = new createjs.Text("Game Over", "30px peachy-keen", "black");
+  this.view = new createjs.Text("Game Over", "30px peachy-keen", "#2DA1BA");
   this.view.textAlign = "center";
-  this.view.x = 500;
+  this.view.x = game.canvas.width/2.0;
   this.view.y = 200;;
   game.stage.addChild(this.view);
 
-  this.numCalled = 0;
-  this.numFrame = 120;
-
-  var that = this;
-  var GameEndEvent = function () {
-    that.numCalled++;
-    if (that.numCalled >= that.numFrame) {
-      that.destroy();
-      return;
-    }
-    setTimeout(GameEndEvent, 1.0 / 60);
-  };
-  GameEndEvent();
+  this.timeleft = cooldown_time;
 };
 
 GameEndEffect.prototype = new Effect();
@@ -87,6 +74,16 @@ GameEndEffect.prototype.destroy = function() {
   game.stage.removeChild(this.view);
   delete this;
 };
+GameEndEffect.prototype.tick = function(delta_time) {
+  this.timeleft -= delta_time;
+
+  if (this.timeleft < 0) {
+    this.view.text = "";
+  }
+  else {
+    this.view.text = "Restarting in " + Math.floor(this.timeleft) + " seconds...";
+  }
+}
 
 // Blink effect
 var BlinkEffect = function(ninja) {

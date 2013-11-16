@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 30;
+  this.roundTime = 300;
   this.score = {};
   this.friendlyFire = false;
 

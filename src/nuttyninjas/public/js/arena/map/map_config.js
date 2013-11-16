@@ -2,7 +2,8 @@ MapConfig = {};
 MapConfig.limits = {
   healthtile : 5,
   speedtile : 2,
-  guntile : 5
+  guntile : 5,
+  novatile : 2
 };
 
 MapConfig.tiles = {
@@ -19,7 +20,8 @@ MapConfig.tiles = {
   // 1: {image:'tree.png', w: 360, h: 345, tileW: 1, tileH: 1},
   // 2: {image:'rock-2.png', w: 240, h: 240},
   health: {image:'first-aid-kit.png', w: 300, h: 256},
-  speed: {image:'haste-boots.png', w: 300, h: 300}
+  speed: {image:'haste-boots.png', w: 300, h: 300},
+  nova: {image: 'nova.png', w:400, h:519}
 };
 
 MapConfig.maps = [

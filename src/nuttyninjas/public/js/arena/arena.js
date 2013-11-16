@@ -119,7 +119,3 @@ document.addEventListener("keydown", function(e) {
     setTimeout(resize, 1000);
   }
 }, false);
-
-$(function() {
-  $('#pause-button').on('click', function() { game.pause(); });
-});

@@ -107,7 +107,8 @@ Ninja.prototype.collide = function(anotherObject) {
       this.state = 'dead'; 
       PubSub.publish('ninja.death', {
         killer : anotherObject.ninja,
-        victim: this
+        victim: this,
+        weapon: anotherObject
       });
     }
   }

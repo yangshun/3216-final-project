@@ -16,7 +16,7 @@ var Arena = (function() {
     queue.loadManifest(SoundManager.sounds);
     queue.addEventListener("complete", function() {
       game.map.clearMap();
-      game.map.generateMap('islands', 'scale');
+      game.map.generateMap('altMap','round', 2.25, 0.9);
       game.restart();
     });
 

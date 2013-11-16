@@ -56,9 +56,7 @@ Game.prototype.restart = function() {
   this.start();
   PubSub.publish('game.restart', {});
 
-  if (this.gameEndEffect) {
-    this.gameEndEffect.destroy();
-  }
+  if (this.gameEndEffect) { this.gameEndEffect.destroy(); }
 }
 
 Game.prototype.start = function() {
@@ -78,7 +76,7 @@ Game.prototype.pause = function() {
 
 Game.prototype.end = function() {
   this.state = "END";
-  this.gameEndEffect = new GameEndEffect(5);
+  this.gameEndEffect = new GameEndEffect(10);
   PubSub.publish('game.end', {});
 }
 

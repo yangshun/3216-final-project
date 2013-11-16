@@ -85,6 +85,14 @@ var loadJoysticks = function() {
     }
 
   }, 1000 / 30);
+
+  var handle_shake = function(event_data) {
+    var a = event_data.accelerationIncludingGravity;
+    if (Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z) > 30) {
+      UnaController.sendToScreen('input', { key: 'shoot', shoot: 1});
+    }
+  };
+  window.addEventListener('devicemotion', handle_shake, false);
 };
 
 

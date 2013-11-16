@@ -21,23 +21,14 @@ var Arena = (function() {
     });
 
     PubSub.subscribe('game.end', function() {
-      var msg = "Game Over";
-      if (game.score.red && game.score.yellow) {
-        if (game.score.red > game.score.yellow) {
-          msg = "Aka wins";
-        } else if (game.score.red < game.score.yellow) {
-          msg = "Kiiro wins";
-        } else {
-          msg = "Draw !!"
-        }
-      }
-      alert(msg);
-      game.restart();
+      setTimeout(function() {
+        game.restart();
+      }, 10000);
     });
   };
 
   var controller_input = function(id, data) {
-    if (game.state != "PAUSED") {
+    if (game.state === "PLAYING") {
       var ninjaToHandle = _.find(game.ninjas, function(ninja) {
         return ninja.identifier === id;
       });

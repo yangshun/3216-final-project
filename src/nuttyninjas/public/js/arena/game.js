@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 300;
+  this.roundTime = 10;
   this.score = {};
   this.friendlyFire = false;
 
@@ -67,7 +67,6 @@ Game.prototype.pause = function() {
   if (this.state === 'PAUSED') {
     this.start();
   } else if (this.state === 'PLAYING') {
-    createjs.Ticker.setPaused(true);
     this.state = "PAUSED";
     PubSub.publish('game.pause', {});
   }
@@ -75,7 +74,7 @@ Game.prototype.pause = function() {
 
 Game.prototype.end = function() {
   this.state = "END";
-  createjs.Ticker.setPaused(true);
+  new GameEndEffect();
   PubSub.publish('game.end', {});
 }
 
@@ -88,13 +87,15 @@ Game.prototype.handleTick = function(ticker_data) {
     this.ninjas.map(function(s){s.tick();});
     this.shurikens.map(function(s){s.tick();});
     this.map.tick();
-
-    this.stage.update();
     TimedEventManager.tick();
 
     this.timePassed += timestep;
     if (this.timePassed >= this.roundTime) { this.end(); }
   }
+
+  if (this.state == "END") {
+  }
+  this.stage.update();
 }
 
 Game.prototype.addNinja = function(id, data) {

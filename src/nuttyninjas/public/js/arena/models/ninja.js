@@ -85,7 +85,6 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof SpeedTile) {
-    console.log('trigger speed');
     this.addEffect(new SpeedEffect(this, 100, 50, 3000));
   }
 
@@ -104,8 +103,7 @@ Ninja.prototype.collide = function(anotherObject) {
   }
 
   if (anotherObject instanceof NovaTile) {
-    console.log('trigger nova');
-    this.nova(4);
+    this.addEffect(new NovaEffect(this));
   }
   
   if (anotherObject.damageable) {
@@ -214,14 +212,7 @@ Ninja.prototype.removeFollower = function(f) {
 };
 
 Ninja.prototype.nova = function(number) {
-  if (this.ShurikenGun instanceof BananaGun) {
-    this.ShurikenGun.makeShuriken(this.angle, 3);
-  } else {
-    for (var i = 0; i < number; i++) {
-      var angle = toRadian(360.0 / number * i);
-      this.ShurikenGun.makeShurikenNoDelay(angle);
-    }
-  }
+  this.ShurikenGun.nova(number);
 }
 
 // Override tick function

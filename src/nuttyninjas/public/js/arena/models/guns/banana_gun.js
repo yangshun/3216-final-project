@@ -25,3 +25,9 @@ BananaGun.prototype.makeShuriken = function(angle, scale) {
   game.addShuriken(s);
   s.shoot();
 }
+
+BananaGun.prototype.nova = function(number) {
+  if (!this.checkNovaDelay()) return false;
+
+  this.makeShuriken(this.ninja.angle, 3);
+}

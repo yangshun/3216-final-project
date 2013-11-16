@@ -6,7 +6,7 @@ var Game = function() {
   this.state = "LOADING";
   this.timePassed = 0;
   // In seconds
-  this.roundTime = 30;
+  this.roundTime = 300;
   this.score = {};
   this.friendlyFire = false;
 
@@ -56,9 +56,7 @@ Game.prototype.restart = function() {
   this.start();
   PubSub.publish('game.restart', {});
 
-  if (this.gameEndEffect) {
-    this.gameEndEffect.destroy();
-  }
+  if (this.gameEndEffect) { this.gameEndEffect.destroy(); }
 }
 
 Game.prototype.start = function() {

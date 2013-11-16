@@ -6,6 +6,8 @@ var ShurikenGun = function(ninja, view) {
   this.angleRange = 0.05; // In radian
   this.delay = 300;
   this.lastShoot = 0;
+  this.novaDelay = 1000;
+  this.lastNova = 0;
   var color = null;
   if (this.ninja) { color = this.ninja.color; }
   
@@ -39,6 +41,22 @@ ShurikenGun.prototype.makeShurikenNoDelay = function(angle) {
   var s = this.shuriken.make(this.ninja, centerVector, angle);
   game.addShuriken(s);
   s.shoot();
+}
+
+ShurikenGun.prototype.checkNovaDelay = function() {
+  var now = (new Date()).getTime();
+  if (this.lastNova + this.novaDelay > now) return false;
+  this.lastNova = now;
+  return true;
+}
+
+
+ShurikenGun.prototype.nova = function(number) {
+  if (!this.checkNovaDelay()) return false;
+  for (var i = 0; i < number; i++) {
+    var angle = toRadian(360.0 / number * i);
+    this.makeShurikenNoDelay(angle);
+  }
 }
 
 ShurikenGun.prototype.destroy = function() {

@@ -126,9 +126,11 @@ Game.prototype.reviveNinja = function(ninja, time) {
   this.stage.removeChild(ninja.view);
   setTimeout(function() {
     var position = game.map.getRandomBlankPosition();
-    ninja.reset(position);
-    game.stage.addChild(ninja.view);
-    PubSub.publish('ninja.revive', {name: ninja.player.name, ninja: ninja});
+    if (ninja && ninja.state !== 'remove') {
+      ninja.reset(position);
+      game.stage.addChild(ninja.view);
+      PubSub.publish('ninja.revive', {name: ninja.player.name, ninja: ninja});
+    }
   }, time);
 }
 
@@ -149,6 +151,11 @@ Game.prototype.onNinjaDeath = function(msg, data) {
 Game.prototype.removeNinja = function(s) {
   this.stage.removeChild(s.view);
   this.ninjas = _.without(this.ninjas, s);
+  this.box.DestroyBody(s.body);
+}
+
+Game.prototype.removeShield = function(s) {
+  this.stage.removeChild(s.view);
   this.box.DestroyBody(s.body);
 }
 

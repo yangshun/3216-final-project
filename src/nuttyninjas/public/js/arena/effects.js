@@ -99,6 +99,7 @@ var BlinkEffect = function(ninja) {
 
   var that = this;
   var BlinkEvent = function () {
+    if (!that.ninja) return;
     that.interval *= 0.9;
     that.ninja.view.alpha = 1 - that.ninja.view.alpha;
 
@@ -192,10 +193,9 @@ var KillerEffect = function(ninja) {
     that.view.scaleX *= 1.01;
     that.view.scaleY *= 1.01;
 
-    that.view.y = ninja.view.y + that.deltaY;
-    that.view.x = ninja.view.x;
+    that.view.y = that.view.y + that.deltaY;
 
-    TimedEventManager.addEvent(1.0/that.numFrame, KillerEvent);
+    TimedEventManager.addEvent(2.0/that.numFrame, KillerEvent);
     that.numCalled++;
     if (that.numCalled >= that.numFrame) {
       that.destroy();

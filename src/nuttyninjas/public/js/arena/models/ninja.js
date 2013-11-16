@@ -36,11 +36,17 @@ Ninja.prototype.shield = function() {
   // Might want to do effects here
   this.ninja_shield.active(true);
   this.shielding = true;
+  this.slowEffect = this.slowEffect || new SpeedEffect(this, -150, 50);
 };
 
 Ninja.prototype.unshield = function() {
   this.ninja_shield.active(false);
   this.shielding = false;
+  if (this.slowEffect) {
+    this.slowEffect.remove();
+    this.slowEffect.destroy();
+    this.slowEffect = null;
+  }
 };
 
 Ninja.prototype.destroy = function() {
@@ -52,6 +58,9 @@ Ninja.prototype.destroy = function() {
 
   this.followers.map(function(f) { f.destroy(); });
   this.followers = [];
+
+  this.ninja_shield.destroy();
+  this.ninja_shield = null;
   
   game.removeNinja(this);
   this.view = null;
@@ -183,7 +192,8 @@ Ninja.prototype.reset = function(position) {
 Ninja.prototype.die = function() {
   this.state = 'reviving';
   this.body.SetActive(false);
- 
+
+  this.unshield();
   _.each(this.effects, function(e) { e.destroy(); });
   this.effects = [];
 }

@@ -7,6 +7,7 @@ var Game = function() {
   this.timePassed = 0;
   // In seconds
   this.roundTime = 300;
+  this.cooldownTime = 5;
   this.score = {};
   this.friendlyFire = false;
 
@@ -78,7 +79,7 @@ Game.prototype.pause = function() {
 
 Game.prototype.end = function() {
   this.state = "END";
-  this.gameEndEffect = new GameEndEffect(5);
+  this.gameEndEffect = new GameEndEffect(this.cooldownTime);
   PubSub.publish('game.end', {});
 }
 

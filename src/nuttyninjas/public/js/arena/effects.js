@@ -62,7 +62,7 @@ var GameEndEffect = function(cooldown_time) {
   this.view = new createjs.Text("Game Over", "30px peachy-keen", "#2DA1BA");
   this.view.textAlign = "center";
   this.view.x = game.canvas.width/2.0;
-  this.view.y = 200;;
+  this.view.y = 200;
   game.stage.addChild(this.view);
 
   this.timeleft = cooldown_time;

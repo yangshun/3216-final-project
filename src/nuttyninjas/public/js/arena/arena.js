@@ -23,7 +23,7 @@ var Arena = (function() {
     PubSub.subscribe('game.end', function() {
       setTimeout(function() {
         game.restart();
-      }, 10000);
+      }, game.cooldownTime*1000);
     });
   };
 

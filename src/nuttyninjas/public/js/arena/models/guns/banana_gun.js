@@ -8,8 +8,10 @@ var BananaGun = function(ninja, view) {
 BananaGun.prototype = new ShurikenGun();
 BananaGun.prototype.constructor = BananaGun;
 
-BananaGun.prototype.makeShuriken = function(angle) {
+BananaGun.prototype.makeShuriken = function(angle, scale) {
   if (!this.checkDelay()) return false;
+
+  if (!scale) scale = 1;
 
 	var sign = Math.random() > 0.5 ? 1.0 : -1.0;
 	angle = angle + sign * Math.random() * this.angleRange;
@@ -18,7 +20,7 @@ BananaGun.prototype.makeShuriken = function(angle) {
   var cY = this.shuriken.offsetX() * -Math.sin(-angle) + this.ninja.size * Math.cos(-angle);
   var centerVector = new Vector2D(this.ninja.view.x + cX, this.ninja.view.y + cY);
 
-  var s = this.shuriken.make(this.ninja, centerVector, angle, this.turn);
+  var s = this.shuriken.make(this.ninja, centerVector, angle, this.turn, scale);
   this.turn = -1 * this.turn;
   game.addShuriken(s);
   s.shoot();

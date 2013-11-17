@@ -2,6 +2,19 @@ body {
   font: 14px "peachy-keen", "Obelix", Tahoma, Helvetica, Arial, sans-serif;
   position: relative;
   margin: 0;
+  background-color: black;
+}
+
+.yellow { 
+	color: #fed61b;
+}
+
+.room-number {
+	font-size: 32px;
+}
+
+.arena-url {
+	margin-top: 10px;
 }
 
 .leaderboard {
@@ -10,9 +23,29 @@ body {
 	right: 0;
 	top: 48px; 
 	width: 200px;
-	padding: 20px;
+	padding-left: 20px;
+	padding-right: 20px;
 	color: #fff;
 	background-color: rgba(0, 0, 0, 0.7);
+	margin-top: 2px;
+}
+
+.leaderboard th {
+	/*background-color: #fff;*/
+	color: #fff;
+	padding-left: 5px;
+	padding-right: 5px;
+	border-bottom: 1px solid #fed61b;
+}
+
+.leaderboard td {
+	color: #fed61b;
+	padding-left: 5px;
+	overflow: hidden;
+}
+
+.leaderboard p {
+	color: #fff;
 }
 
 .status-bar {

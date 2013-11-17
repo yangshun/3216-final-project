@@ -1,7 +1,11 @@
+var ArenaConfig = {
+  scoreBoardWidth: 240
+}
+
 var Arena = (function() {
   var init = function() {
     var gameCanvas = document.getElementById('gameCanvas');
-    gameCanvas.width = window.innerWidth;
+    gameCanvas.width = window.innerWidth-ArenaConfig.scoreBoardWidth;
     gameCanvas.height = (window.innerHeight-50);
 
     var stage = new createjs.Stage(gameCanvas);
@@ -79,7 +83,7 @@ function resize() {
   //   game.canvas.style.height = window.innerHeight +'px';
   //   game.canvas.style.width = (window.innerHeight * ratio) +'px';
   // }
-  game.canvas.style.width = window.innerWidth +'px';
+  game.canvas.style.width = window.innerWidth-ArenaConfig.scoreBoardWidth +'px';
   game.canvas.style.height = (window.innerHeight-50) +'px';
 }
 

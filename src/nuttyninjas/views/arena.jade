@@ -90,38 +90,38 @@ block content
 
   div(class="leaderboard", ng-controller="LeaderboardController")
     //- p {{player_list}}
-    table
+    h2 Room No: <span class="yellow room-number">1</span>
+    p(class="arena-url") Visit <span class="yellow">{{ current_url }}</span> <br/>on your mobile to play!
+    hr
+    h2(class="yellow") Leaderboard
+    table(ng-show="player_list.length != 0")
       tr
-        th Name
-        th Kills
-        th Deaths
+        th(width="120") Player
+        th(width="30") K
+        th(width="30") D
 
       tr(ng-repeat="player in player_list | orderBy:'-kills'")
         td {{player.name}}
         td {{player.kills}}
         td {{player.deaths}}
+    p(ng-show="player_list.length == 0") No players active!
 
-  script
-    var stats = new Stats();
-    stats.setMode(0); // 0: fps, 1: ms
+  //- script
+  //-   var stats = new Stats();
+  //-   stats.setMode(0); // 0: fps, 1: ms
 
-    // Align top-left
-    stats.domElement.style.position = 'absolute';
-    stats.domElement.style.left = '0px';
-    stats.domElement.style.top = '48px';
+  //-   // Align top-left
+  //-   stats.domElement.style.position = 'absolute';
+  //-   stats.domElement.style.left = '0px';
+  //-   stats.domElement.style.top = '48px';
 
-    document.body.appendChild( stats.domElement );
+  //-   document.body.appendChild( stats.domElement );
 
-    setInterval( function () {
-        stats.begin();
-        stats.end();
-    }, 1000 / 60 );
+  //-   setInterval( function () {
+  //-       stats.begin();
+  //-       stats.end();
+  //-   }, 1000 / 60 );
 
   canvas(id='gameCanvas', height='420', width='720')
-
-  //- h1 = title
-  //- p Welcome to #{title}
-  //- p#ping Connecting ...
-  //- p#connected Total Clients : 0
 
   div(id='fps_counter')

@@ -290,3 +290,18 @@ Map.prototype.generatePowerup = function(x, y, type) {
   p.initBody();
   this.destructible.push(p);
 };
+
+Map.prototype.respawnMap = function() {
+  _.map(this.destructible, function(t) {
+    if (t instanceof Powerup) t.dead = true;
+  });
+  for (var i=0; i<this.tileMap.length; i++) {
+    _.map(this.tileMap[i], function(t) {
+      if (t) {
+        if (t.view) t.view.alpha = 1;
+        if (t.body) t.body.SetActive(true);
+      }
+    });
+  }
+
+};

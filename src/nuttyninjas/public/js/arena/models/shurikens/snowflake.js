@@ -11,7 +11,7 @@ SnowFlake.prototype = new Shuriken();
 SnowFlake.prototype.constructor = SnowFlake;
 
 SnowFlake.offsetX = function() {
-  return 40.0;
+  return 35.0;
 }
 
 SnowFlake.make = function(ninja, centerVector, angle) {

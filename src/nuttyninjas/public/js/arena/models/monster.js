@@ -10,7 +10,7 @@ var Monster = function() {
   this.state = 'live';
   this.effects = [];
   this.damageable = true;
-  this._type = 'Monster';
+  this._type = 'monster';
 };
 
 Monster.prototype = new ControllableObject();

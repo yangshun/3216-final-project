@@ -1,5 +1,5 @@
 var KBConfig = {
-  width: 135,
+  width: 120,
   height: 40,
   part_width: 40,
   part_height: 40,
@@ -87,7 +87,7 @@ function Kill(data, x, y) {
   killerview.y = 0;
 
   var killername = getNinjaNameView(data.killer.player.name);
-  killername.x = -KBConfig.part_width;
+  killername.x = -killername.getBounds().width - 10;
   killername.y = KBConfig.namePaddingY;
 
   var victimview;
@@ -100,7 +100,7 @@ function Kill(data, x, y) {
   victimview.y = 0;
 
   var victimname = getNinjaNameView(data.victim.player.name);
-  victimname.x = 100 + KBConfig.part_width;
+  victimname.x = KBConfig.width + victimname.getBounds().width/2 + 5;
   victimname.y = KBConfig.namePaddingY;
 
   var weaponview = getWeaponView(data.weapon_type);

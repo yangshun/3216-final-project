@@ -69,6 +69,7 @@ Ninja.prototype.destroy = function() {
 
 // Override collision callback
 Ninja.prototype.collide = function(anotherObject) {
+  if (this.state == 'invulnerable') return ;
   if (anotherObject instanceof Shuriken) {
     if (anotherObject.ninja == this) {
       // Anything we want to happen here?

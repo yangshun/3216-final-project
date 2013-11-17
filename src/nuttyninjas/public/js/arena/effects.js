@@ -95,7 +95,7 @@ var BlinkEffect = function(ninja) {
 
   var that = this;
   var BlinkEvent = function () {
-    if (!that.ninja) return;
+    if (!that.ninja || !that.ninja.view) return;
     that.interval *= 0.9;
     that.ninja.view.alpha = 1 - that.ninja.view.alpha;
 

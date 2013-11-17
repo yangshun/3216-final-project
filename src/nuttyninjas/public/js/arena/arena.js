@@ -74,17 +74,22 @@ var Arena = (function() {
 // Resize code
 
 function resize() {
-  // var ratio = game.canvas.width / game.canvas.height;
-  // console.log(window.innerHeight, window.innerWidth);
-  // if (window.innerHeight * ratio > window.innerWidth) {
-  //   game.canvas.style.width = window.innerWidth +'px';
-  //   game.canvas.style.height = (window.innerWidth / ratio) +'px';
-  // } else {
-  //   game.canvas.style.height = window.innerHeight +'px';
-  //   game.canvas.style.width = (window.innerHeight * ratio) +'px';
-  // }
-  game.canvas.style.width = window.innerWidth-ArenaConfig.scoreBoardWidth +'px';
-  game.canvas.style.height = (window.innerHeight-50) +'px';
+  var height = window.innerHeight - 50;
+  var width = window.innerWidth-ArenaConfig.scoreBoardWidth;
+
+  var ratio = game.canvas.width / game.canvas.height;
+
+  if (height * ratio > width) {
+    game.canvas.style.width = width +'px';
+    game.canvas.style.height = (width / ratio) +'px';
+  } else {
+    game.canvas.style.height = height +'px';
+    game.canvas.style.width = (height * ratio) +'px';
+  }
+  console.log('resize call');
+
+  //game.canvas.style.width = window.innerWidth-ArenaConfig.scoreBoardWidth +'px';
+  //game.canvas.style.height = (window.innerHeight-50) +'px';
 }
 
 window.addEventListener("resize", resize, false);

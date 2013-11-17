@@ -36,7 +36,7 @@ var loadBot = function() {
 		var l = 1.0;
     UnaController.sendToScreen('input', {key: 'move', angle: delta, length: l});
 		//socket.emit('controller-input', { name: myname, key: 'move', angle: delta, length: l });
-	}, 100);
+	}, 10);
 
 	setInterval(function() {
     UnaController.sendToScreen('input', { key: 'shoot', shoot: 1});

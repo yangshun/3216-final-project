@@ -144,20 +144,25 @@ Ninja.prototype.updateHitPointBar = function() {
 
 // Override handleInput function
 Ninja.prototype.handleInput = function(input) {
-  if (input.key === 'move') {
-    this.angle = input.angle;
-    var vXnew = this.speed * input.length * Math.cos(input.angle);
-    var vYnew = this.speed * input.length * Math.sin(input.angle);
-    this.changeLinearVelocity(new Vector2D(vXnew, vYnew));
-  } else if (input.key === 'stopmove') {
-    this.changeLinearVelocity(new Vector2D(0, 0));
-  } else if (input.key === 'shoot') {
-    if (this.state == 'live') { this.shoot(); }
-  } else if (input.key === 'shield') {
-    if (this.state == 'live') { this.shield(); }
-  } else if (input.key === 'unshield') {
-    if (this.state == 'live') { this.unshield(); }
+  if (this.state == 'live') {
+    if (input.key === 'move') {
+      this.angle = input.angle;
+      var vXnew = this.speed * input.length * Math.cos(input.angle);
+      var vYnew = this.speed * input.length * Math.sin(input.angle);
+      this.changeLinearVelocity(new Vector2D(vXnew, vYnew));
+    } else if (input.key === 'stopmove') {
+      this.changeLinearVelocity(new Vector2D(0, 0));
+    } else if (input.key === 'shoot') {
+      this.shoot();
+    } else if (input.key === 'shield') {
+      this.shield();
+    } else if (input.key === 'unshield') {
+      this.unshield();
+    } else if (input.key == 'nova') {
+      this.nova(4);
+    }
   }
+
 };
 
 Ninja.prototype.changeLinearVelocity = function(v) {

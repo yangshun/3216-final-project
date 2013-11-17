@@ -26,7 +26,7 @@ var loadNinja = function() {
     var myname = $('#playername').val();
     if (myname) {
       window.localStorage.setItem('ninja-name', myname);
-      
+
       var ninja_color;
       switch(mySwiper.activeIndex) {
         case 1:
@@ -120,7 +120,7 @@ var loadJoysticks = function() {
   var handle_shake = function(event_data) {
     var a = event_data.accelerationIncludingGravity;
     if (Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z) > 30) {
-      UnaController.sendToScreen('input', { key: 'shoot', shoot: 1});
+      UnaController.sendToScreen('input', {key: 'nova'});
     }
   };
   window.addEventListener('devicemotion', handle_shake, false);

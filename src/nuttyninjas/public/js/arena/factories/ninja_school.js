@@ -46,7 +46,7 @@ var NinjaSchool = {
     hitpoint_view.graphics.beginFill(data.color).drawRect(-(ninja.size*1.5), -ninja.size-20, ninja.size*3, 10);
     view.addChild(hitpoint_view);
 
-    var name_view = new createjs.Text(data.player.name, "15px peachy-keen", "black");
+    var name_view = new createjs.Text(data.player.name, "15px peachy-keen, Obelix", "black");
     name_view.name = "name";
     name_view.textAlign = "center";
     name_view.x = 0;

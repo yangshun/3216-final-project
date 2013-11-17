@@ -229,6 +229,10 @@ TexturedObstacleTile.prototype.collide = function(other) {
     this.view.alpha = this.hitpoint / 3 * 0.25 + 0.75;
   }
 
+  if (other instanceof Monster) {
+    this.hitpoint = 0;
+  }
+
   if (this.hitpoint <= 0) {
     this.dead = true;
   }

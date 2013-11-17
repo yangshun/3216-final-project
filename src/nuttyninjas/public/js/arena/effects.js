@@ -125,11 +125,11 @@ BlinkEffect.prototype.destroy = function() {
 };
 
 // Death effect
-var DeathEffect = function(ninja) {
+var DeathEffect = function(object) {
   Effect.call(this);
-  this.view = ninja.view.getChildByName('body').clone();
-  this.view.x = ninja.view.x;
-  this.view.y = ninja.view.y;
+  this.view = object.view.getChildByName('body').clone();
+  this.view.x = object.view.x;
+  this.view.y = object.view.y;
   game.stage.addChild(this.view);
   
   this.interval = 100; 
@@ -172,7 +172,10 @@ DeathEffect.prototype.destroy = function() {
 // Killer effect
 var KillerEffect = function(ninja) {
   Effect.call(this);
-  this.view = new createjs.Text('Killing Spree','15px peachy-keen, Obelix','red');
+
+  var text = KillerEffect.randomMessage();
+  this.view = new createjs.Text(text,'15px peachy-keen, Obelix','red');
+
   this.view.textAlign = 'center';
   this.deltaY = -2;
 
@@ -201,9 +204,12 @@ var KillerEffect = function(ninja) {
   KillerEvent();
 };
 
+KillerEffect.randomMessage = function() {
+  var msg = ["Killing spree", "I kicked your ass", "Die noob!"];
+  return _.sample(msg);
+}
 KillerEffect.prototype = new Effect();
 KillerEffect.prototype.constructor = KillerEffect;
-
 KillerEffect.prototype.destroy = function() {
   game.stage.removeChild(this.view);
   delete this;

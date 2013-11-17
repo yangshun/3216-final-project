@@ -15,11 +15,18 @@ if (path.length === 2 && path[1] !== '') {
 
 
 var loadNinja = function() {
-  // Figure out what is checked and his name
- 
+  // Check if there is a name in local storage
+  var name = window.localStorage.getItem('ninja-name');
+  if (name) {
+    $('#playername').val(name);
+  }
+
+  // Figure out what is checked and his name 
   $('.join-button').on('click', function() {
     var myname = $('#playername').val();
     if (myname) {
+      window.localStorage.setItem('ninja-name', myname);
+
       var ninja_color;
       switch(mySwiper.activeIndex) {
         case 1:
@@ -69,8 +76,6 @@ var loadJoysticks = function() {
   });
 
   $('#block-button').on('touchend', function() {
-
-    console.log("sending something");
     UnaController.sendToScreen('input', { key: 'unshield'});
   });
   // rightJoystick  = new VirtualJoystick({
@@ -80,13 +85,11 @@ var loadJoysticks = function() {
 
   // Move Event
   var isMoving = false;
+  var previousAngle = null;
+  var threshold = 1; // threshold in degrees
   setInterval(function() {
     var x = leftJoystick.deltaX();
     var y = leftJoystick.deltaY();
-    var delta = Math.atan2(y, x);
-    if (controller_is_portrait) {
-      delta -= Math.PI/2;
-    }
     // console.log(delta)
     if (x === 0 && y === 0) {
       if (isMoving) {
@@ -95,9 +98,21 @@ var loadJoysticks = function() {
       }
     }
     else {
-      var l = Math.min(Math.sqrt(x * x + y * y) / 50.0, 1.0);
-      isMoving = true;
-      UnaController.sendToScreen('input', {key: 'move', angle: delta, length: l});
+      var delta = Math.atan2(y, x);
+      if (controller_is_portrait) {
+        delta -= Math.PI/2;
+      }
+      var deltaDeg = Math.round(delta * 180 / Math.PI);
+
+      if (!previousAngle || Math.abs(deltaDeg - previousAngle) > threshold) {
+        //console.log("firing " + previousAngle + " " + deltaDeg);
+        previousAngle = deltaDeg;
+
+        var l = Math.min(Math.sqrt(x * x + y * y) / 50.0, 1.0);
+        isMoving = true;
+        UnaController.sendToScreen('input', {key: 'move', angle: delta, length: l});
+
+      }
     }
 
   }, 1000 / 30);
@@ -105,7 +120,7 @@ var loadJoysticks = function() {
   var handle_shake = function(event_data) {
     var a = event_data.accelerationIncludingGravity;
     if (Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z) > 30) {
-      UnaController.sendToScreen('input', { key: 'shoot', shoot: 1});
+      UnaController.sendToScreen('input', {key: 'nova'});
     }
   };
   window.addEventListener('devicemotion', handle_shake, false);
@@ -120,14 +135,14 @@ var loadJoysticks = function() {
 $(function() { 
   loadNinja();
   var handleOrientationChange = function(e) {
-    console.log($(window).width(), $(window).height())
+    //console.log($(window).width(), $(window).height())
     if ($(window).width() > $(window).height()) {
-      console.log('landscape');
+      //console.log('landscape');
       $('.controller-inner-container').removeClass('controller-inner-container-portrait');
       $('.controller-inner-container').addClass('controller-inner-container-landscape');
       controller_is_portrait = false;
     } else {
-      console.log('portrait');
+      //console.log('portrait');
       $('.controller-inner-container').removeClass('controller-inner-container-landscape');
       $('.controller-inner-container').addClass('controller-inner-container-portrait');
       controller_is_portrait = true;

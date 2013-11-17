@@ -2,7 +2,7 @@ html, body {
 	width: 100%; 
 	height: 100%; 
 	margin: 0;
-	font-family: "peachy-keen", sans-serif;
+	font-family: "peachy-keen", "Obelix", Tahoma, Helvetica, Arial, sans-serif;
 }
 
 .landing-container { 

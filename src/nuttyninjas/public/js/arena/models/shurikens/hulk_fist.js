@@ -12,7 +12,7 @@ HulkFist.prototype = new Shuriken();
 HulkFist.prototype.constructor = HulkFist;
 
 HulkFist.offsetX = function() {
-  return 60.0;
+  return 55.0;
 }
 
 HulkFist.make = function(ninja, centerVector, angle) {

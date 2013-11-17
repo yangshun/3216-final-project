@@ -52,7 +52,7 @@ Game.prototype.restart = function() {
     ninja.die();
     game.reviveNinja(ninja, 0);
   });
-  _.each(this.monster, function(monster) {
+  _.each(this.monsters, function(monster) {
     monster.destroy();
   });
   this.score = {};

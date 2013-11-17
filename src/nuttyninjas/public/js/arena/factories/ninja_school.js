@@ -1,7 +1,9 @@
 var NinjaSchool = {
   colors: ['yellow', 'red', 'blue', 'orange', 'purple', 'green', 'brown', 'cyan'],
-  images: {'yellow'  : '/images/ninja-yellow.png',
-            'red'    : '/images/ninja-red.png'},
+  images: {'yellow'  : '/images/players/player-yellow.png',
+            'red'    : '/images/players/player-red.png',
+            'green'  : '/images/players/player-green.png',
+            'blue'   : '/images/players/player-blue.png'},
 
   // data: {position: Vector2D, player: Player, color: String}
   trainNinja: function(data) {
@@ -33,10 +35,10 @@ var NinjaSchool = {
     var image_name = this.images[data.color] || this.images['yellow'];
     var body_view = new createjs.Bitmap(image_name);
     body_view.name = "body";
-    body_view.scaleX = ninja.size  / (500 / 2.0);
-    body_view.scaleY = ninja.size  / (500 / 2.0);
-    body_view.regX = 500 / 2;
-    body_view.regY = 500 / 2;
+    body_view.scaleX = ninja.size  / (250 / 2.0);
+    body_view.scaleY = ninja.size  / (250 / 2.0);
+    body_view.regX = 250 / 2;
+    body_view.regY = 250 / 2;
     view.addChild(body_view);
 
     var hitpoint_view = new createjs.Shape();

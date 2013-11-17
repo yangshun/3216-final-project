@@ -127,7 +127,8 @@ Ninja.prototype.equipGun = function(gun_type) {
   this.ShurikenGun = gun;
   gun.view.x = 0;
   gun.view.y = 0;
-  this.view.addChildAt(gun.view, 0);
+  var numChild = this.view.getNumChildren();
+  this.view.addChildAt(gun.view, numChild);
 };
 
 Ninja.prototype.updateHitPointBar = function() {

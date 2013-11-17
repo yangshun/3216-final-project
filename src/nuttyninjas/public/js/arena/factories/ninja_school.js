@@ -3,8 +3,14 @@ var NinjaSchool = {
   images: {'yellow'  : '/images/players/player-yellow.png',
             'red'    : '/images/players/player-red.png',
             'green'  : '/images/players/player-green.png',
-            'blue'   : '/images/players/player-blue.png'},
-
+            'blue'   : '/images/players/player-blue.png'
+  },
+  color_hex: {
+    'yellow'  : '#fed61b',
+    'red'    : '#fe1b1b',
+    'green'  : '#5bfe1b',
+    'blue'   : '#1bd6fe'
+  },
   // data: {position: Vector2D, player: Player, color: String}
   trainNinja: function(data) {
     if (!this.canTrainNinja(data.color)) return false;
@@ -43,22 +49,23 @@ var NinjaSchool = {
 
     var hitpoint_view = new createjs.Shape();
     hitpoint_view.name = "hitpoint";
-    hitpoint_view.graphics.beginFill(data.color).drawRect(-(ninja.size*1.5), -ninja.size-20, ninja.size*3, 10);
+    hitpoint_view.graphics.beginFill(this.color_hex[data.color]).drawRect(-(ninja.size*1.5), -ninja.size-20, ninja.size*3, 10);
     view.addChild(hitpoint_view);
 
-    var name_view = new createjs.Text(data.player.name, "15px peachy-keen, Obelix", "black");
+    var name_view = new createjs.Text(data.player.name, "15px peachy-keen, Obelix", "white");
     name_view.name = "name";
     name_view.textAlign = "center";
     name_view.x = 0;
     name_view.y = - ninja.size - 45;
     var bgw = name_view.getBounds().width + 10;
     var bgh = name_view.getBounds().height;
-    var name_bg_view = new createjs.Shape();
-    name_bg_view.name = "name_bg";
-    name_bg_view.graphics.beginFill("white").drawRect(-bgw / 2.0, -ninja.size - bgh - 24, bgw, bgh);
-    name_bg_view.alpha = 0.75;
+    
+    // var name_bg_view = new createjs.Shape();
+    // name_bg_view.name = "name_bg";
+    // name_bg_view.graphics.beginFill("white").drawRect(-bgw / 2.0, -ninja.size - bgh - 24, bgw, bgh);
+    // name_bg_view.alpha = 0.75;
 
-    view.addChild(name_bg_view);
+    // view.addChild(name_bg_view);
     view.addChild(name_view);
 
     ninja.body = body;

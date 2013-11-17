@@ -102,6 +102,10 @@ Ninja.prototype.collide = function(anotherObject) {
     }
   }
 
+  if (anotherObject instanceof Monster) {
+    this.hitPoint -= 1.0;
+  }
+
   if (anotherObject instanceof NovaTile) {
     this.addEffect(new NovaEffect(this));
   }
@@ -109,8 +113,11 @@ Ninja.prototype.collide = function(anotherObject) {
   if (anotherObject.damageable) {
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
+      var killer;
+      if (anotherObject instanceof Monster) { killer = anotherObject; } 
+      else { killer = anotherObject.ninja; }
       PubSub.publish('ninja.death', {
-        killer : anotherObject.ninja,
+        killer :killer,
         victim: this,
         weapon: anotherObject
       });

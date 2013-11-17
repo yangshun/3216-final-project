@@ -2,6 +2,7 @@ var Game = function() {
   this.map = null;
   this.ninjas = [];
   this.shurikens = [];
+  this.monsters = [];
   this.stage = null;
   this.state = "LOADING";
   this.timePassed = 0;
@@ -51,6 +52,9 @@ Game.prototype.restart = function() {
     ninja.die();
     game.reviveNinja(ninja, 0);
   });
+  _.each(this.monster, function(monster) {
+    monster.destroy();
+  });
   this.score = {};
   this.timePassed = 0;
   createjs.Ticker.setFPS(60);
@@ -88,6 +92,7 @@ Game.prototype.handleTick = function(ticker_data) {
     this.box.ClearForces();
 
     this.ninjas.map(function(s){s.tick();});
+    this.monsters.map(function(m){m.tick();});
     this.shurikens.map(function(s){s.tick();});
     this.map.tick();
     TimedEventManager.tick();
@@ -175,4 +180,25 @@ Game.prototype.removeShuriken = function(s) {
   this.stage.removeChild(s.view);
   this.shurikens = _.without(this.shurikens, s);
   this.box.DestroyBody(s.body);
+}
+
+Game.prototype.addMonster = function() {
+  var position = this.map.getRandomBlankPosition();
+
+  var data = {position: position};
+  if (!MonsterHell.canMakeMonster(data)) return false;
+
+  var monster = MonsterHell.makeMonster(data);
+
+  this.monsters.push(monster);
+  this.stage.addChild(monster.view);
+  PubSub.publish('monster.create', monster);
+
+  return true;
+}
+
+Game.prototype.removeMonster = function(m) {
+  this.stage.removeChild(m.view);
+  this.monsters = _.without(this.monsers, m);
+  this.box.DestroyBody(m.body);
 }

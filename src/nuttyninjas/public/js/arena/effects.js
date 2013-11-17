@@ -125,11 +125,11 @@ BlinkEffect.prototype.destroy = function() {
 };
 
 // Death effect
-var DeathEffect = function(ninja) {
+var DeathEffect = function(object) {
   Effect.call(this);
-  this.view = ninja.view.getChildByName('body').clone();
-  this.view.x = ninja.view.x;
-  this.view.y = ninja.view.y;
+  this.view = object.view.getChildByName('body').clone();
+  this.view.x = object.view.x;
+  this.view.y = object.view.y;
   game.stage.addChild(this.view);
   
   this.interval = 100; 

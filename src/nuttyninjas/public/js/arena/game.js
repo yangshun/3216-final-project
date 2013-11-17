@@ -58,6 +58,7 @@ Game.prototype.restart = function() {
   this.score = {};
   this.timePassed = 0;
   createjs.Ticker.setFPS(60);
+  this.map.respawnMap();
   this.start();
   PubSub.publish('game.restart', {});
 

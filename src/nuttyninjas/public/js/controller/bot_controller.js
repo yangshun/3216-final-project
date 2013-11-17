@@ -17,8 +17,14 @@ var loadNinja = function() {
   var myninja = 'red';
 
   myname = 'BOT#'+Math.round(Math.random() * 100000);
-  var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
-  socket.emit('client-register', data);
+  var ninja_color = 'red';
+  //var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
+  UnaController.register(myroom, {name: myname, ninja: ninja_color}, function(res){
+    if (res.success) {
+      $(document).ready(loadBot);
+    }
+  });
+  //socket.emit('client-register', data)
 };
 
 var loadBot = function() {
@@ -28,11 +34,13 @@ var loadBot = function() {
 		var sign = Math.floor(Math.random() * 2);
 		delta += sign * Math.random() * Math.PI * 2 / 4;
 		var l = 1.0;
-		socket.emit('controller-input', { name: myname, key: 'move', angle: delta, length: l });
+    UnaController.sendToScreen('input', {key: 'move', angle: delta, length: l});
+		//socket.emit('controller-input', { name: myname, key: 'move', angle: delta, length: l });
 	}, 100);
 
 	setInterval(function() {
-		socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
+    UnaController.sendToScreen('input', { key: 'shoot', shoot: 1});
+		// socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
 	}, 10);
 };
 
@@ -42,9 +50,10 @@ var loadBot = function() {
 // 3. Arena replies ok and you're good to go
 // socket.emit('client-register', { type: 'controller', room: myroom, name: myname, ninja: 'fat ninja'});
 $(function() { loadNinja(); });
+/*
 socket.on('arena-controller-join', function(data) {
   if (data.success) {
     $(document).ready(loadBot);
   }
 });
-
+*/

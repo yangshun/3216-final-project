@@ -8,19 +8,27 @@ SoundManager = {
             {id: "plasma-sound", src: "/sound/plasma.mp3"},
             {id: "punch-sound", src: "/sound/punch.mp3"},
             {id: "bgm", src: "/sound/ROAM - Hold The Fort.mp3"}],
+  muted: false,
+  paused: false,
   play: function(id, opts) {
-    opts = opts || {};
-    createjs.Sound.play(id, opts);
+    if (!SoundManager.muted && !SoundManager.paused) {
+      opts = opts || {};
+      createjs.Sound.play(id, opts);
+    }
   },
   playBgm: function() {
-    if (!this.bgm) {
-      this.bgm = createjs.Sound.createInstance("bgm");
-      this.bgm.play({loop: -1});
-    } else {
-      this.bgm.resume();
+    console.log('playbgm', SoundManager.paused, SoundManager.muted);
+    if (!SoundManager.muted && !SoundManager.paused) {
+      if (!this.bgm) {
+        this.bgm = createjs.Sound.createInstance("bgm");
+        this.bgm.play({loop: -1});
+      } else {
+        this.bgm.resume();
+      }
     }
   },
   pauseBgm: function() {
+    console.log('pausebgm', SoundManager.paused, SoundManager.muted);
     if (this.bgm) {
       this.bgm.pause();
     }
@@ -28,10 +36,14 @@ SoundManager = {
 };
 
 PubSub.subscribe('game.start', function() {
-  SoundManager.playBgm();
+  SoundManager.paused = false;
+  if (!SoundManager.muted) {
+    SoundManager.playBgm();
+  }
 });
 
 PubSub.subscribe('game.pause', function() {
+  SoundManager.pased = true;
   SoundManager.pauseBgm();
 });
 
@@ -66,4 +78,14 @@ PubSub.subscribe('shuriken.rocket.shoot', function(data) {
 
 PubSub.subscribe('shuriken.snowflake.shoot', function(data) {
   SoundManager.play('frost-sound');
+});
+
+PubSub.subscribe('game.mute', function() {
+  SoundManager.muted = true;
+  SoundManager.pauseBgm();
+});
+
+PubSub.subscribe('game.unmute', function() {
+  SoundManager.muted = false;
+  SoundManager.playBgm();
 });

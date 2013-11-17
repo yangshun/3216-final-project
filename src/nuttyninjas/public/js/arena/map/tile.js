@@ -224,9 +224,10 @@ TexturedObstacleTile.prototype.destroy = function() {
 };
 
 TexturedObstacleTile.prototype.collide = function(other) {
-  if (other instanceof Shuriken) {
-    this.hitpoint -= other.damage;
-    this.view.alpha = this.hitpoint / 3 * 0.25 + 0.75;
+  if (!(other instanceof Ninja || other instanceof Tile)) {
+    // this.hitpoint -= other.damage;
+    // this.view.alpha = this.hitpoint / 3 * 0.25 + 0.75;
+    this.hitpoint = 0;
   }
 
   if (other instanceof Monster) {

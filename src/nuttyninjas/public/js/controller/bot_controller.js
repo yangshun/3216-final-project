@@ -14,10 +14,10 @@ if (path.length === 2 && path[1] !== '') {
 
 var loadNinja = function() {
   // Figure out what is checked and his name
-  var myninja = 'red';
+  var colors = ['red', 'yellow', 'green', 'blue'];
 
   myname = 'BOT#'+Math.round(Math.random() * 100000);
-  var ninja_color = 'red';
+  var ninja_color = _.sample(colors);
   //var data = { type: 'controller', room: myroom, name: myname, ninja: myninja};
   UnaController.register(myroom, {name: myname, ninja: ninja_color}, function(res){
     if (res.success) {

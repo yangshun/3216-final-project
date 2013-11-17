@@ -53,8 +53,9 @@ ShurikenGun.prototype.checkNovaDelay = function() {
 
 ShurikenGun.prototype.nova = function(number) {
   if (!this.checkNovaDelay()) return false;
+  var random_offset = Math.round(Math.random()*360);
   for (var i = 0; i < number; i++) {
-    var angle = toRadian(360.0 / number * i);
+    var angle = toRadian(360.0 / number * i + random_offset);
     this.makeShurikenNoDelay(angle);
   }
 }

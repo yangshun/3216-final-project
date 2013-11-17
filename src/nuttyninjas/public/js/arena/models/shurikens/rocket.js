@@ -11,7 +11,7 @@ Rocket.prototype = new Shuriken();
 Rocket.prototype.constructor = Rocket;
 
 Rocket.offsetX = function() {
-  return 40.0;
+  return 35.0;
 }
 
 Rocket.make = function(ninja, centerVector, angle) {

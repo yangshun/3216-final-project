@@ -1,3 +1,8 @@
+@font-face {
+    font-family: "Obelix";
+    src: url(../fonts/ObelixPro-cyr.ttf) format("truetype");
+}
+
 input {
 	width: 240px;
 	padding: 5px;
@@ -5,7 +10,7 @@ input {
 	text-align: center;
 	border: none;
 	outline: none;
-	font-family: "peachy-keen", sans-serif;
+	font-family: "peachy-keen", "Obelix", Tahoma, Helvetica, Arial, sans-serif;
 }
 
 input:focus {

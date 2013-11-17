@@ -195,6 +195,10 @@ Map.prototype.getRandomBlankTile = function() {
 
 Map.prototype.getRandomBlankPosition = function() {
   var emptyTile = this.getRandomBlankTile();
+  if (!emptyTile) {
+    // Spawn in the middle of the map
+    return new Vector2D(this.width/2, this.height/2);
+  }
   return new Vector2D(emptyTile.x+TILE_WIDTH/2, emptyTile.y+TILE_HEIGHT/2);
 }
 

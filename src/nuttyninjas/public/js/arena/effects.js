@@ -59,10 +59,17 @@ HealEffect.prototype.destroy = function() {
 // GameEndEffect Effect
 var GameEndEffect = function(cooldown_time) {
   Effect.call(this);
-  this.view = new createjs.Text("Game Over", "30px peachy-keen, Obelix", "#2DA1BA");
+
+  this.bg_cover = new createjs.Shape();  
+  this.bg_cover.graphics.beginFill("black").drawRect(0, 0, game.canvas.width, game.canvas.height);
+  this.bg_cover.alpha = 0.5;
+
+  game.stage.addChild(this.bg_cover);
+
+  this.view = new createjs.Text("Game Over", "30px peachy-keen, Obelix", "#fed61b");
   this.view.textAlign = "center";
   this.view.x = game.canvas.width/2.0;
-  this.view.y = 200;
+  this.view.y = game.canvas.height/2.0 - this.view.getBounds().height - 50;
   game.stage.addChild(this.view);
 
   this.timeleft = cooldown_time;
@@ -71,6 +78,7 @@ var GameEndEffect = function(cooldown_time) {
 GameEndEffect.prototype = new Effect();
 GameEndEffect.prototype.constructor = GameEndEffect;
 GameEndEffect.prototype.destroy = function() {
+  game.stage.removeChild(this.bg_cover);
   game.stage.removeChild(this.view);
   this.view = null;
   delete this;

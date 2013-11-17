@@ -12,7 +12,7 @@ Laser.prototype = new Shuriken();
 Laser.prototype.constructor = Laser;
 
 Laser.offsetX = function() {
-  return 40.0;
+  return 35.0;
 }
 
 Laser.make = function(ninja, centerVector, angle) {

@@ -17,7 +17,6 @@ SoundManager = {
     }
   },
   playBgm: function() {
-    console.log('playbgm', SoundManager.paused, SoundManager.muted);
     if (!SoundManager.muted && !SoundManager.paused) {
       if (!this.bgm) {
         this.bgm = createjs.Sound.createInstance("bgm");
@@ -28,7 +27,6 @@ SoundManager = {
     }
   },
   pauseBgm: function() {
-    console.log('pausebgm', SoundManager.paused, SoundManager.muted);
     if (this.bgm) {
       this.bgm.pause();
     }

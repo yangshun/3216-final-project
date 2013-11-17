@@ -119,7 +119,8 @@ Ninja.prototype.collide = function(anotherObject) {
       PubSub.publish('ninja.death', {
         killer :killer,
         victim: this,
-        weapon: anotherObject
+        weapon: anotherObject,
+        weapon_type: anotherObject._type
       });
     }
   }

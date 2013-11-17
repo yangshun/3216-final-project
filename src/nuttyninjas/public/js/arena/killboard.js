@@ -21,24 +21,35 @@ function Kill(data, x, y) {
     'rocket': {img: '/images/projectiles/rocket.png', w: 240, h: 86},
     'hulk_fist': {img: '/images/projectiles/hulk-fist.png', w: 300, h: 142},
     'snowflake': {img: '/images/projectiles/snowflake.png', w: 160, h: 160},
-    'Meme': {img: '/images/projectiles/meme-1.png', w: 400, h: 519}
+    'Meme': {img: '/images/projectiles/meme-1.png', w: 400, h: 519},
+    'monster': {img: '/images/monster.png', w: 600, h: 600}
   };
 
   var getNinjaView = function(color) {
-    console.log(color);
     var img = NinjaSchool.images[color] || NinjaSchool.images.yellow;
     if (!img) return false;
 
     var ninjaview = new createjs.Bitmap(img);
-    ninjaview.scaleX = data.killer.size / (500/2.0);
-    ninjaview.scaleY = data.killer.size / (500/2.0);
-    ninjaview.regX = 500 / 2;
-    ninjaview.regY = 500 / 2;
+    ninjaview.scaleX = data.killer.size / (250/2.0);
+    ninjaview.scaleY = data.killer.size / (250/2.0);
+    ninjaview.regX = 250 / 2;
+    ninjaview.regY = 250 / 2;
     return  ninjaview;
   };
-  
+
+  var getMonsterView = function() {
+    var img = MonsterHell.image;
+    if (!img) return false;
+
+    var monsterview = new createjs.Bitmap(img);
+    monsterview.scaleX = KBConfig.part_width / 600;
+    monsterview.scaleY = KBConfig.part_height / 600;
+    monsterview.regX = 600/2;
+    monsterview.regY = 600/2;
+    return  monsterview;
+  };
+
   var getWeaponView = function(type) {
-    console.log(type);
     var weapon = ShurikenImages[type];
     var img = weapon.img;
     var weaponview = new createjs.Bitmap(img);
@@ -57,11 +68,21 @@ function Kill(data, x, y) {
   bgview.graphics.beginFill('#ffffff').drawRect(-KBConfig.part_width/2,-KBConfig.part_height/2,KBConfig.width, KBConfig.height);
   bgview.alpha = 0.0;
 
-  var killerview = getNinjaView(data.killer.color);
+  var killerview;
+  if (data.killer._type == 'monster') {
+    killerview = getMonsterView();
+  } else {
+    killerview = getNinjaView(data.killer.color);
+  }
   killerview.x = 0;
   killerview.y = 0;
 
-  var victimview = getNinjaView(data.victim.color);
+  var victimview;
+  if (data.victim._type == 'Monster') {
+    victimview = getMonsterView();
+  } else {
+    victimview = getNinjaView(data.victim.color);
+  }
   victimview.x = 100;
   victimview.y = 0;
 
@@ -122,5 +143,13 @@ var KillBoard = (function() {
 })();
 
 PubSub.subscribe('ninja.death', function(msg, data) {
-  KillBoard.push(data);
+  if (data.killer._type !== 'monster' && data.victim._type !== 'monster') {
+    KillBoard.push(data);
+  }
 });
+
+var makekill = function() {
+  data = {killer: new Ninja(), victim: new Ninja(), weapon_type: 'shuriken'};
+  console.log(data);
+  KillBoard.push(data);
+};

@@ -93,6 +93,7 @@ Game.prototype.handleTick = function(ticker_data) {
 
     this.ninjas.map(function(s){s.tick();});
     this.monsters.map(function(m){m.tick();});
+    if (Math.random() < 0.005 && this.monsters.length === 0) { this.addMonster(); }
     this.shurikens.map(function(s){s.tick();});
     this.map.tick();
     TimedEventManager.tick();

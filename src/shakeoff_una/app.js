@@ -40,7 +40,7 @@ app.configure(function() {
 
 // Enable screenless
 una.enableServerMode();
-una.set('floodControlDelay', 300);
+una.set('floodControlDelay', 10);
 una.server_mode.registerInitState({apple: 0, android: 0});
 
 una.server_mode.registerOnControllerInput('game', function(UnaServer, una_header, payload) {

@@ -91,8 +91,7 @@ var BlinkEffect = function(ninja) {
   Effect.call(this);
   this.ninja = ninja;
   this.interval = 100;
-  this.oldCollide = ninja.collide;
-  ninja.collide = function(){};
+  ninja.state = 'invulnerable';
 
   var that = this;
   var BlinkEvent = function () {
@@ -105,7 +104,7 @@ var BlinkEffect = function(ninja) {
     } else {
       that.ninja.removeEffect(that);
       that.ninja.view.alpha = 1;
-      that.ninja.collide = that.oldCollide;
+      ninja.state = 'live';
       that.destroy();
     }
   };

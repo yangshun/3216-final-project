@@ -12,7 +12,6 @@ var KBConfig = {
 };
 
 function Kill(data, x, y) {
-  console.log(data);
   var ShurikenImages = {
     'shield' : {img: '/images/katana.png', w: 1969, h: 206},
     'shuriken': {img: '/images/projectiles/shuriken.png', w: 344, h: 344},
@@ -31,15 +30,14 @@ function Kill(data, x, y) {
     if (!img) return false;
 
     var ninjaview = new createjs.Bitmap(img);
-    ninjaview.scaleX = data.killer.size / (500/2.0);
-    ninjaview.scaleY = data.killer.size / (500/2.0);
-    ninjaview.regX = 500 / 2;
-    ninjaview.regY = 500 / 2;
+    ninjaview.scaleX = data.killer.size / (250/2.0);
+    ninjaview.scaleY = data.killer.size / (250/2.0);
+    ninjaview.regX = 250 / 2;
+    ninjaview.regY = 250 / 2;
     return  ninjaview;
   };
 
   var getMonsterView = function() {
-    console.log('monsterview');
     var img = MonsterHell.image;
     if (!img) return false;
 
@@ -149,3 +147,9 @@ PubSub.subscribe('ninja.death', function(msg, data) {
     KillBoard.push(data);
   }
 });
+
+var makekill = function() {
+  data = {killer: new Ninja(), victim: new Ninja(), weapon_type: 'shuriken'};
+  console.log(data);
+  KillBoard.push(data);
+};

@@ -15,11 +15,18 @@ if (path.length === 2 && path[1] !== '') {
 
 
 var loadNinja = function() {
-  // Figure out what is checked and his name
- 
+  // Check if there is a name in local storage
+  var name = window.localStorage.getItem('ninja-name');
+  if (name) {
+    $('#playername').val(name);
+  }
+
+  // Figure out what is checked and his name 
   $('.join-button').on('click', function() {
     var myname = $('#playername').val();
     if (myname) {
+      window.localStorage.setItem('ninja-name', myname);
+      
       var ninja_color;
       switch(mySwiper.activeIndex) {
         case 1:

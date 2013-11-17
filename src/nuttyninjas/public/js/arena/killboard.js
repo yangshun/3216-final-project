@@ -8,7 +8,8 @@ var KBConfig = {
   moveDelay: 100,
   stayDelay: 2000,
 
-  paddingTop: 50
+  paddingTop: 50,
+  namePaddingY: -10
 };
 
 function Kill(data, x, y) {
@@ -23,6 +24,14 @@ function Kill(data, x, y) {
     'snowflake': {img: '/images/projectiles/snowflake.png', w: 160, h: 160},
     'Meme': {img: '/images/projectiles/meme-1.png', w: 400, h: 519},
     'monster': {img: '/images/monster.png', w: 600, h: 600}
+  };
+
+  var getNinjaNameView = function(name) {
+    var view = new createjs.Text(name, '20px peachy-keenm Obelix', 'white');
+    view.textAlign = 'center';
+    name.x = 0;
+    name.y = 0;
+    return view;
   };
 
   var getNinjaView = function(color) {
@@ -77,6 +86,10 @@ function Kill(data, x, y) {
   killerview.x = 0;
   killerview.y = 0;
 
+  var killername = getNinjaNameView(data.killer.player.name);
+  killername.x = -KBConfig.part_width;
+  killername.y = KBConfig.namePaddingY;
+
   var victimview;
   if (data.victim._type == 'Monster') {
     victimview = getMonsterView();
@@ -86,13 +99,19 @@ function Kill(data, x, y) {
   victimview.x = 100;
   victimview.y = 0;
 
+  var victimname = getNinjaNameView(data.victim.player.name);
+  victimname.x = 100 + KBConfig.part_width;
+  victimname.y = KBConfig.namePaddingY;
+
   var weaponview = getWeaponView(data.weapon_type);
   weaponview.x = 50;
   weaponview.y = 0;
 
   view.addChild(bgview);
   view.addChild(killerview);
+  view.addChild(killername);
   view.addChild(victimview);
+  view.addChild(victimname);
   view.addChild(weaponview);
 
   this.view = view;
@@ -129,8 +148,6 @@ var KillBoard = (function() {
   var pop = function() {
     // Move everyone up
     kill_list.map(function(l) {
-      //l.view.y -= KBConfig.height;
-      //var target_y = l.view.y - KBConfig.height;
       var target_x = l.view.x + KBConfig.width;
       var tween = createjs.Tween.get(l.view, {override:true})
                     .to({x:target_x, alpha:0}, KBConfig.moveDelay);
@@ -150,6 +167,8 @@ PubSub.subscribe('ninja.death', function(msg, data) {
 
 var makekill = function() {
   data = {killer: new Ninja(), victim: new Ninja(), weapon_type: 'shuriken'};
+  data.killer.player = {name: 'p1'};
+  data.victim.player = {name: 'p2'};
   console.log(data);
   KillBoard.push(data);
 };

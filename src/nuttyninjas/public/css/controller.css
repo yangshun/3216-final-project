@@ -99,6 +99,34 @@ html.game-mode .controller-container {
 	position: relative;
 }
 
+.joystick-section .joystick-instructions {
+	position: absolute;
+	width: 90%;
+	left: 5%;
+	text-align: center;
+	font-size: 14px;
+}
+
+.controller-inner-container-portrait .joystick-section .joystick-instructions {
+	transform:rotate(90deg);
+	-ms-transform:rotate(90deg);
+	-webkit-transform:rotate(90deg);
+	-moz-transform:rotate(90deg);
+	width: 180px;
+	left: 80px;
+	top: 70px;
+}
+
+.controller-inner-container-landscape .joystick-section .joystick-instructions {
+	width: 100%;
+	margin-top: 40%;
+	left: 0;
+}
+
+.joystick-left {
+	background-color: #000;
+}
+
 .controller-inner-container-portrait .joystick-section {
 	width: 100%;
 	height: 50%;

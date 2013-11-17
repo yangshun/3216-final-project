@@ -52,7 +52,7 @@ var NinjaSchool = {
     name_view.x = 0;
     name_view.y = - ninja.size - 45;
     var bgw = name_view.getBounds().width + 10;
-    var bgh = name_view.getBounds().height;
+    var bgh = name_view.getBounds().height + 5;
     var name_bg_view = new createjs.Shape();
     name_bg_view.name = "name_bg";
     name_bg_view.graphics.beginFill("white").drawRect(-bgw / 2.0, -ninja.size - bgh - 24, bgw, bgh);

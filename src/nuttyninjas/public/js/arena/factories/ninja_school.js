@@ -57,15 +57,23 @@ var NinjaSchool = {
     name_view.textAlign = "center";
     name_view.x = 0;
     name_view.y = - ninja.size - 45;
-    var bgw = name_view.getBounds().width + 10;
-    var bgh = name_view.getBounds().height;
-    
+    name_view.outline = 1;
+
+    var name_view2 = new createjs.Text(data.player.name, "15px peachy-keen, Obelix", "black");
+    name_view2.name = "name";
+    name_view2.textAlign = "center";
+    name_view2.x = 0;
+    name_view2.y = - ninja.size - 45;
+
+    //var bgw = name_view.getBounds().width + 10;
+    //var bgh = name_view.getBounds().height;
     // var name_bg_view = new createjs.Shape();
     // name_bg_view.name = "name_bg";
     // name_bg_view.graphics.beginFill("white").drawRect(-bgw / 2.0, -ninja.size - bgh - 24, bgw, bgh);
     // name_bg_view.alpha = 0.75;
 
     // view.addChild(name_bg_view);
+    view.addChild(name_view2);
     view.addChild(name_view);
 
     ninja.body = body;

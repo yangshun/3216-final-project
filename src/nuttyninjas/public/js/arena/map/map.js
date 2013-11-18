@@ -366,9 +366,12 @@ Map.prototype.reskin = function(tileSet) {
     game.stage.addChild(m.view);
   });
 
-  game.ninjas.map(function(m) {
-    game.stage.removeChild(m.view);
-    game.stage.addChild(m.view);
+  game.ninjas.map(function(n) {
+    game.stage.removeChild(n.view);
+    game.stage.removeChild(n.ninja_shield.view);
+
+    game.stage.addChild(n.view);
+    game.stage.addChild(n.ninja_shield.view);
   });
 
   game.shurikens.map(function(m) {

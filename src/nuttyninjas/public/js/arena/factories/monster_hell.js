@@ -42,6 +42,11 @@ var MonsterHell = {
     hitpoint_view.graphics.beginFill("black").drawRect(-(monster.size*1), -monster.size-10, monster.size*2, 10);
     view.addChild(hitpoint_view);
 
+    var hitpoint_frame_view = new createjs.Shape();
+    hitpoint_frame_view.name = "hitpoint_frame";
+    hitpoint_frame_view.graphics.setStrokeStyle(1,"round").beginStroke("black").drawRect(-(monster.size*1), -monster.size-10, monster.size*2, 10);
+    view.addChild(hitpoint_frame_view);
+
     monster.body = body;
     monster.body.actor = monster;
     monster.view = view;

@@ -2,6 +2,9 @@ function ArenaController($scope, $timeout, $location) {
 
 	$scope.time_left = '';
 	$scope.current_url = window.location.origin.split(':').slice(0,2).join(':')+'/';
+  var terrains = ['jungle', 'snow'];
+  $scope.terrain_index = 0;
+
   var path_array = window.location.pathname.split('/')
   if(path_array.length <= 2){
     $scope.current_room = '';
@@ -38,6 +41,12 @@ function ArenaController($scope, $timeout, $location) {
     $scope.game_paused = !$scope.game_paused;
     game.pause();
   };
+
+  $scope.changeTerrain = function() {
+    $scope.terrain_index += 1;
+    $scope.terrain_index %= terrains.length;
+    game.map.reskin(terrains[terrain_index]);
+  }
 
   PubSub.subscribe('game.score.changed', function (msg, score) {
     $scope.radiant_score = score["red"] || 0;

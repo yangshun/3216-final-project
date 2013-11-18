@@ -26,7 +26,7 @@ Monster.prototype.destroy = function() {
 
 // Override collision callback
 Monster.prototype.collide = function(anotherObject) {
-  if (anotherObject instanceof Shuriken) {
+  if (!(anotherObject instanceof Soul) && (anotherObject instanceof Shuriken)) {
     this.hitPoint -= anotherObject.damage;
   }
 
@@ -114,7 +114,32 @@ Monster.prototype.tick = function() {
     this.view.getChildByName("body").rotation = toDegree(this.angle);
     _.each(this.effects, function(e) { e.tick(that); });
     this.move();
+    if (Math.random() < 0.008) this.nova(8);
   } else if (this.state === 'dead') {
     this.destroy();
   }
 };
+
+Monster.prototype.makeSoulNoDelay = function(angle) {
+  var cX = Soul.offsetX() * Math.cos(-angle) + this.size * Math.sin(-angle);
+  var cY = Soul.offsetX() * -Math.sin(-angle) + this.size * Math.cos(-angle);
+  var centerVector = new Vector2D(this.view.x + cX, this.view.y + cY);
+
+  var s = Soul.make(this, centerVector, angle);
+  game.addShuriken(s);
+  s.shoot();
+}
+
+Monster.prototype.checkNovaDelay = function() {
+  return true;
+}
+
+
+Monster.prototype.nova = function(number) {
+  if (!this.checkNovaDelay()) return false;
+  var random_offset = Math.round(Math.random()*360);
+  for (var i = 0; i < number; i++) {
+    var angle = toRadian(360.0 / number * i + random_offset);
+    this.makeSoulNoDelay(angle);
+  }
+}

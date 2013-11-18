@@ -10,6 +10,7 @@ var Monster = function() {
   this.state = 'live';
   this.effects = [];
   this.damageable = true;
+  this.damageModifier = 1.5;
   this._type = 'monster';
 };
 

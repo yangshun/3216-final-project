@@ -104,7 +104,7 @@ var NinjaSchool = {
             break;
         case 'blue':
             ninja.damageModifier = 0.9;
-            ninja.healthModifier = 1.2;
+            ninja.healthModifier = 1.4;
             ninja.speedModifier = 1.0;
             ninja.shieldModifier = 1.2;
             break;

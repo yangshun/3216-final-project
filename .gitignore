@@ -15,4 +15,5 @@ npm-debug.log
 node_modules
 
 src/nuttyninjas/deploytools/deploy
+src/shakeoff_una/deploytools/deploy
 *.pyc

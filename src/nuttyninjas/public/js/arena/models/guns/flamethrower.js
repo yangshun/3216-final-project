@@ -2,7 +2,7 @@ var Flamethrower = function(ninja, view) {
   ShurikenGun.call(this, ninja, view);
   this.shuriken = Flame;
   this.angleRange = 0.02;
-  this.delay = 500;
+  this.delay = 450;
 }
 
 Flamethrower.prototype = new ShurikenGun();

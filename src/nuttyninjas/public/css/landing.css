@@ -23,7 +23,7 @@ html, body {
 }
 
 .mobile-container { 
-	min-height: 460px;
+	min-height: 480px;
 	background-image: url('../images/backgrounds/jungle.jpg'); 
 	background-size: cover; 
 	display: none; 
@@ -113,6 +113,18 @@ html, body {
 
 .mobile-container .text-container {
 	/*top: 35%;*/
+}
+
+.join-button {
+	text-align: center;
+	background-color: #fed61b;
+	color: #000;
+	padding: 10px 0;
+	border-radius: 10px;
+	width: 240px;
+	box-shadow: 0px 1px 0px rgba(0, 0, 0, 1);
+	margin: 10px auto;
+	text-shadow: 0px 1px 0px rgba(255, 255, 255, 1);
 }
 
 .text-container h2 {

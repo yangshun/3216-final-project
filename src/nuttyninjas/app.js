@@ -38,6 +38,34 @@ app.get('/join/*', routes.controllerWithRoom);
 app.get('/bot', routes.botcontrollerWithRoom);
 app.get('/bot/*', routes.botcontrollerWithRoom);
 
+
+app.get('/trololol/kick/:id', function(req, res) {
+  var socket = una.io.sockets.socket(req.params.id);
+  if (socket) {
+    socket.disconnect();
+    return res.redirect('/trololol');
+  }
+  res.send(false);
+});
+
+app.get('/trololol', function(req, res) {
+  var out = {};
+  for (var room_id in una.io.sockets.manager.rooms) {
+    if (room_id == '') {
+      continue;
+    }
+    var sockets = una.io.sockets.clients(room_id.substring(1));
+    var clients = [];
+    for (var i=0;i<sockets.length;i++) {
+      clients.push(sockets[i].una);
+    }
+    out[room_id] = clients;
+  }
+
+  return res.render('admin', {clients: JSON.stringify(out)});
+
+});
+
 var allowCrossDomain = function(req, res, next) {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');

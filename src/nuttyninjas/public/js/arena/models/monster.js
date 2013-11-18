@@ -26,7 +26,7 @@ Monster.prototype.destroy = function() {
 
 // Override collision callback
 Monster.prototype.collide = function(anotherObject) {
-  if (!(anotherObject instanceof Soul) && (anotherObject instanceof Shuriken)) {
+  if (anotherObject instanceof Shuriken && anotherObject.ninja) {
     this.hitPoint -= anotherObject.damage;
   }
 
@@ -120,12 +120,12 @@ Monster.prototype.tick = function() {
   }
 };
 
-Monster.prototype.makeSoulNoDelay = function(angle) {
-  var cX = Soul.offsetX() * Math.cos(-angle) + this.size * Math.sin(-angle);
-  var cY = Soul.offsetX() * -Math.sin(-angle) + this.size * Math.cos(-angle);
+Monster.prototype.makeFlameNoDelay = function(angle) {
+  var cX = Flame.offsetX() * Math.cos(-angle) + this.size * Math.sin(-angle);
+  var cY = Flame.offsetX() * -Math.sin(-angle) + this.size * Math.cos(-angle);
   var centerVector = new Vector2D(this.view.x + cX, this.view.y + cY);
 
-  var s = Soul.make(this, centerVector, angle);
+  var s = Flame.make(this, centerVector, angle, "monster");
   game.addShuriken(s);
   s.shoot();
 }
@@ -140,6 +140,6 @@ Monster.prototype.nova = function(number) {
   var random_offset = Math.round(Math.random()*360);
   for (var i = 0; i < number; i++) {
     var angle = toRadian(360.0 / number * i + random_offset);
-    this.makeSoulNoDelay(angle);
+    this.makeFlameNoDelay(angle);
   }
 }

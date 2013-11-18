@@ -52,7 +52,12 @@ Monster.prototype.collide = function(anotherObject) {
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
       var deathEffect = new DeathEffect(this);
-      PubSub.publish('monster.death', { killer : anotherObject.ninja, victim: this });
+      PubSub.publish('monster.death', {
+        killer: anotherObject.ninja,
+        victim: this,
+        x: this.view.x,
+        y: this.view.y
+      });
     }
   }
 };

@@ -52,6 +52,11 @@ var NinjaSchool = {
     hitpoint_view.graphics.beginFill(this.color_hex[data.color]).drawRect(-(ninja.size*1.5), -ninja.size-20, ninja.size*3, 10);
     view.addChild(hitpoint_view);
 
+    var hitpoint_frame_view = new createjs.Shape();
+    hitpoint_frame_view.name = "hitpoint_frame";
+    hitpoint_frame_view.graphics.setStrokeStyle(1,"round").beginStroke(this.color_hex[data.color]).drawRect(-(ninja.size*1.5), -ninja.size-20, ninja.size*3, 10);
+    view.addChild(hitpoint_frame_view);
+
     var name_view = new createjs.Text(data.player.name, "15px peachy-keen, Obelix", "white");
     name_view.name = "name";
     name_view.textAlign = "center";

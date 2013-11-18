@@ -15,16 +15,16 @@ block content
   div(class="landing-container mobile-container")
     img(class="logo-img" src="/images/logo.png")
     div(class="text-container")
+      //- h5
+      //-   a(href="/join/", class="webapp-link") QUICK JOIN
+      //- p(class="white") - OR -
       h5
-        a(href="/join/", class="webapp-link") QUICK JOIN
-      p(class="white") - OR -
-      h5
-        a(onclick="revealInput()", class="to-be-hidden") JOIN A ROOM
-        div(class="room-section", style="display:none")
-          p Enter the room number<br/> to join the game
+        //- a(onclick="revealInput()", class="to-be-hidden") JOIN A ROOM
+        div(class="room-section")
+          p Enter the room number<br/> of the game to join
           input(id="room-number")
-          a(onclick="joinRoom()") JOIN!
-        p(class="white to-be-hidden") <br/>Please lock your phone's orientation to Portrait mode before playing
+          p(class="join-button", onclick="joinRoom()") JOIN!
+          p(class="white to-be-hidden") <br/>Please lock your phone's orientation to Portrait mode before playing
   script
     $(document).ready(function() {
       entryAnimation();
@@ -69,5 +69,10 @@ block content
     }
 
     function joinRoom() {
-      window.location.href = '/join/' + $('#room-number').val();
+      var room_num = $('#room-number').val();
+      if (room_num) {
+        window.location.href = '/join/' + room_num;
+      } else {
+        alert('Please enter a room number!');
+      }
     }

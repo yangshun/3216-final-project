@@ -94,21 +94,25 @@ var NinjaSchool = {
             ninja.damageModifier = 1.2;
             ninja.healthModifier = 0.9;
             ninja.speedModifier = 1.1;
+            ninja.shieldModifier = 1.0;
             break;
         case 'yellow':
             ninja.damageModifier = 1.1;
             ninja.healthModifier = 0.9;
             ninja.speedModifier = 1.2;
+            ninja.shieldModifier = 0.9;
             break;
         case 'blue':
             ninja.damageModifier = 0.9;
             ninja.healthModifier = 1.4;
             ninja.speedModifier = 1.0;
+            ninja.shieldModifier = 1.2;
             break;
         case 'green':
             ninja.damageModifier = 1.0;
-            ninja.healthModifier = 1.4;
+            ninja.healthModifier = 1.5;
             ninja.speedModifier = 0.9;
+            ninja.shieldModifier = 1.1;
             break;
         default: break;
     }
@@ -116,6 +120,7 @@ var NinjaSchool = {
     ninja.maxHitPoint *= ninja.healthModifier;
     ninja.hitPoint = ninja.maxHitPoint;
     ninja.baseSpeed *= ninja.speedModifier;
+    ninja.ninja_shield.damage *= ninja.shieldModifier;
     ninja.speed = ninja.baseSpeed;
 
     return ninja;

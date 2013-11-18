@@ -13,6 +13,7 @@ var Shield = function(x, y, body, bitmapView) {
   this._type = 'shield';
 
   this.damageable = true;
+  this.damage = 0.5;
 };
 
 Shield.prototype = new CollidableObject();

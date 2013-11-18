@@ -104,7 +104,7 @@ Ninja.prototype.collide = function(anotherObject) {
 
   if (anotherObject instanceof Shield) {
     if (anotherObject.ninja.team !== this.team || game.friendlyFire) {
-      this.hitPoint -= 0.5;
+      this.hitPoint -= anotherObject.ninja.ninja_shield.damage;
     }
   }
 

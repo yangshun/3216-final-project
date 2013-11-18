@@ -10,7 +10,7 @@ var Game = function() {
   this.roundTime = 300;
   this.cooldownTime = 5;
   this.score = {};
-  this.friendlyFire = false;
+  this.friendlyFire = true;
 
   this.box = new b2World(new b2Vec2(0, 0), true);
   var listener = new b2ContactListener();

@@ -37,8 +37,9 @@ var allowCrossDomain = function(req, res, next) {
 var AccessLog = (function() {
   var log = {};
   var blacklist = {};
-  var blacklistTime = 1000 * 60 * 5;
-  var epsilon = 5;
+  var blacklistTime = 1000 * 60 * 5; // Time a person spends in bl once blacklisted
+  var epsilon = 5; // 1=Only very stable intervals, 10=Tolerate differences of 10 ms
+  var runway = 10; // Total number of intervals collected before checking
   
   var inBlackList = function(id, time) {
     if(blacklist[id]) {
@@ -51,16 +52,28 @@ var AccessLog = (function() {
     return false;
   };
 
-  var periodic = function(arr) {
-    work = arr.slice(0,10);
-    var i, j;
-    for (i=9;i>0;i--) {
-      for (j=0;j<i;j++) {
-        work[j] = Math.abs(work[j+1]-work[j]);
-      }
+  var periodicHelper = function(arr, n) {
+    for (j=0;j<n;j++) {
+      arr[j] = Math.abs(arr[j+1]-arr[j]);
     }
-    console.log('last diff : ',Math.abs(work[0]));
-    return Math.abs(work[0]) < epsilon;
+  };
+
+  var periodic = function(arr) {
+    var i;
+    for (i=runway-1;i>0;i--) {
+      periodicHelper(arr, i);
+    }
+  };
+  
+  var isPeriodic = function(arr, id) {
+    var precalculated = log[id].precalculated;
+    if (precalculated) {
+      periodicHelper(arr, runway-1); // Do a lot less work if calculated b4
+    } else {
+      periodic(arr);
+      log[id].precalculated = true;
+    }
+    return Math.abs(arr[0]) < epsilon;
   };
 
   // Return true if is bot
@@ -70,13 +83,14 @@ var AccessLog = (function() {
     // log this one
     if (log[id] !== undefined) {
       log[id].intervals.unshift(time-log[id].last);
-      log[id].intervals.splice(10); // Only rmb last 10 intervals
+      log[id].intervals.splice(runway);
       log[id].last = time;
     } else {
-      log[id] = {intervals:[], last:time};
+      log[id] = {intervals:[], last:time, precalculated:false};
     }
-    if (log[id].intervals.length == 10) {
-      var isFlooder =  periodic(log[id].intervals);
+
+    if (log[id].intervals.length == runway) {
+      var isFlooder =  isPeriodic(log[id].intervals, id);
       blacklist[id] = time;
     }
     return false;
@@ -94,7 +108,7 @@ una.set('floodControlDelay', 10);
 una.server_mode.registerInitState({apple: 0, android: 0});
 
 una.server_mode.registerOnControllerInput('game', function(UnaServer, una_header, payload) {
-  var isFlooding = AccessLog.checkFlood(payload.toString());
+  var isFlooding = AccessLog.checkFlood(una_header.id);
   if (!isFlooding) {
     var state = UnaServer.getState();
     state[payload]++;

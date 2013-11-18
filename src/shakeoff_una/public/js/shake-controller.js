@@ -9,12 +9,13 @@ function ShakeController($scope, $timeout) {
   var choice = '';
 
   $scope.choose_brand = function(type) {
-    UnaController.register('', type, function(res) {
+    UnaController.register('', {type: type, count: 0}, function(res) {
       if (res.success) {
         $scope.chosen_image = '/images/' + type + '-logo.png';
         $scope.mobile_landing_container.hidden = true;
         $scope.mobile_shaking_container.hidden = false;
         choice = type;
+        $scope.$apply();
       }
     });
   };

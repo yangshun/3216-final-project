@@ -1,6 +1,5 @@
 var MonsterHell = {
-  image: "/images/monster.png",
-  spriteimage: "/images/fire-spirit.png",
+  spriteimage: "/images/monsters/fire-spirit.png",
 
   // data: {position: Vector2D, player: Player, color: String}
   makeMonster: function(data) {

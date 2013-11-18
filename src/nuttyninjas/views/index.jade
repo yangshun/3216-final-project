@@ -9,7 +9,7 @@ block content
     div(class="katana katana-right")
     div(class="text-container")
       h3
-        a(href="/play/") Host Game
+        a(onclick="hostGamePressed()") Host Game
       //- h3
         a View Games
   div(class="landing-container mobile-container")
@@ -61,6 +61,11 @@ block content
     function revealInput() {
       $('.to-be-hidden').hide();
       $('.room-section').show();
+    }
+
+    function hostGamePressed() {
+      var room_id = Math.floor(Math.random() * 1000);
+      window.location.href = '/play/' + room_id; 
     }
 
     function joinRoom() {

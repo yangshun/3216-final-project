@@ -74,7 +74,7 @@ Ninja.prototype.collide = function(anotherObject) {
     if (anotherObject.ninja == this) {
       // Anything we want to happen here?
     } else {
-      if (anotherObject.ninja.team !== this.team || game.friendlyFire) {
+      if (anotherObject instanceof Soul || anotherObject.ninja.team !== this.team || game.friendlyFire) {
         this.hitPoint -= anotherObject.damage;
       }
     }
@@ -115,7 +115,8 @@ Ninja.prototype.collide = function(anotherObject) {
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
       var killer;
-      if (anotherObject instanceof Monster) { killer = anotherObject; } 
+      if (anotherObject instanceof Monster) { killer = anotherObject; }
+      else if (anotherObject instanceof Soul) { killer = anotherObject.monster; } 
       else { killer = anotherObject.ninja; }
       PubSub.publish('ninja.death', {
         killer :killer,

@@ -1,5 +1,5 @@
 function getPath(type, num) {
-  return MapConfig.tiles[type] + MapConfig.tiles[num].image;
+  return MapConfig.tiles[type].path + MapConfig.tiles[type][num].image;
 }
 
 var Map = function() {
@@ -17,11 +17,12 @@ var Map = function() {
     guntile: 0,
     novatile: 0
   };
+  this.tileSet = 'jungle';  // 'jungle' or 'snow'
 
-  this.bgpath = '/images/terrain/jungle/jungle2.jpg';
+  this.bgpath = getPath(this.tileSet, 'bg');
   this.background = new createjs.Bitmap(this.bgpath);
-  this.background.scaleX = game.canvas.width/1500;
-  this.background.scaleY = game.canvas.height/844;
+  this.background.scaleX = game.canvas.width/MapConfig.tiles[this.tileSet].bg.w;
+  this.background.scaleY = game.canvas.height/MapConfig.tiles[this.tileSet].bg.h;
   game.stage.addChild(this.background);
 
 
@@ -88,8 +89,8 @@ Map.prototype.generateMap = function(id, opts, dist, tol) {
         var type = 4;
         //var type = Math.floor(Math.random()*6)+1;
         var r = Math.round(Math.random() * 4) * 90;
-        var t = new TexturedObstacleTile(j,i,r,getPath('terrain', type), MapConfig.tiles[type]);
-        t.initShape(MapConfig.tiles[type].w, MapConfig.tiles[type].h);
+        var t = new TexturedObstacleTile(j,i,r,getPath(this.tileSet, type), MapConfig.tiles[this.tileSet][type]);
+        t.initShape(MapConfig.tiles[this.tileSet][type].w, MapConfig.tiles[this.tileSet][type].h);
         t.initBody();
         this.destructible.push(t);
       } else {
@@ -114,8 +115,8 @@ Map.prototype.generateRandomMap = function() {
       } else if (Math.random() < 0.05) {
         var type = Math.round(Math.random() * 5) + 1;
         var r = Math.round(Math.random() * 4) * 90;
-        var t = new TexturedObstacleTile(j,i,r,getPath('terrain', type), MapConfig.tiles[type]);
-        t.initShape(MapConfig.tiles[type].w, MapConfig.tiles[type].h);
+        var t = new TexturedObstacleTile(j,i,r,getPath('jungle', type), MapConfig.tiles[this.tileSet][type]);
+        t.initShape(MapConfig.tiles[this.tileSet][type].w, MapConfig.tiles[this.tileSet][type].h);
         t.initBody();
         this.destructible.push(t);
       } else {
@@ -292,11 +293,11 @@ Map.prototype.generatePowerup = function(x, y, type) {
   switch (type) {
     case 'healthtile':
       p = new HealthTile(x, y, 0, getPath('powerup', 'health'));
-      p.initShape(MapConfig.tiles['health'].w, MapConfig.tiles['health'].h);
+      p.initShape(MapConfig.tiles.powerup['health'].w, MapConfig.tiles.powerup['health'].h);
       break;
     case 'speedtile':
       p = new SpeedTile(x, y, 0, getPath('powerup', 'speed'));
-      p.initShape(MapConfig.tiles['speed'].w, MapConfig.tiles['speed'].h);
+      p.initShape(MapConfig.tiles.powerup['speed'].w, MapConfig.tiles.powerup['speed'].h);
       break;
     case 'guntile':
       p = new GunTile(x, y, 0);
@@ -304,7 +305,7 @@ Map.prototype.generatePowerup = function(x, y, type) {
       break;
     case 'novatile':
       p = new NovaTile(x, y, 0, getPath('powerup', 'nova'));
-      p.initShape(MapConfig.tiles['nova'].w, MapConfig.tiles['nova'].h);
+      p.initShape(MapConfig.tiles.powerup['nova'].w, MapConfig.tiles.powerup['nova'].h);
       break;
   }
   p.initBody();

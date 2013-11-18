@@ -18,7 +18,7 @@ var Map = function() {
     novatile: 0
   };
 
-  this.bgpath = '/images/terrain/jungle/jungle2.jpg';
+  this.bgpath = '/images/terrain/snow/snowfield.jpg';
   this.background = new createjs.Bitmap(this.bgpath);
   this.background.scaleX = game.canvas.width/1500;
   this.background.scaleY = game.canvas.height/844;

@@ -124,7 +124,10 @@ Monster.prototype.tick = function() {
     this.view.getChildByName("body").rotation = toDegree(this.angle+Math.PI/2);
     _.each(this.effects, function(e) { e.tick(that); });
     this.move();
-    if (Math.random() < 0.008) this.nova(8);
+
+    var prob = 0.008;
+    if (this.hitPoint < this.maxHitPoint / 2.0) prob = 0.012;
+    if (Math.random() < prob) this.nova(8);
   } else if (this.state === 'dead') {
     this.destroy();
   }

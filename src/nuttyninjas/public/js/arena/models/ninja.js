@@ -121,7 +121,7 @@ Ninja.prototype.collide = function(anotherObject) {
       this.state = 'dead'; 
       var killer;
       if (anotherObject instanceof Monster) { killer = anotherObject; }
-      else if (anotherObject instanceof Flame) { killer = anotherObject.monster; } 
+      else if (anotherObject instanceof Flame) { killer = anotherObject.monster || anotherObject.ninja; } 
       else { killer = anotherObject.ninja; }
       PubSub.publish('ninja.death', {
         killer :killer,
@@ -258,4 +258,17 @@ Ninja.prototype.tick = function() {
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
   }
+};
+
+Ninja.prototype.reskin = function(tileSet) {
+  game.stage.removeChild(this.view);
+  game.stage.removeChild(this.ninja_shield.view);
+  var nameStroke = this.view.getChildByName('nameStroke');
+  var c = nameStroke.color;
+  var name = this.view.getChildByName('name');
+  nameStroke.color = name.color;
+  name.color = c;
+
+  game.stage.addChild(this.view);
+  game.stage.addChild(this.ninja_shield.view);
 };

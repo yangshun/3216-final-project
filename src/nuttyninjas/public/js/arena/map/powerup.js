@@ -24,8 +24,8 @@ Powerup.prototype.initShape = function(w, h) {
   this.view = new createjs.Bitmap(this.img);
   this.view.scaleX = TILE_WIDTH / this.img_width;
   this.view.scaleY = TILE_HEIGHT / this.img_height;
-  this.view.regX = 0; //this.img_width / 2;
-  this.view.regY = 0; //this.img_height / 2;
+  this.view.regX = this.img_width / 2;
+  this.view.regY = this.img_height / 2;
   this.view.x = this.x;
   this.view.y = this.y;
 
@@ -61,6 +61,14 @@ Powerup.prototype.collide = function(anotherObject) {
 Powerup.prototype.destroy = function() {
   game.map.removeTile(this);
 };
+
+Powerup.prototype.tick = function() {
+  if (this.dead) {
+    this.destroy();
+  }
+  this.view.rotation += 1;
+};
+
 
 // Gun Pickup Tiles
 
@@ -113,7 +121,7 @@ GunTile.prototype.tick = function() {
 
 // HealthTile
 
-var HealthTile = function(x, y, r, img) {
+var HealthTile = function(x, y, r, img, heal) {
   Powerup.call(this);
   this.x = x * TILE_WIDTH;
   this.y = y * TILE_HEIGHT;
@@ -122,7 +130,7 @@ var HealthTile = function(x, y, r, img) {
   this.rotation = r || 0; // Rotation in degrees
   this.img = img;
 
-  this.heal = 30;
+  this.heal = heal || 30;
 
   this.view = null;
   this.body = null;

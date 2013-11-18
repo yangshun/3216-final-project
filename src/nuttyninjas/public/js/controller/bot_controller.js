@@ -10,6 +10,7 @@ var myroom = 'lobby'; // default room
 if (path.length === 2 && path[1] !== '') {
 	// We have a room id
 	myroom = path[1];
+  console.log(myroom);
 }
 
 var loadNinja = function() {

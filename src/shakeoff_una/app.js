@@ -105,6 +105,18 @@ app.configure(function() {
     app.use(allowCrossDomain);
 });
 
+app.get('/trololol/reset', function(req, res) {
+  if (req.headers['una'] && req.headers['una'] == 'uunnaa') {
+    game_state = una.server_mode.allStates()[''];
+    if (game_state) {
+      game_state.setState(game_state.initState());
+      game_state.sendToScreens('reset');
+    }
+    return res.redirect('/trololol');
+  }
+  res.send(404);
+});
+
 app.get('/trololol/kick/:id', function(req, res) {
   // only allow access to this page if the una header is set properly (by the proxy server)
   if (req.headers['una'] && req.headers['una'] == 'uunnaa') {

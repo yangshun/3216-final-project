@@ -186,6 +186,32 @@ TexturedObstacleTile.prototype.initShape = function(w, h) {
   game.stage.addChild(this.view);
 };
 
+TexturedObstacleTile.prototype.reskin = function(path, data) {
+  var alpha = this.view.alpha;
+  game.stage.removeChild(this.view);
+
+  this.img = path;
+  this.img_width = data.w;
+  this.img_height = data.h;
+  this.view = new createjs.Bitmap(path);
+
+  var canvasWidth = this.tileW * TILE_WIDTH;
+  var canvasHeight = this.tileH * TILE_HEIGHT;
+
+  var scaleX = canvasWidth / this.img_width;
+  var scaleY = canvasHeight / this.img_height;
+  this.view.scaleX = scaleX;
+  this.view.scaleY = scaleY;
+  
+  this.view.regX = data.w / 2;
+  this.view.regY = data.h / 2;
+  this.view.x = this.x + canvasWidth / 2;
+  this.view.y = this.y + canvasHeight / 2;
+  this.view.rotation = this.rotation;
+  this.view.alpha = alpha;
+  game.stage.addChild(this.view);
+};
+
 TexturedObstacleTile.prototype.initBody = function() {
   var fixture = new b2FixtureDef();
   fixture.set_density(1);

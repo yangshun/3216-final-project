@@ -29,9 +29,9 @@ function ShakeController($scope, $timeout) {
     }, 500);
   };
   
-  var hardest_shake = 0;
+  var hardest_shake = 40;
   // Set tolerance to 1=hardest shake,0=anyhow shake
-  var tolerance = 0.75;
+  var tolerance = 0.80;
   var handle_shake = function(event_data) {
     var a = event_data.accelerationIncludingGravity;
     var curr_shake = Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z);

@@ -210,7 +210,12 @@ var KillerEffect = function(ninja) {
 };
 
 KillerEffect.randomMessage = function() {
-  var msg = ["Killing spree", "I kicked your ass", "Die noob!"];
+  var msg = ["That's what she said", "You suck", "Call me maybe",
+             "I kicked your ass", "This is NINJA!",
+             "Come back next year", "I am your father",
+             "Argh be bach",
+             "Who's your Daddy?", "!@#$", "Me Gusta",
+             "Die noob!", "RAMPAGE!", "PWNED"];
   return _.sample(msg);
 }
 KillerEffect.prototype = new Effect();

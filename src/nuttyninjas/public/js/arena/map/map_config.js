@@ -27,7 +27,8 @@ MapConfig.tiles = {
   image: '/images/',
   powerup:{
     path: '/images/powerups/',
-    health: {image:'first-aid-kit.png', w: 300, h: 256},
+    health: {image:'first-aid-kit.png', w: 322, h: 340},
+    healthmini: {image:'first-aid-kit-mini.png', w:168, h:165},
     speed: {image:'haste-boots.png', w: 300, h: 300},
     nova: {image: 'nova.png', w:256, h:256}
   }

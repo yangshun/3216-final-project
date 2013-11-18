@@ -121,7 +121,7 @@ GunTile.prototype.tick = function() {
 
 // HealthTile
 
-var HealthTile = function(x, y, r, img) {
+var HealthTile = function(x, y, r, img, heal) {
   Powerup.call(this);
   this.x = x * TILE_WIDTH;
   this.y = y * TILE_HEIGHT;
@@ -130,7 +130,7 @@ var HealthTile = function(x, y, r, img) {
   this.rotation = r || 0; // Rotation in degrees
   this.img = img;
 
-  this.heal = 30;
+  this.heal = heal || 30;
 
   this.view = null;
   this.body = null;

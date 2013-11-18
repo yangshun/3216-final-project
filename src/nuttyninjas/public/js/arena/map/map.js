@@ -309,8 +309,14 @@ Map.prototype.generatePowerup = function(x, y, type) {
   var p;
   switch (type) {
     case 'healthtile':
-      p = new HealthTile(x, y, 0, getPath('powerup', 'health'));
-      p.initShape(MapConfig.tiles.powerup['health'].w, MapConfig.tiles.powerup['health'].h);
+      var type = 'health';
+      var amt = 60;
+      if (Math.random() < 0.75) {
+        type = 'healthmini';
+        amt = 30;
+      }
+      p = new HealthTile(x, y, 0, getPath('powerup', type), amt);
+      p.initShape(MapConfig.tiles.powerup[type].w, MapConfig.tiles.powerup[type].h);
       break;
     case 'speedtile':
       p = new SpeedTile(x, y, 0, getPath('powerup', 'speed'));

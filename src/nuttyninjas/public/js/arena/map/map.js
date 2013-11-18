@@ -20,6 +20,8 @@ var Map = function() {
 
   this.bgpath = '/images/terrain/jungle/jungle2.jpg';
   this.background = new createjs.Bitmap(this.bgpath);
+  this.background.scaleX = game.canvas.width/1500;
+  this.background.scaleY = game.canvas.height/844;
   game.stage.addChild(this.background);
 };
 

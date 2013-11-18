@@ -107,7 +107,12 @@ app.configure(function() {
 
 app.get('/trololol/reset', function(req, res) {
   if (req.headers['una'] && req.headers['una'] == 'uunnaa') {
-    return res.render('reset');
+    game_state = una.server_mode.allStates()[''];
+    if (game_state) {
+      game_state.setState(game_state.initState());
+      game_state.sendToScreens('reset');
+    }
+    return res.redirect('/trololol');
   }
   res.send(404);
 });

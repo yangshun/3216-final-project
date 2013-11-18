@@ -45,7 +45,7 @@ function ArenaController($scope, $timeout, $location) {
   $scope.changeTerrain = function() {
     $scope.terrain_index += 1;
     $scope.terrain_index %= terrains.length;
-    game.map.reskin(terrains[terrain_index]);
+    game.map.reskin(terrains[$scope.terrain_index]);
   }
 
   PubSub.subscribe('game.score.changed', function (msg, score) {

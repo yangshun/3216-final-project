@@ -5,7 +5,8 @@ var GunFactory = {
             'juggernaut': '/images/cannons/juggernaut.png',
             'laser': '/images/cannons/laser.png',
             'plasma': '/images/cannons/plasma.png',
-            'meme': '/images/cannons/meme.png'},
+            'meme': '/images/cannons/meme.png',
+            'flamethrower': '/images/cannons/flamethrower.png'},
 
   // data: {position: Vector2D, player: Player, color: String}
   makeGun: function(data) {
@@ -45,6 +46,9 @@ var GunFactory = {
         break;
       case 'meme':
         gun = new MemeGun(data.ninja, gun_view);
+        break;
+      case 'flamethrower':
+        gun = new Flamethrower(data.ninja, gun_view);
         break;
       default:
         gun = new ShurikenGun(data.ninja, gun_view);

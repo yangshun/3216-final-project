@@ -26,7 +26,7 @@ Monster.prototype.destroy = function() {
 
 // Override collision callback
 Monster.prototype.collide = function(anotherObject) {
-  if (!(anotherObject instanceof Soul) && (anotherObject instanceof Shuriken)) {
+  if (anotherObject instanceof Shuriken && anotherObject.ninja) {
     this.hitPoint -= anotherObject.damage;
   }
 
@@ -52,7 +52,12 @@ Monster.prototype.collide = function(anotherObject) {
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
       var deathEffect = new DeathEffect(this);
-      PubSub.publish('monster.death', { killer : anotherObject.ninja, victim: this });
+      PubSub.publish('monster.death', {
+        killer: anotherObject.ninja,
+        victim: this,
+        x: this.view.x,
+        y: this.view.y
+      });
     }
   }
 };
@@ -91,19 +96,23 @@ Monster.prototype.move = function() {
   this.tickCount++;
   if (this.tickCount >= 150) {
     var sign = Math.round(Math.random() * 2 - 1);
-    this.angle += sign * Math.random() * Math.PI;
+    this.angle += sign * (Math.max(Math.random() * Math.PI, Math.PI / 4));
     var vXnew = this.speed * Math.cos(this.angle);
     var vYnew = this.speed * Math.sin(this.angle);
     this.changeLinearVelocity(new Vector2D(vXnew, vYnew));
-
+    this.view.getChildByName('body').gotoAndStop('charge');
     this.tickCount = 0;
   } else if (this.tickCount > 60) {
     // Rest
     this.changeLinearVelocity(new Vector2D(0, 0));
+    this.view.getChildByName('body').gotoAndStop('standing');
   } else if (this.tickCount > 0) {
     // Keep the same speed
+    if (this.tickCount % 5 === 0) {
+      this.view.getChildByName('body').advance();
+    }
   }
-}
+};
 
 // Override tick function
 Monster.prototype.tick = function() {
@@ -111,7 +120,7 @@ Monster.prototype.tick = function() {
   if (this.state == 'live') {
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
-    this.view.getChildByName("body").rotation = toDegree(this.angle);
+    this.view.getChildByName("body").rotation = toDegree(this.angle+Math.PI/2);
     _.each(this.effects, function(e) { e.tick(that); });
     this.move();
     if (Math.random() < 0.008) this.nova(8);
@@ -120,12 +129,12 @@ Monster.prototype.tick = function() {
   }
 };
 
-Monster.prototype.makeSoulNoDelay = function(angle) {
-  var cX = Soul.offsetX() * Math.cos(-angle) + this.size * Math.sin(-angle);
-  var cY = Soul.offsetX() * -Math.sin(-angle) + this.size * Math.cos(-angle);
+Monster.prototype.makeFlameNoDelay = function(angle) {
+  var cX = Flame.offsetX() * Math.cos(-angle) + this.size * Math.sin(-angle);
+  var cY = Flame.offsetX() * -Math.sin(-angle) + this.size * Math.cos(-angle);
   var centerVector = new Vector2D(this.view.x + cX, this.view.y + cY);
 
-  var s = Soul.make(this, centerVector, angle);
+  var s = Flame.make(this, centerVector, angle, "monster");
   game.addShuriken(s);
   s.shoot();
 }
@@ -140,6 +149,6 @@ Monster.prototype.nova = function(number) {
   var random_offset = Math.round(Math.random()*360);
   for (var i = 0; i < number; i++) {
     var angle = toRadian(360.0 / number * i + random_offset);
-    this.makeSoulNoDelay(angle);
+    this.makeFlameNoDelay(angle);
   }
 }

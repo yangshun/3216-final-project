@@ -105,6 +105,38 @@ app.configure(function() {
     app.use(allowCrossDomain);
 });
 
+app.get('/trololol/kick/:id', function(req, res) {
+  var socket = una.io.sockets.socket(req.params.id);
+  if (socket) {
+    socket.disconnect();
+    return res.redirect('/trololol');
+  }
+  res.send(false);
+});
+
+app.get('/trololol', function(req, res) {
+  var out = {};
+  for (var room_id in una.io.sockets.manager.rooms) {
+    if (room_id == '') {
+      continue;
+    }
+    var sockets = una.io.sockets.clients(room_id.substring(1));
+    var clients = [];
+    for (var i=0;i<sockets.length;i++) {
+      clients.push(sockets[i].una);
+    }
+
+    clients = clients.sort(function(x,y) {
+      if (x.user_data && y.user_data) {
+        return y.user_data.count - x.user_data.count;
+      }
+    });
+    out[room_id] = clients;
+  }
+
+  return res.render('admin', {clients: JSON.stringify(out)});
+});
+
 // Enable screenless
 una.enableServerMode();
 una.set('floodControlDelay', 10);
@@ -113,6 +145,7 @@ una.server_mode.registerInitState({apple: 0, android: 0});
 una.server_mode.registerOnControllerInput('game', function(UnaServer, una_header, payload) {
   var isFlooding = AccessLog.checkFlood(una_header.id);
   if (!isFlooding) {
+    una_header.user_data.count++;
     var state = UnaServer.getState();
     state[payload]++;
     UnaServer.sendToScreens('game', payload);

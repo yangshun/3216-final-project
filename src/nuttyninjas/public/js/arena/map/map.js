@@ -23,6 +23,20 @@ var Map = function() {
   this.background.scaleX = game.canvas.width/1500;
   this.background.scaleY = game.canvas.height/844;
   game.stage.addChild(this.background);
+
+
+  // PubSub map events
+  var that = this;
+  PubSub.subscribe('monster.death', function(msg, data) {
+    var monster = data.victim;
+    var x = data.x / TILE_WIDTH;
+    var y = data.y / TILE_HEIGHT;
+    var guntile = new GunTile(x,y,0,'flamethrower');
+    guntile.initShape();
+    guntile.initBody();
+    that.destructible.push(guntile);
+  });
+
 };
 
 Map.prototype.clearMap = function() {
@@ -311,3 +325,4 @@ Map.prototype.respawnMap = function() {
   }
 
 };
+

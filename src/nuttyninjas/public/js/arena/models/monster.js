@@ -52,7 +52,12 @@ Monster.prototype.collide = function(anotherObject) {
     if (this.hitPoint <= 0) { 
       this.state = 'dead'; 
       var deathEffect = new DeathEffect(this);
-      PubSub.publish('monster.death', { killer : anotherObject.ninja, victim: this });
+      PubSub.publish('monster.death', {
+        killer: anotherObject.ninja,
+        victim: this,
+        x: this.view.x,
+        y: this.view.y
+      });
     }
   }
 };
@@ -91,7 +96,7 @@ Monster.prototype.move = function() {
   this.tickCount++;
   if (this.tickCount >= 150) {
     var sign = Math.round(Math.random() * 2 - 1);
-    this.angle += sign * Math.random() * Math.PI;
+    this.angle += sign * (Math.max(Math.random() * Math.PI, Math.PI / 4));
     var vXnew = this.speed * Math.cos(this.angle);
     var vYnew = this.speed * Math.sin(this.angle);
     this.changeLinearVelocity(new Vector2D(vXnew, vYnew));

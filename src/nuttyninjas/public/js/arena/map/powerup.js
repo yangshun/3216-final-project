@@ -72,7 +72,7 @@ var GunTile = function(x, y, r, gun_type) {
   this.tileY = y;
   this.rotation = r || 0; // Rotation in degrees
 
-  var gun_types = GunFactory.allGunTypes();
+  var gun_types = _.without(GunFactory.allGunTypes(), 'flamethrower');
 
   this.gun_type = gun_type || _.sample(gun_types);
 

@@ -1,8 +1,13 @@
 var KBConfig = {
   width: 120,
   height: 40,
-  part_width: 40,
-  part_height: 40,
+
+  ninja_part_width: 50,
+  ninja_part_height: 50,
+
+  weapon_part_width: 40,
+  weapon_part_height: 20,
+
   disappearDelay: 100,
   appearDelay: 100,
   moveDelay: 100,
@@ -26,8 +31,15 @@ function Kill(data, x, y) {
     'monster': {img: '/images/monster.png', w: 600, h: 600}
   };
 
+  var NinjaImages = {
+    'red': {img: '/images/ninjas/ninja-red.png', w: 600, h: 538},
+    'yellow': {img: '/images/ninjas/ninja-yellow.png', w: 600, h: 538},
+    'green': {img: '/images/ninjas/ninja-green.png', w: 600, h: 538},
+    'blue': {img: '/images/ninjas/ninja-blue.png', w: 600, h: 538}
+  };
+
   var getNinjaNameView = function(name) {
-    var view = new createjs.Text(name, '20px peachy-keenm Obelix', 'white');
+    var view = new createjs.Text(name, '20px "peachy-keen", Obelix', 'white');
     view.textAlign = 'center';
     name.x = 0;
     name.y = 0;
@@ -35,14 +47,14 @@ function Kill(data, x, y) {
   };
 
   var getNinjaView = function(color) {
-    var img = NinjaSchool.images[color] || NinjaSchool.images.yellow;
-    if (!img) return false;
+    var image =  NinjaImages[color];
+    if (!image) return false;
 
-    var ninjaview = new createjs.Bitmap(img);
-    ninjaview.scaleX = data.killer.size / (250/2.0);
-    ninjaview.scaleY = data.killer.size / (250/2.0);
-    ninjaview.regX = 250 / 2;
-    ninjaview.regY = 250 / 2;
+    var ninjaview = new createjs.Bitmap(image.img);
+    ninjaview.scaleX = KBConfig.ninja_part_width / image.w;
+    ninjaview.scaleY = KBConfig.ninja_part_height / image.h;
+    ninjaview.regX = image.w / 2;
+    ninjaview.regY = image.h / 2;
     return  ninjaview;
   };
 
@@ -51,8 +63,8 @@ function Kill(data, x, y) {
     if (!img) return false;
 
     var monsterview = new createjs.Bitmap(img);
-    monsterview.scaleX = KBConfig.part_width / 600;
-    monsterview.scaleY = KBConfig.part_height / 600;
+    monsterview.scaleX = KBConfig.ninja_part_width / 600;
+    monsterview.scaleY = KBConfig.ninja_part_height / 600;
     monsterview.regX = 600/2;
     monsterview.regY = 600/2;
     return  monsterview;
@@ -62,8 +74,8 @@ function Kill(data, x, y) {
     var weapon = ShurikenImages[type];
     var img = weapon.img;
     var weaponview = new createjs.Bitmap(img);
-    weaponview.scaleX = KBConfig.part_width / weapon.w;
-    weaponview.scaleY = KBConfig.part_height / weapon.h * 0.7;
+    weaponview.scaleX = KBConfig.weapon_part_width / weapon.w;
+    weaponview.scaleY = KBConfig.weapon_part_height / weapon.h;
     weaponview.regX = weapon.w / 2;
     weaponview.regY = weapon.h / 2;
     return weaponview;
@@ -74,7 +86,7 @@ function Kill(data, x, y) {
   view.y = y || 0;
 
   var bgview = new createjs.Shape();
-  bgview.graphics.beginFill('#ffffff').drawRect(-KBConfig.part_width/2,-KBConfig.part_height/2,KBConfig.width, KBConfig.height);
+  bgview.graphics.beginFill('#ffffff').drawRect(-KBConfig.ninja_part_width/2,-KBConfig.ninja_part_height/2,KBConfig.width, KBConfig.height);
   bgview.alpha = 0.0;
 
   var killerview;

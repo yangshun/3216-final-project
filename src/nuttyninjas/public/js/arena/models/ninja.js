@@ -74,7 +74,7 @@ Ninja.prototype.collide = function(anotherObject) {
     if (anotherObject.ninja == this) {
       // Anything we want to happen here?
     } else {
-      if (anotherObject.ninja.team !== this.team || game.friendlyFire || anotherObject instanceof Soul) {
+      if (anotherObject instanceof Soul || anotherObject.ninja.team !== this.team || game.friendlyFire) {
         this.hitPoint -= anotherObject.damage;
       }
     }

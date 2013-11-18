@@ -15,6 +15,7 @@ function ShakeController($scope, $timeout) {
         $scope.mobile_landing_container.hidden = true;
         $scope.mobile_shaking_container.hidden = false;
         choice = type;
+        $scope.$apply();
       }
     });
   };

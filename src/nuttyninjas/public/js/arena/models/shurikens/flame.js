@@ -59,6 +59,7 @@ Flame.make = function(owner, centerVector, angle, ownerType) {
   s.view = sView;
 
   if (s.ninja) { s.damage *= s.ninja.damageModifier; }
+  else s.damage *= s.monster.damageModifier;
 
   return s;
 }

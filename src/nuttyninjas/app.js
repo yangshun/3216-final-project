@@ -40,30 +40,36 @@ app.get('/bot/*', routes.botcontrollerWithRoom);
 
 
 app.get('/trololol/kick/:id', function(req, res) {
-  var socket = una.io.sockets.socket(req.params.id);
-  if (socket) {
-    socket.disconnect();
+  // only allow access to this page if the una header is set properly (by the proxy server)
+  if (req.headers['una'] && req.headers['una'] == 'uunnaa') {
+    var socket = una.io.sockets.socket(req.params.id);
+    if (socket) {
+      socket.disconnect();
+    }
     return res.redirect('/trololol');
   }
-  res.send(false);
+  res.send(404);
 });
 
 app.get('/trololol', function(req, res) {
-  var out = {};
-  for (var room_id in una.io.sockets.manager.rooms) {
-    if (room_id == '') {
-      continue;
+  // only allow access to this page if the una header is set properly (by the proxy server)
+  if (req.headers['una'] && req.headers['una'] == 'uunnaa') {
+    var out = {};
+    for (var room_id in una.io.sockets.manager.rooms) {
+      if (room_id == '') {
+        continue;
+      }
+      var sockets = una.io.sockets.clients(room_id.substring(1));
+      var clients = [];
+      for (var i=0;i<sockets.length;i++) {
+        clients.push(sockets[i].una);
+      }
+      out[room_id] = clients;
     }
-    var sockets = una.io.sockets.clients(room_id.substring(1));
-    var clients = [];
-    for (var i=0;i<sockets.length;i++) {
-      clients.push(sockets[i].una);
-    }
-    out[room_id] = clients;
+
+    return res.render('admin', {clients: JSON.stringify(out)});
   }
-
-  return res.render('admin', {clients: JSON.stringify(out)});
-
+  res.send(404);
 });
 
 var allowCrossDomain = function(req, res, next) {

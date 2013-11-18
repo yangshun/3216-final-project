@@ -14,7 +14,7 @@ AWS_IP = '54.254.146.200'
 SERVER = [AWS_IP]
 env.user = 'ubuntu'
 env.key_filename = '~/.ssh/gsync.pem'
-port = '3000' 
+port = '3216' 
 
 
 def sanity_check():

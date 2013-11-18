@@ -6,7 +6,7 @@ var routes = require('./routes');
 var http = require('http');
 
 // App setup
-app.set('port', process.env.PORT || 3000);
+app.set('port', process.env.PORT || 3216);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
 app.use(express.favicon());

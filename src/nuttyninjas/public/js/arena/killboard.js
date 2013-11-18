@@ -6,7 +6,7 @@ var KBConfig = {
   disappearDelay: 100,
   appearDelay: 100,
   moveDelay: 100,
-  stayDelay: 2000,
+  stayDelay: 3000,
 
   paddingTop: 50,
   namePaddingY: -10
@@ -122,7 +122,7 @@ function Kill(data, x, y) {
 
 
 var KillBoard = (function() {
-  var x = window.innerWidth / 2.0 - KBConfig.width / 2;
+  var x = (window.innerWidth - ArenaConfig.scoreBoardWidth) / 2.0 - KBConfig.width / 2;
   var kill_list = [];
 
   var push = function (data) {
@@ -135,11 +135,11 @@ var KillBoard = (function() {
 
     // Add this last kill onto the list
     var k = new Kill(data, x, last_y);
-    k.view.x = x - KBConfig.width;
+    k.view.x = - KBConfig.width;
     k.view.y = last_y;
     k.view.alpha = 0;
     kill_list.push(k);
-    createjs.Tween.get(k.view, {override:true}).to({x: x, alpha: 1}, KBConfig.appearDelay);
+    createjs.Tween.get(k.view, {override:true}).to({alpha: 1, x: x}, KBConfig.appearDelay);
 
     game.stage.addChild(k.view);
     setTimeout(pop, KBConfig.stayDelay);
@@ -148,7 +148,7 @@ var KillBoard = (function() {
   var pop = function() {
     // Move everyone up
     kill_list.map(function(l) {
-      var target_x = l.view.x + KBConfig.width;
+      var target_x = game.canvas.width;
       var tween = createjs.Tween.get(l.view, {override:true})
                     .to({x:target_x, alpha:0}, KBConfig.moveDelay);
     });

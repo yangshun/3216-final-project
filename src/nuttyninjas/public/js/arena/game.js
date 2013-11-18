@@ -201,6 +201,6 @@ Game.prototype.addMonster = function() {
 
 Game.prototype.removeMonster = function(m) {
   this.stage.removeChild(m.view);
-  this.monsters = _.without(this.monsers, m);
+  this.monsters = _.without(this.monsters, m);
   this.box.DestroyBody(m.body);
 }

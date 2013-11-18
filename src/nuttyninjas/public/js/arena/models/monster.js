@@ -45,6 +45,8 @@ Monster.prototype.collide = function(anotherObject) {
   if (anotherObject instanceof Shield) {
     this.hitPoint -= 0.5;
   }
+
+  this.updateHitPointBar();
   
   if (anotherObject.damageable) {
     if (this.hitPoint <= 0) { 
@@ -53,8 +55,6 @@ Monster.prototype.collide = function(anotherObject) {
       PubSub.publish('monster.death', { killer : anotherObject.ninja, victim: this });
     }
   }
-
-  this.updateHitPointBar();
 };
 
 Monster.prototype.updateHitPointBar = function() {
@@ -109,12 +109,11 @@ Monster.prototype.move = function() {
 Monster.prototype.tick = function() {
   var that = this;
   if (this.state == 'live') {
-    this.move();
-    
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
     this.view.getChildByName("body").rotation = toDegree(this.angle);
     _.each(this.effects, function(e) { e.tick(that); });
+    this.move();
   } else if (this.state === 'dead') {
     this.destroy();
   }

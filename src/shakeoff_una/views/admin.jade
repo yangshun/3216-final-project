@@ -1,0 +1,33 @@
+doctype 5
+html
+  head
+    title= "Admin"
+
+
+  body
+    div(id='clients')
+
+    script
+        var clients = JSON.parse('!{clients}');
+        var inner = '';
+        for (key in clients) {
+            if (clients[key].length == 0) continue;
+            var html = '<h1>' + key + '</h1>';
+            for (var i=0;i<clients[key].length;i++) {
+                var client = clients[key][i];
+                var clientHtml = '';
+                if (client.id) {
+                    if (client.type == 'controller') {
+                        clientHtml +=  ' ' + client.id + ' (' + client.user_data.count + ')';
+                    }
+                    else {
+                        clientHtml += client.type;
+                    }
+                }
+                clientHtml = '<a href="/trololol/kick/' + client.id + '">' + clientHtml + '</a>';
+                html += clientHtml + "<br />";
+            }
+
+            inner += html;
+        }
+        document.getElementById('clients').innerHTML = inner;

@@ -86,5 +86,8 @@ Banana.make = function(ninja, centerVector, angle, turn, scale) {
   s.body.actor = s;
   s.view = sView;
   s.turn = turn;
+
+  s.damage *= s.ninja.damageModifier;
+
   return s;
 }

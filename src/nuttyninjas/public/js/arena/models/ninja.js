@@ -7,6 +7,7 @@ var Ninja = function(player, color) {
   this.team = this.color;
   this.size = NINJA_RADIUS;
   this.speed = 250.0;
+  this.baseSpeed = 250.0;
   this.angle = Math.PI / 2;
   this.state = 'live';
   this.effects = [];
@@ -16,6 +17,10 @@ var Ninja = function(player, color) {
 
   this.ninja_shield = null;
   this.shielding = false;
+
+  this.damageModifier = 0;
+  this.speedModifier = 0;
+  this.healthModifier = 0;
 
   this._type = 'ninja';
 };
@@ -198,7 +203,7 @@ Ninja.prototype.reset = function(position) {
   this.state = 'live';
   this.hitPoint = this.maxHitPoint;
   this.angle = 0.0;
-  this.speed = 250.0;
+  this.speed = this.baseSpeed;
   
   this.body.SetActive(true);
   this.body.SetTransform(position.tob2Vec2(SCALE), 0.0);

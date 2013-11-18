@@ -54,5 +54,7 @@ Meme.make = function(ninja, centerVector, angle) {
   s.body.actor = s;
   s.view = sView;
 
+  s.damage *= s.ninja.damageModifier;
+
   return s;
 }

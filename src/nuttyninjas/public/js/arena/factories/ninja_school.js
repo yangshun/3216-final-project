@@ -88,6 +88,36 @@ var NinjaSchool = {
     ninja.equipGun('none');
 
     ninja.ninja_shield = Shield.make(data.position.x - 15, data.position.y, 30, 7, ninja);
+
+    switch (ninja.color) {
+        case 'red':
+            ninja.damageModifier = 1.2;
+            ninja.healthModifier = 0.9;
+            ninja.speedModifier = 1.1;
+            break;
+        case 'yellow':
+            ninja.damageModifier = 1.1;
+            ninja.healthModifier = 0.9;
+            ninja.speedModifier = 1.2;
+            break;
+        case 'blue':
+            ninja.damageModifier = 0.9;
+            ninja.healthModifier = 1.2;
+            ninja.speedModifier = 1.0;
+            break;
+        case 'green':
+            ninja.damageModifier = 1.0;
+            ninja.healthModifier = 1.2;
+            ninja.speedModifier = 0.9;
+            break;
+        default: break;
+    }
+
+    ninja.maxHitPoint *= ninja.healthModifier;
+    ninja.hitPoint = ninja.maxHitPoint;
+    ninja.baseSpeed *= ninja.speedModifier;
+    ninja.speed = ninja.baseSpeed;
+
     return ninja;
   },
 

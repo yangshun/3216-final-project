@@ -19,7 +19,8 @@ MapConfig.tiles = {
   7: {image:'tree.png', w: 360, h: 345, tileW: 1, tileH: 1},
   // 1: {image:'tree.png', w: 360, h: 345, tileW: 1, tileH: 1},
   // 2: {image:'rock-2.png', w: 240, h: 240},
-  health: {image:'first-aid-kit.png', w: 300, h: 256},
+  health: {image:'first-aid-kit.png', w: 322, h: 240},
+  'health-mini': {image:'first-aid-kit-mini.png', w: 168, h: 165},
   speed: {image:'haste-boots.png', w: 300, h: 300},
   nova: {image: 'nova.png', w:256, h:256}
 };

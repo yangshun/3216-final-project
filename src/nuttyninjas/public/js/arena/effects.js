@@ -134,6 +134,7 @@ BlinkEffect.prototype.destroy = function() {
 // Death effect
 var DeathEffect = function(object) {
   Effect.call(this);
+  if (!object) return;
   this.view = object.view.getChildByName('body').clone();
   this.view.x = object.view.x;
   this.view.y = object.view.y;
@@ -161,16 +162,13 @@ var DeathEffect = function(object) {
     that.view.x += that.deltaX;
     TimedEventManager.addEvent(1.0/that.numFrame, DeathEvent);
     that.numCalled++;
-    if (that.numCalled >= that.numFrame) {
-      that.destroy();
-    }
+    if (that.numCalled >= that.numFrame) { that.destroy(); }
   };
   DeathEvent();
 };
 
 DeathEffect.prototype = new Effect();
 DeathEffect.prototype.constructor = DeathEffect;
-
 DeathEffect.prototype.destroy = function() {
   game.stage.removeChild(this.view);
   delete this;

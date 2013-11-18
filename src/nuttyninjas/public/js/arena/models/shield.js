@@ -9,7 +9,7 @@ var Shield = function(x, y, body, bitmapView) {
 
   this.dist = 30;
 
-  this.dead = false;
+  this.activated = false;
   this._type = 'shield';
 
   this.damageable = true;
@@ -18,6 +18,7 @@ var Shield = function(x, y, body, bitmapView) {
 Shield.prototype = new CollidableObject();
 Shield.prototype.constructor = Shield;
 Shield.prototype.active = function(activate, x, y) {
+  this.activated = activate;
   this.body.SetActive(activate);
   this.view.alpha = activate ? 1 : 0;
 
@@ -35,14 +36,16 @@ Shield.prototype.destroy = function() {
 }
 
 Shield.prototype.tick = function(x, y, angle) {
-  var cX = this.dist * - Math.sin(angle);
-  var cY = this.dist * Math.cos(angle);
-  var centerVector = new Vector2D(x + cX, y + cY);
-  this.body.SetTransform(centerVector.tob2Vec2(SCALE), angle);
+  if (this.activated) {
+    var cX = this.dist * - Math.sin(angle);
+    var cY = this.dist * Math.cos(angle);
+    var centerVector = new Vector2D(x + cX, y + cY);
+    this.body.SetTransform(centerVector.tob2Vec2(SCALE), angle);
 
-  this.view.x = this.body.GetPosition().get_x() * SCALE;
-  this.view.y = this.body.GetPosition().get_y() * SCALE;
-  this.view.rotation = toDegree(this.body.GetAngle());
+    this.view.x = this.body.GetPosition().get_x() * SCALE;
+    this.view.y = this.body.GetPosition().get_y() * SCALE;
+    this.view.rotation = toDegree(this.body.GetAngle());
+  }
 };
 
 Shield.make = function(x, y, width, height, ninja) {

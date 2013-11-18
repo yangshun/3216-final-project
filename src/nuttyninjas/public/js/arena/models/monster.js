@@ -95,15 +95,19 @@ Monster.prototype.move = function() {
     var vXnew = this.speed * Math.cos(this.angle);
     var vYnew = this.speed * Math.sin(this.angle);
     this.changeLinearVelocity(new Vector2D(vXnew, vYnew));
-
+    this.view.getChildByName('body').gotoAndStop('charge');
     this.tickCount = 0;
   } else if (this.tickCount > 60) {
     // Rest
     this.changeLinearVelocity(new Vector2D(0, 0));
+    this.view.getChildByName('body').gotoAndStop('standing');
   } else if (this.tickCount > 0) {
     // Keep the same speed
+    if (this.tickCount % 5 === 0) {
+      this.view.getChildByName('body').advance();
+    }
   }
-}
+};
 
 // Override tick function
 Monster.prototype.tick = function() {
@@ -111,7 +115,7 @@ Monster.prototype.tick = function() {
   if (this.state == 'live') {
     this.view.x = this.body.GetPosition().get_x() * SCALE;
     this.view.y = this.body.GetPosition().get_y() * SCALE;
-    this.view.getChildByName("body").rotation = toDegree(this.angle);
+    this.view.getChildByName("body").rotation = toDegree(this.angle+Math.PI/2);
     _.each(this.effects, function(e) { e.tick(that); });
     this.move();
     if (Math.random() < 0.008) this.nova(8);

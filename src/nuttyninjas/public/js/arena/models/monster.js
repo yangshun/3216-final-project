@@ -91,7 +91,7 @@ Monster.prototype.move = function() {
   this.tickCount++;
   if (this.tickCount >= 150) {
     var sign = Math.round(Math.random() * 2 - 1);
-    this.angle += sign * Math.random() * Math.PI;
+    this.angle += sign * (Math.max(Math.random() * Math.PI, Math.PI / 4));
     var vXnew = this.speed * Math.cos(this.angle);
     var vYnew = this.speed * Math.sin(this.angle);
     this.changeLinearVelocity(new Vector2D(vXnew, vYnew));

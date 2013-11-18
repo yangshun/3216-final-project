@@ -82,8 +82,8 @@ var AccessLog = (function() {
     time = time || (new Date()).getTime();
     // log this one
     if (log[id] !== undefined) {
-      log[id].intervals.unshift(time-log[id].last);
-      log[id].intervals.splice(runway);
+      log[id].intervals.push(time-log[id].last);
+      log[id].intervals = log[id].intervals.slice(0,runway);
       log[id].last = time;
     } else {
       log[id] = {intervals:[], last:time, precalculated:false};

@@ -373,11 +373,7 @@ Map.prototype.reskin = function(tileSet) {
   });
 
   game.ninjas.map(function(n) {
-    game.stage.removeChild(n.view);
-    game.stage.removeChild(n.ninja_shield.view);
-
-    game.stage.addChild(n.view);
-    game.stage.addChild(n.ninja_shield.view);
+    n.reskin(tileSet);
   });
 
   game.shurikens.map(function(m) {

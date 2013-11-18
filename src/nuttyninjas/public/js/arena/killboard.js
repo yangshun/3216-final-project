@@ -40,7 +40,11 @@ function Kill(data, x, y) {
   };
 
   var getNinjaNameView = function(name) {
-    var view = new createjs.Text(name, '20px "peachy-keen", Obelix', 'white');
+    var c = 'white';
+    if (game.map.tileSet == 'snow') {
+      c = 'black';
+    }
+    var view = new createjs.Text(name, '20px "peachy-keen", Obelix', c);
     view.textAlign = 'center';
     name.x = 0;
     name.y = 0;

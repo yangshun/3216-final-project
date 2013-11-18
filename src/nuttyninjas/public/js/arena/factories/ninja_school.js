@@ -58,7 +58,7 @@ var NinjaSchool = {
     view.addChild(hitpoint_frame_view);
 
     var name_view = new createjs.Text(data.player.name, "15px peachy-keen, Obelix", "white");
-    name_view.name = "name";
+    name_view.name = "nameStroke";
     name_view.textAlign = "center";
     name_view.x = 0;
     name_view.y = - ninja.size - 45;

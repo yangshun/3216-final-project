@@ -42,6 +42,11 @@ var loadBot = function() {
     UnaController.sendToScreen('input', { key: 'shoot', shoot: 1});
 		// socket.emit('controller-input', { key: 'shoot', name: myname, shoot: 1});
 	}, 10);
+
+  setInterval(function() {
+    UnaController.sendToScreen('input', {key: 'shield'});
+    setTimeout(function() { UnaController.sendToScreen('input', {key:'unshield'});}, 2000);
+  }, 5000);
 };
 
 // Socket Events

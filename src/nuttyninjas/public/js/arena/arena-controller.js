@@ -3,7 +3,11 @@ function ArenaController($scope, $timeout, $location) {
 	$scope.time_left = '';
 	$scope.current_url = window.location.origin.split(':').slice(0,2).join(':')+'/';
   var path_array = window.location.pathname.split('/')
-  $scope.current_room = path_array[path_array.length-1]
+  if(path_array.length <= 2){
+    $scope.current_room = '';
+  } else {
+    $scope.current_room = path_array[path_array.length-1];
+  }
 	$scope.radiant_score = 0;
 	$scope.dire_score = 0;
 

@@ -254,5 +254,8 @@ Ninja.prototype.tick = function() {
   } else if (this.state == 'remove') {
     PubSub.publish('ninja.remove', {name: this.player.name, ninja: this });
     this.destroy();
+  } else if (this.state == 'invulnerable') {
+    this.view.x = this.body.GetPosition().get_x() * SCALE;
+    this.view.y = this.body.GetPosition().get_y() * SCALE;
   }
 };

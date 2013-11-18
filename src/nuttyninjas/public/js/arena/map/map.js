@@ -370,4 +370,9 @@ Map.prototype.reskin = function(tileSet) {
     game.stage.removeChild(m.view);
     game.stage.addChild(m.view);
   });
+
+  game.shurikens.map(function(m) {
+    game.stage.removeChild(m.view);
+    game.stage.addChild(m.view);
+  });
 };

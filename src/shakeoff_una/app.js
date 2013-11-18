@@ -53,7 +53,7 @@ var AccessLog = (function() {
   };
 
   var periodicHelper = function(arr, n) {
-    for (j=0;j<n;j++) {
+    for (j=n-1;j>=0;j--) {
       arr[j] = Math.abs(arr[j+1]-arr[j]);
     }
   };
@@ -73,7 +73,8 @@ var AccessLog = (function() {
       periodic(arr);
       log[id].precalculated = true;
     }
-    return Math.abs(arr[0]) < epsilon;
+
+    return arr[0] < epsilon && arr[1] < epsilon && arr[2] < epsilon;
   };
 
   // Return true if is bot
@@ -83,15 +84,17 @@ var AccessLog = (function() {
     // log this one
     if (log[id] !== undefined) {
       log[id].intervals.push(time-log[id].last);
-      log[id].intervals = log[id].intervals.slice(0,runway);
       log[id].last = time;
     } else {
       log[id] = {intervals:[], last:time, precalculated:false};
     }
-
-    if (log[id].intervals.length == runway) {
+    if (log[id].intervals.length > runway) {
+      log[id].intervals.shift();
+      console.log(log[id].intervals);
       var isFlooder =  isPeriodic(log[id].intervals, id);
-      blacklist[id] = time;
+      if (isFlooder) {
+        blacklist[id] = time;
+      }
     }
     return false;
   };

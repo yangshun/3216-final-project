@@ -25,12 +25,28 @@ MapConfig.tiles = {
     4: {image:'tree-2.png', w: 500, h: 491, tileW: 2, tileH: 2}
   },
   image: '/images/',
+<<<<<<< HEAD
   powerup:{
     path: '/images/powerups/',
     health: {image:'first-aid-kit.png', w: 300, h: 256},
     speed: {image:'haste-boots.png', w: 300, h: 300},
     nova: {image: 'nova.png', w:256, h:256}
   }
+=======
+  1: {image:'rock.png', w: 360, h: 180, tileW: 1, tileH: 1},
+  2: {image:'rock-3.png', w: 360, h: 360, tileW: 1, tileH: 1},
+  3: {image:'rock-4.png', w: 360, h: 360, tileW: 1, tileH: 1},
+  4: {image:'tree-2.png', w: 360, h: 345, tileW: 2, tileH: 2},
+  5: {image:'hut.png', w: 600, h: 600, tileW: 1, tileH: 1},
+  6: {image:'hut-2.png', w: 600, h: 600, tileW: 1, tileH: 1},
+  7: {image:'tree.png', w: 360, h: 345, tileW: 1, tileH: 1},
+  // 1: {image:'tree.png', w: 360, h: 345, tileW: 1, tileH: 1},
+  // 2: {image:'rock-2.png', w: 240, h: 240},
+  health: {image:'first-aid-kit.png', w: 322, h: 240},
+  'health-mini': {image:'first-aid-kit-mini.png', w: 168, h: 165},
+  speed: {image:'haste-boots.png', w: 300, h: 300},
+  nova: {image: 'nova.png', w:256, h:256}
+>>>>>>> 39012fa4e6d53f5ad30fdebe3ab9c6434b625b8a
 };
 
 MapConfig.maps = [

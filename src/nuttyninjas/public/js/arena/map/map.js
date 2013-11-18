@@ -18,13 +18,7 @@ var Map = function() {
     novatile: 0
   };
   this.tileSet = 'jungle';  // 'jungle' or 'snow'
-
-  this.bgpath = getPath(this.tileSet, 'bg');
-  this.background = new createjs.Bitmap(this.bgpath);
-  this.background.scaleX = game.canvas.width/MapConfig.tiles[this.tileSet].bg.w;
-  this.background.scaleY = game.canvas.height/MapConfig.tiles[this.tileSet].bg.h;
-  game.stage.addChild(this.background);
-
+  this.initBackground();
 
   // PubSub map events
   var that = this;
@@ -38,6 +32,18 @@ var Map = function() {
     that.destructible.push(guntile);
   });
 
+};
+
+Map.prototype.initBackground = function() {
+  if (this.background) {
+    game.stage.removeChild(this.background);
+  }
+
+  this.bgpath = getPath(this.tileSet, 'bg');
+  this.background = new createjs.Bitmap(this.bgpath);
+  this.background.scaleX = game.canvas.width/MapConfig.tiles[this.tileSet].bg.w;
+  this.background.scaleY = game.canvas.height/MapConfig.tiles[this.tileSet].bg.h;
+  game.stage.addChild(this.background);
 };
 
 Map.prototype.clearMap = function() {
@@ -88,8 +94,13 @@ Map.prototype.generateMap = function(id, opts, dist, tol) {
       } else if (this.asciiMap[i][j] != 0) {
         var type = 4;
         //var type = Math.floor(Math.random()*6)+1;
+        var tileData = _.clone(MapConfig.tiles[this.tileSet][type]);
+        if (tileData.tileW == 2 && Math.random() < 0.5) {
+          tileData.tileW = 1;
+          tileData.tileH = 1;
+        }
         var r = Math.round(Math.random() * 4) * 90;
-        var t = new TexturedObstacleTile(j,i,r,getPath(this.tileSet, type), MapConfig.tiles[this.tileSet][type]);
+        var t = new TexturedObstacleTile(j,i,r,getPath(this.tileSet, type),tileData);
         t.initShape(MapConfig.tiles[this.tileSet][type].w, MapConfig.tiles[this.tileSet][type].h);
         t.initBody();
         this.destructible.push(t);
@@ -115,7 +126,13 @@ Map.prototype.generateRandomMap = function() {
       } else if (Math.random() < 0.05) {
         var type = Math.round(Math.random() * 5) + 1;
         var r = Math.round(Math.random() * 4) * 90;
-        var t = new TexturedObstacleTile(j,i,r,getPath('jungle', type), MapConfig.tiles[this.tileSet][type]);
+        var tileData = MapConfig.tiles[this.tileSet][type].clone();
+
+        if (tileData.tileW == 2) {
+          tileData.tileW = 1;
+          tileData.tileH = 1;
+        }
+        var t = new TexturedObstacleTile(j,i,r,getPath('jungle', type), tileData);
         t.initShape(MapConfig.tiles[this.tileSet][type].w, MapConfig.tiles[this.tileSet][type].h);
         t.initBody();
         this.destructible.push(t);
@@ -327,3 +344,30 @@ Map.prototype.respawnMap = function() {
 
 };
 
+Map.prototype.reskin = function(tileSet) {
+  this.tileSet = tileSet;
+  this.initBackground();
+  var type = 4;
+  var reinit = [];
+  for(var i=0; i<this.destructible.length; i++) {
+    if (this.destructible[i] instanceof TexturedObstacleTile) {
+      this.destructible[i].reskin(getPath(this.tileSet, type), MapConfig.tiles[this.tileSet][type]);
+    } else {
+      reinit.push(this.destructible[i]);
+    }
+  }
+  for(var i=0; i<reinit.length; i++) {
+    game.stage.removeChild(reinit[i].view);
+    game.stage.addChild(reinit[i].view);
+  }
+
+  game.monsters.map(function(m) {
+    game.stage.removeChild(m.view);
+    game.stage.addChild(m.view);
+  });
+
+  game.ninjas.map(function(m) {
+    game.stage.removeChild(m.view);
+    game.stage.addChild(m.view);
+  });
+};

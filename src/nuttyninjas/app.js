@@ -43,7 +43,7 @@ app.get('/trololol/kick/:id', function(req, res) {
   var socket = una.io.sockets.socket(req.params.id);
   if (socket) {
     socket.disconnect();
-    return res.redirect('/'+req.params.password);
+    return res.redirect('/trololol');
   }
   res.send(false);
 });

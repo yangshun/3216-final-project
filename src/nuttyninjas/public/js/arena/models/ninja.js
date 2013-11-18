@@ -121,7 +121,7 @@ Ninja.prototype.collide = function(anotherObject) {
       this.state = 'dead'; 
       var killer;
       if (anotherObject instanceof Monster) { killer = anotherObject; }
-      else if (anotherObject instanceof Flame) { killer = anotherObject.monster; } 
+      else if (anotherObject instanceof Flame) { killer = anotherObject.monster || anotherObject.ninja; } 
       else { killer = anotherObject.ninja; }
       PubSub.publish('ninja.death', {
         killer :killer,

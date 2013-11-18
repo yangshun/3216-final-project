@@ -28,7 +28,8 @@ function Kill(data, x, y) {
     'hulk_fist': {img: '/images/projectiles/hulk-fist.png', w: 300, h: 142},
     'snowflake': {img: '/images/projectiles/snowflake.png', w: 160, h: 160},
     'Meme': {img: '/images/projectiles/meme-1.png', w: 400, h: 519},
-    'monster': {img: '/images/monster.png', w: 600, h: 600}
+    'monster': {img: '/images/monster.png', w: 600, h: 600},
+    'Flame': {img: '/images/projectiles/flame.png', w: 417, h:320}
   };
 
   var NinjaImages = {

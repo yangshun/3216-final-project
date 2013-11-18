@@ -29,9 +29,14 @@ function ShakeController($scope, $timeout) {
     }, 500);
   };
   
+  var hardest_shake = 0;
+  // Set tolerance to 1=hardest shake,0=anyhow shake
+  var tolerance = 0.75;
   var handle_shake = function(event_data) {
     var a = event_data.accelerationIncludingGravity;
-    if (Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z) > 60) {
+    var curr_shake = Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z);
+    hardest_shake = Math.max(hardest_shake, curr_shake);
+    if (curr_shake > tolerance * hardest_shake) {
       $scope.shake();
     }
   };

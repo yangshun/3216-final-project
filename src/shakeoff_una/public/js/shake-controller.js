@@ -37,7 +37,7 @@ function ShakeController($scope, $timeout) {
     var a = event_data.accelerationIncludingGravity;
     var curr_shake = Math.abs(a.x) + Math.abs(a.y) + Math.abs(a.z);
     hardest_shake = Math.max(hardest_shake, curr_shake);
-    if (curr_shake > tolerance * hardest_shake) {
+    if (curr_shake > tolerance * hardest_shake || curr_shake > 60) {
       $scope.shake();
     }
   };

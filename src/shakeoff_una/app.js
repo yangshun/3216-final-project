@@ -162,13 +162,13 @@ una.set('floodControlDelay', 10);
 una.server_mode.registerInitState({apple: 0, android: 0});
 
 una.server_mode.registerOnControllerInput('game', function(UnaServer, una_header, payload) {
-  var isFlooding = AccessLog.checkFlood(una_header.id);
-  if (!isFlooding) {
+  //var isFlooding = AccessLog.checkFlood(una_header.id);
+  //if (!isFlooding) {
     una_header.user_data.count++;
     var state = UnaServer.getState();
     state[payload]++;
     UnaServer.sendToScreens('game', payload);
-  }
+ // }
 });
 
 una.server_mode.registerOnScreenInput('reset', function(UnaServer, una_header, payload) {

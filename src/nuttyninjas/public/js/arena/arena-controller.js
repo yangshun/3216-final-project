@@ -4,12 +4,15 @@ function ArenaController($scope, $timeout, $location) {
 	$scope.current_url = window.location.origin.split(':').slice(0,2).join(':')+'/';
   var terrains = ['jungle', 'snow'];
   $scope.terrain_index = 0;
-
-  var path_array = window.location.pathname.split('/')
-  if(path_array.length <= 2){
+  var window_path = window.location.pathname;
+  if (window_path[window_path.length-1] != '/') {
+    window_path += '/';
+  }
+  var path_array = window_path.split('/')
+  if(path_array.length <= 3){
     $scope.current_room = '';
   } else {
-    $scope.current_room = path_array[path_array.length-1];
+    $scope.current_room = path_array[path_array.length-2];
   }
 	$scope.radiant_score = 0;
 	$scope.dire_score = 0;

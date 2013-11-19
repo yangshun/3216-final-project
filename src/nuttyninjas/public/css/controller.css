@@ -7,7 +7,7 @@ html, body {
 
 body {
 	background-image: url('../images/backgrounds/dojo.jpg');
-	background-size: cover; 
+	/*background-size: cover; */
 	background-repeat: no-repeat;
 	background-position: center top;
 	font-family: "peachy-keen", "Obelix", Tahoma, Helvetica, Arial, sans-serif;

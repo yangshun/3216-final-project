@@ -1,4 +1,4 @@
-Nutty Ninja
+Una
 ==
 
 ### The Team
@@ -15,3 +15,10 @@ Nutty Ninja
 3. `source deploy/bin/activate`
 4. `pip install -r requirement.txt`
 5. Deploy with `fab deploy`
+
+### src/ directory
+1. nuttyninjas: Nutty Ninjas
+2. shakeoff: Shakeoff
+3. una: Submodule of Una (https://github.com/una-org/una)
+4. una-org.github.io: Submodule of Una landing page (https://github.com/una-org/una-org.github.io)
+5. sudoku: Abadoned sudoku effort

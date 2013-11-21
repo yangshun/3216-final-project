@@ -1,0 +1,6 @@
+[submodule "src/una"]
+	path = src/una
+	url = https://github.com/una-org/una
+[submodule "src/una-org.github.io"]
+	path = src/una-org.github.io
+	url = https://github.com/una-org/una-org.github.io

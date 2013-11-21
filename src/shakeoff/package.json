@@ -1,13 +1,13 @@
 {
-  "name": "application-name",
+  "name": "shakeoff_una",
   "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "start": "node app.js"
-  },
+  "description": "shakeoff una",
+  "main": "node app.js",
   "dependencies": {
-    "express": "3.4.0",
-    "jade": "*",
-    "socket.io": "~0.9.16"
-  }
+    "jade": "~0.35.0",
+    "una": "~0.3.2"
+  },
+  "devDependencies": {},
+  "author": "",
+  "license": "BSD-2-Clause"
 }

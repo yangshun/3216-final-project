@@ -9,7 +9,7 @@ import time
 from fabric.api import *
 from fabric.colors import *
 
-PROJECT_PATH = '/home/ubuntu/2013-final-project-3/src/shakeoff_una'
+PROJECT_PATH = '/home/ubuntu/2013-final-project-3/src/shakeoff'
 AWS_IP = '54.254.205.17'
 SERVER = [AWS_IP]
 env.user = 'ubuntu'

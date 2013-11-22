@@ -3,8 +3,6 @@
 Una
 ==
 
-### What is Una?
-
 Una is a free and open source Javascript library that allows developers to create interactive applications where multiple users can interact with large central displays in real-time using mobile devices. We have developed a product site for interested developers to find out more about Una, try it out for themselves and potentially contribute to the development of Una!
 
 
@@ -12,8 +10,8 @@ Una is a free and open source Javascript library that allows developers to creat
 
 We have built a whole ton of stuff in the past 6 weeks. Here's a list of them:
 
-Nutty Ninjas
---
+#### Nutty Ninjas
+
 **Directory Path**: `src/nuttyninjas`
 
 ##### Instructions
@@ -25,8 +23,8 @@ Nutty Ninjas
 6. Hold your mobile device in landscape mode. It is now your controller that controls the Ninja shown on the screen.
 7. Invite your friend beside you to join in and start throwing ninja stars!
 
-Shakeoff
---
+#### Shakeoff
+
 **Directory Path**: `src/shakeoff`
 
 ##### Instructions
@@ -34,20 +32,18 @@ Shakeoff
 2. On your mobile phone, go to [http://shake.lvtien.com](http://shake.lvtien.com)
 3. Choose Team Android or Team Apple on your mobile phone, and start shaking to show support for your favourite brand.
 
-Una Library
---
+#### Una Library
 
 - **Directory Path**: `src/una`
 - Submodule of Una [(https://github.com/una-org/una)](https://github.com/una-org/una)
 
-Una Landing Site
---
+#### Una Landing Site
 
 - **Directory Path**: `src/una-org.github.io`
 - Submodule of Una landing site [(https://github.com/una-org/una-org.github.io)](https://github.com/una-org/una-org.github.io)
 
-Sudoku
---
+#### Sudoku
+
 - **Directory Path**: `src/sudoku`
 - Abandoned sudoku effort
 
